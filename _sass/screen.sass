@@ -1,0 +1,217 @@
+@import compass/reset
+@import compass/typography/links
+@import compass/typography/vertical_rhythm
+@import compass/typography/lists
+@import compass/css3/border-radius
+@import url(http://fonts.googleapis.com/css?family=Cabin+Condensed:600,400|Roboto+Slab:400,700|Ubuntu+Mono:400,700)
+
+$base-font-size: 16px
+$base-line-height: 24px
+
+//$sans: "freight-sans-pro","Myriad Pro","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif
+$sans: "Cabin Condensed",sans-serif
+$roman: "Roboto Slab","ff-tisa-web-pro",Georgia,Cambria,"Times New Roman",Times,serif
+
+$orange: #fa9b1e
+$csocial: #000000
+$csocialh: $orange
+$clink: darken($orange, 10%)
+
++establish-baseline
+
+
+html, body
+  height: 100%
+
+body
+  background-color: #fff
+  font-family: $roman
+  text-align: center
+  color: #111
+
+h1, h2, h3 
+  font-family: $sans
+  font-weight: 600
+
+h1
+  +adjust-font-size-to(44px)
+
+h2
+  +adjust-font-size-to(28px)
+
+h3
+  +adjust-font-size-to(22px)
+
+p
+  margin: 1em 0
+
+a
+  +link-colors($clink)
+
+#site
+  text-align: justify
+  width: 42em
+  margin: 3em auto 2em
+  line-height: 1.5em
+
+#header
+  text-transform: lowercase
+  margin-bottom: 3em
+  a
+    +unstyled-link
+    //($normal, $hover, $active, $visited, $focus)
+    +link-colors($csocial,$csocialh,$csocialh,$csocial,$csocial)
+    cursor: pointer
+
+#description
+  position: relative
+  float: left
+  font-family: $sans
+  color: gray
+
+#social
+  position: relative
+  float: right
+  > ul
+    +horizontal-list
+    > li a
+      font-family: $sans
+      font-weight: 600
+
+.date
+  text-transform: lowercase
+  color: gray
+  font-family: $sans
+
+.posts .date
+  font-family: $roman
+
+p > code
+  font-family: "Ubuntu Mono"
+  //background-color: #444444
+  background-color: #ddd
+  //color: #fdce93
+  //+adjust-font-size-to(14px)
+  padding: 0.15em
+  +border-radius(0.25em,0.25em)
+
+div.highlight
+  +border-radius(0.5em,0.5em)
+  +adjust-font-size-to(14px)
+  line-height: 16px
+  font-family: "Ubuntu Mono"
+  background-color: #444444
+  padding: 0.5em 0.75em
+  //margin: 0.5em
+  code, pre
+    color: #fdce93
+
+  .hll
+    background-color: #222
+  .c
+    color: #7f9f7f
+  .err
+    color: #e37170
+    background-color: #3d3535
+  .g
+    color: #7f9f7f
+  .k
+    color: #f0dfaf
+  .l
+    color: #ccc
+  .n
+    color: #dcdccc
+  .o
+    color: #f0efd0
+  .x
+    color: #ccc
+  .p
+    color: #41706f
+  .cm, .cp, .c1
+    color: #7f9f7f
+  .cs
+    color: #cd0000
+    font-weight: bold
+  .gd
+    color: #cd0000
+  .ge
+    color: #ccc
+    font-style: italic
+  .gr
+    color: red
+  .gh
+    color: #dcdccc
+    font-weight: bold
+  .gi
+    color: #00cd00
+  .go
+    color: gray
+  .gp
+    color: #dcdccc
+    font-weight: bold
+  .gs
+    color: #ccc
+    font-weight: bold
+  .gu
+    color: purple
+    font-weight: bold
+  .gt
+    color: #0040D0
+  .kc
+    color: #dca3a3
+  .kd
+    color: #ffff86
+  .kn
+    color: #dfaf8f
+    font-weight: bold
+  .kp
+    color: #cdcf99
+  .kr
+    color: #cdcd00
+  .kt
+    color: #00cd00
+  .ld
+    color: #cc9393
+  .m
+    color: #8cd0d3
+  .s
+    color: #cc9393
+  .na
+    color: #9ac39f
+  .nb, .nc
+    color: #efef8f
+  .no, .nd
+    color: #ccc
+  .ni
+    color: #c28182
+  .ne
+    color: #c3bf9f
+    font-weight: bold
+  .nf
+    color: #efef8f
+  .nl
+    color: #ccc
+  .nn
+    color: #8fbede
+  .nx, .py
+    color: #ccc
+  .nt
+    color: #9ac39f
+  .nv
+    color: #dcdccc
+  .ow
+    color: #f0efd0
+  .w
+    color: #ccc
+  .mf, .mh, .mi, .mo
+    color: #8cd0d3
+  .sb, .sc, .sd, .s2, .se, .sh, .si, .sx, .sr, .s1, .ss
+    color: #cc9393
+  .bp, .vc
+    color: #efef8f
+  .vg
+    color: #dcdccc
+  .vi
+    color: #ffffc7
+  .il
+    color: #8cd0d3

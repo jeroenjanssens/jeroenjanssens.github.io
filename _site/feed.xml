@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Jeroen Janssens</title>
+		<description>Dutch Data Scientist in Old New Amsterdam</description>
+		<link>http://www.jeroenjanssens.com</link>
+		<atom:link href="http://www.jeroenjanssens.com/feed.xml" rel="self" type="application/rss+xml" />
+		
+			<item>
+				<title>Quickly navigate your filesystem from the command-line</title>
+				<description>&lt;p&gt;Like many others, I spend most of my day behind a computer.
+In order make the most of it (and to keep my body from complaining too much), I try to maintain an optimized setup.
+For example, I code in &lt;a href=&quot;http://en.wikipedia.org/wiki/Vim_(text_editor)&quot;&gt;Vim&lt;/a&gt;, browse with &lt;a href=&quot;http://www.vimperator.org/vimperator&quot;&gt;Vimperator&lt;/a&gt;, and move windows around in &lt;a href=&quot;http://i3wm.org&quot;&gt;i3&lt;/a&gt;.
+Another common task is filesystem navigation. 
+I prefer to use the command-line for this, but typing &lt;code&gt;cd ~/some/very/deep/often-used/directory&lt;/code&gt; does become cumbersome.&lt;/p&gt;
+
+&lt;p&gt;Automated tools like &lt;a href=&quot;https://github.com/joelthelion/autojump&quot;&gt;autojump&lt;/a&gt; and &lt;a href=&quot;https://github.com/clvv/fasd&quot;&gt;fasd&lt;/a&gt; address this problem by offering shortcuts to the directories you often go.
+Personally, I prefer a more manual solution, which I would like to share with you.
+I have noticed quite an increase in efficiency with this, and perhaps you will too.&lt;/p&gt;
+
+&lt;p&gt;Under the hood this manual solution comes down to storing symbolic links in a hidden directory (e.g., &lt;code&gt;~/.marks&lt;/code&gt;).
+There are four shell functions &lt;code&gt;jump&lt;/code&gt;, &lt;code&gt;mark&lt;/code&gt;, &lt;code&gt;unmark&lt;/code&gt;, and &lt;code&gt;marks&lt;/code&gt;, and they look like this:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;MARKPATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/.marks
+&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;jump &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
+    &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; -P &lt;span class=&quot;nv&quot;&gt;$MARKPATH&lt;/span&gt;/&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt; 2&amp;gt;/dev/null &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;No such mark: $1&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;mark &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
+    mkdir -p &lt;span class=&quot;nv&quot;&gt;$MARKPATH&lt;/span&gt;; ln -s &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;pwd&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$MARKPATH&lt;/span&gt;/&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;unmark &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
+    rm -i &lt;span class=&quot;nv&quot;&gt;$MARKPATH&lt;/span&gt;/&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt; 
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;marks &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    ls -l &lt;span class=&quot;nv&quot;&gt;$MARKPATH&lt;/span&gt; | sed &lt;span class=&quot;s1&quot;&gt;&amp;#39;s/  / /g&amp;#39;&lt;/span&gt; | cut -d&lt;span class=&quot;s1&quot;&gt;&amp;#39; &amp;#39;&lt;/span&gt; -f9- | sed &lt;span class=&quot;s1&quot;&gt;&amp;#39;s/ -/\t-/g&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Put this in your &lt;code&gt;.zshrc&lt;/code&gt; or &lt;code&gt;.bashrc&lt;/code&gt; and you&amp;#39;re ready to jump. (I have also turned this into a plugin for &lt;a href=&quot;https://github.com/robbyrussell/oh-my-zsh&quot;&gt;oh-my-zsh&lt;/a&gt; called &lt;code&gt;jump&lt;/code&gt;, but that&amp;#39;s currently in a &lt;a href=&quot;https://github.com/robbyrussell/oh-my-zsh/pull/2045&quot;&gt;pull-request&lt;/a&gt;.) To add a new bookmark, &lt;code&gt;cd&lt;/code&gt; into the directory and &lt;code&gt;mark&lt;/code&gt; it with a name to your liking:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/some/very/deep/often-used/directory
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mark deep
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This adds a symbolic link named &lt;code&gt;deep&lt;/code&gt; to the directory &lt;code&gt;~/.marks&lt;/code&gt;. To &lt;code&gt;jump&lt;/code&gt; to this directory, type the following from any place in the filesystem:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;jump deep
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;To remove the bookmark (i.e., the symbolic link), type:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;unmark deep
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;You can view all marks by typing:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;marks
+
+deep    -&amp;gt; /home/johndoe/some/very/deep/often-used/directory
+foo     -&amp;gt; /usr/bin/foo/bar
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;That&amp;#39;s all there is to it! 
+If you like what I had to say then you may want to &lt;a href=&quot;https://twitter.com/jeroenhjanssens/&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+				<pubDate>Fri, 16 Aug 2013 15:06:19 -0400</pubDate>
+				<link>http://www.jeroenjanssens.com/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html</link>
+				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html</guid>
+			</item>
+		
+	</channel>
+</rss>

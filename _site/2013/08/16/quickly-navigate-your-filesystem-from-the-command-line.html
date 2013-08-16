@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>Quickly navigate your filesystem from the command-line</title>
+		<meta name="viewport" content="width=device-width">
+		<meta name="description" content="Dutch Data Scientist in Old New Amsterdam">
+		<link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+		<link rel="alternate" type="application/rss+xml" title="Jeroen Janssens" href="http://www.jeroenjanssens.com/feed.xml">
+	</head>
+	<body>
+		<div id="site">
+			<div id="header">
+				<h1><a href="/">Jeroen Janssens</a></h1>
+				<div id="description">Dutch Data Scientist in Old New Amsterdam</div>
+				<div id="social">
+					<ul>
+						<li><a href="http://twitter.com/jeroenhjanssens/">Twitter</a></li>
+						<li><a href="http://github.com/jeroenjanssens/">Github</a></li>
+						<li><a href="http://www.linkedin.com/in/jeroenjanssens">LinkedIn</a></li>
+						<li><a href="http://www.jeroenjanssens.com/feed.xml">RSS</a></li>
+					<ul>
+				</div>
+			</div>
+			<div id="content">
+									<h2>Quickly navigate your filesystem from the command-line</h2>
+					<div class="date">Published on 16 August 2013</div>
+					<div class="post">
+						<p>Like many others, I spend most of my day behind a computer.
+In order make the most of it (and to keep my body from complaining too much), I try to maintain an optimized setup.
+For example, I code in <a href="http://en.wikipedia.org/wiki/Vim_(text_editor)">Vim</a>, browse with <a href="http://www.vimperator.org/vimperator">Vimperator</a>, and move windows around in <a href="http://i3wm.org">i3</a>.
+Another common task is filesystem navigation. 
+I prefer to use the command-line for this, but typing <code>cd ~/some/very/deep/often-used/directory</code> does become cumbersome.</p>
+
+<p>Automated tools like <a href="https://github.com/joelthelion/autojump">autojump</a> and <a href="https://github.com/clvv/fasd">fasd</a> address this problem by offering shortcuts to the directories you often go.
+Personally, I prefer a more manual solution, which I would like to share with you.
+I have noticed quite an increase in efficiency with this, and perhaps you will too.</p>
+
+<p>Under the hood this manual solution comes down to storing symbolic links in a hidden directory (e.g., <code>~/.marks</code>).
+There are four shell functions <code>jump</code>, <code>mark</code>, <code>unmark</code>, and <code>marks</code>, and they look like this:</p>
+<div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="nb">export </span><span class="nv">MARKPATH</span><span class="o">=</span><span class="nv">$HOME</span>/.marks
+<span class="k">function </span>jump <span class="o">{</span> 
+    <span class="nb">cd</span> -P <span class="nv">$MARKPATH</span>/<span class="nv">$1</span> 2&gt;/dev/null <span class="o">||</span> <span class="nb">echo</span> <span class="s2">&quot;No such mark: $1&quot;</span>
+<span class="o">}</span>
+<span class="k">function </span>mark <span class="o">{</span> 
+    mkdir -p <span class="nv">$MARKPATH</span>; ln -s <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span> <span class="nv">$MARKPATH</span>/<span class="nv">$1</span>
+<span class="o">}</span>
+<span class="k">function </span>unmark <span class="o">{</span> 
+    rm -i <span class="nv">$MARKPATH</span>/<span class="nv">$1</span> 
+<span class="o">}</span>
+<span class="k">function </span>marks <span class="o">{</span>
+    ls -l <span class="nv">$MARKPATH</span> | sed <span class="s1">&#39;s/  / /g&#39;</span> | cut -d<span class="s1">&#39; &#39;</span> -f9- | sed <span class="s1">&#39;s/ -/\t-/g&#39;</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>Put this in your <code>.zshrc</code> or <code>.bashrc</code> and you&#39;re ready to jump. (I have also turned this into a plugin for <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a> called <code>jump</code>, but that&#39;s currently in a <a href="https://github.com/robbyrussell/oh-my-zsh/pull/2045">pull-request</a>.) To add a new bookmark, <code>cd</code> into the directory and <code>mark</code> it with a name to your liking:</p>
+<div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> ~/some/very/deep/often-used/directory
+<span class="nv">$ </span>mark deep
+</code></pre></div>
+<p>This adds a symbolic link named <code>deep</code> to the directory <code>~/.marks</code>. To <code>jump</code> to this directory, type the following from any place in the filesystem:</p>
+<div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="nv">$ </span>jump deep
+</code></pre></div>
+<p>To remove the bookmark (i.e., the symbolic link), type:</p>
+<div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="nv">$ </span>unmark deep
+</code></pre></div>
+<p>You can view all marks by typing:</p>
+<div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="nv">$ </span>marks
+
+deep    -&gt; /home/johndoe/some/very/deep/often-used/directory
+foo     -&gt; /usr/bin/foo/bar
+</code></pre></div>
+<p>That&#39;s all there is to it! 
+If you like what I had to say then you may want to <a href="https://twitter.com/jeroenhjanssens/">follow me on Twitter</a>.</p>
+
+					</div>
+
+			</div>
+		</div>
+	</body>
+</html>
