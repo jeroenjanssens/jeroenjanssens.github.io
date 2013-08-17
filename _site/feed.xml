@@ -12,9 +12,9 @@
 In order make the most of it (and to keep my body from complaining too much), I try to maintain an optimized setup.
 For example, I code in &lt;a href=&quot;http://en.wikipedia.org/wiki/Vim_(text_editor)&quot;&gt;Vim&lt;/a&gt;, browse with &lt;a href=&quot;http://www.vimperator.org/vimperator&quot;&gt;Vimperator&lt;/a&gt;, and move windows around in &lt;a href=&quot;http://i3wm.org&quot;&gt;i3&lt;/a&gt;.
 Another common task is filesystem navigation. 
-I prefer to use the command-line for this, but typing &lt;code&gt;cd ~/some/very/deep/often-used/directory&lt;/code&gt; does become cumbersome.&lt;/p&gt;
+I prefer to use the command-line for this, but typing &lt;code&gt;cd ~/some/very/deep/often-used/directory&lt;/code&gt; over and over again does become cumbersome.&lt;/p&gt;
 
-&lt;p&gt;Automated tools like &lt;a href=&quot;https://github.com/joelthelion/autojump&quot;&gt;autojump&lt;/a&gt; and &lt;a href=&quot;https://github.com/clvv/fasd&quot;&gt;fasd&lt;/a&gt; address this problem by offering shortcuts to the directories you often go.
+&lt;p&gt;Automated tools like &lt;a href=&quot;https://github.com/joelthelion/autojump&quot;&gt;autojump&lt;/a&gt; and &lt;a href=&quot;https://github.com/clvv/fasd&quot;&gt;fasd&lt;/a&gt; address this problem by offering shortcuts to the directories you often go to.
 Personally, I prefer a more manual solution, which I would like to share with you.
 I have noticed quite an increase in efficiency with this, and perhaps you will too.&lt;/p&gt;
 
