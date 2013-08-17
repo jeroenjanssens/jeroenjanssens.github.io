@@ -8,9 +8,9 @@ Like many others, I spend most of my day behind a computer.
 In order make the most of it (and to keep my body from complaining too much), I try to maintain an optimized setup.
 For example, I code in [Vim][vim], browse with [Vimperator][vimperator], and move windows around in [i3][i3].
 Another common task is filesystem navigation. 
-I prefer to use the command-line for this, but typing `cd ~/some/very/deep/often-used/directory` does become cumbersome.
+I prefer to use the command-line for this, but typing `cd ~/some/very/deep/often-used/directory` over and over again does become cumbersome.
 
-Automated tools like [autojump][autojump] and [fasd][fasd] address this problem by offering shortcuts to the directories you often go.
+Automated tools like [autojump][autojump] and [fasd][fasd] address this problem by offering shortcuts to the directories you often go to.
 Personally, I prefer a more manual solution, which I would like to share with you.
 I have noticed quite an increase in efficiency with this, and perhaps you will too.
 
@@ -59,7 +59,6 @@ $ marks
 
 deep	-> /home/johndoe/some/very/deep/often-used/directory
 foo		-> /usr/bin/foo/bar
-
 ```
 
 That's all there is to it! 
