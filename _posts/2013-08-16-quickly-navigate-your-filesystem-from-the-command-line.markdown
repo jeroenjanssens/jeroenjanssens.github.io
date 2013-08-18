@@ -4,10 +4,7 @@ title:  "Quickly navigate your filesystem from the command-line"
 date:   2013-08-16 19:06:19
 ---
 
-Note: The [discussion on Hacker News][hn] contains many helpful suggestions for improvement (e.g., tab-completion, usage under MAC OS X) and alternative tools. I will incorporate these into this post as soon as possible. [Follow me on Twitter][twitter] if you want to be notified of any updates.
-
---------------------
-
+*Note: The [discussion on Hacker News][hn] contains many helpful suggestions for improvement (e.g., tab-completion, usage under MAC OS X) and alternative tools. I will incorporate these into this post as soon as possible. [Follow me on Twitter][twitter] if you want to be notified of any updates.*
 
 Like many others, I spend most of my day behind a computer.
 In order make the most of it (and to keep my body from complaining too much), I try to maintain an optimized setup.
