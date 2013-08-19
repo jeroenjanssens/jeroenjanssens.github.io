@@ -10,6 +10,15 @@
 		<link rel="alternate" type="application/rss+xml" title="Jeroen Janssens" href="http://www.jeroenjanssens.com/feed.xml">
 	</head>
 	<body>
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-43246574-1', 'jeroenjanssens.com');
+		  ga('send', 'pageview');
+		</script>
 		<div id="site">
 			<div id="header">
 				<h1><a href="/">Jeroen Janssens</a></h1>
@@ -26,34 +35,40 @@
 			<div id="content">
 									<h2>Quickly navigate your filesystem from the command-line</h2>
 					<div class="date">Published on 16 August 2013</div>
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="jeroenhjanssens">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 					<div class="post">
-						<p>Like many others, I spend most of my day behind a computer.
+						<p><em>Update (18-8-2013): Thanks to the many useful suggestions in <a href="https://news.ycombinator.com/item?id=6229001">the discussion on Hacker News</a>, I have added (1) quotes to the code, (2) a section about tab completion, and (3) a note for Mac OS X users.</em></p>
+
+<p>Like many others, I spend most of my day behind a computer.
 In order make the most of it (and to keep my body from complaining too much), I try to maintain an optimized setup.
 For example, I code in <a href="http://en.wikipedia.org/wiki/Vim_(text_editor)">Vim</a>, browse with <a href="http://www.vimperator.org/vimperator">Vimperator</a>, and move windows around in <a href="http://i3wm.org">i3</a>.
 Another common task is filesystem navigation. 
 I prefer to use the command-line for this, but typing <code>cd ~/some/very/deep/often-used/directory</code> over and over again does become cumbersome.</p>
 
-<p>Automated tools like <a href="https://github.com/joelthelion/autojump">autojump</a> and <a href="https://github.com/clvv/fasd">fasd</a> address this problem by offering shortcuts to the directories you often go to.
+<p>Automated tools like <a href="https://github.com/joelthelion/autojump">autojump</a>, <a href="https://github.com/rupa/z">z</a>, and <a href="https://github.com/clvv/fasd">fasd</a> address this problem by offering shortcuts to the directories you often go to.
 Personally, I prefer a more manual solution, which I would like to share with you.
 I have noticed quite an increase in efficiency with this, and perhaps you will too.</p>
+
+<h3>Jumping with symbolic links</h3>
 
 <p>Under the hood this manual solution comes down to storing symbolic links in a hidden directory (e.g., <code>~/.marks</code>).
 There are four shell functions <code>jump</code>, <code>mark</code>, <code>unmark</code>, and <code>marks</code>, and they look like this:</p>
 <div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="nb">export </span><span class="nv">MARKPATH</span><span class="o">=</span><span class="nv">$HOME</span>/.marks
 <span class="k">function </span>jump <span class="o">{</span> 
-    <span class="nb">cd</span> -P <span class="nv">$MARKPATH</span>/<span class="nv">$1</span> 2&gt;/dev/null <span class="o">||</span> <span class="nb">echo</span> <span class="s2">&quot;No such mark: $1&quot;</span>
+    <span class="nb">cd</span> -P <span class="s2">&quot;$MARKPATH/$1&quot;</span> 2&gt;/dev/null <span class="o">||</span> <span class="nb">echo</span> <span class="s2">&quot;No such mark: $1&quot;</span>
 <span class="o">}</span>
 <span class="k">function </span>mark <span class="o">{</span> 
-    mkdir -p <span class="nv">$MARKPATH</span>; ln -s <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span> <span class="nv">$MARKPATH</span>/<span class="nv">$1</span>
+    mkdir -p <span class="s2">&quot;$MARKPATH&quot;</span>; ln -s <span class="s2">&quot;$(pwd)&quot;</span> <span class="s2">&quot;$MARKPATH/$1&quot;</span>
 <span class="o">}</span>
 <span class="k">function </span>unmark <span class="o">{</span> 
-    rm -i <span class="nv">$MARKPATH</span>/<span class="nv">$1</span> 
+    rm -i <span class="s2">&quot;$MARKPATH/$1&quot;</span>
 <span class="o">}</span>
 <span class="k">function </span>marks <span class="o">{</span>
-    ls -l <span class="nv">$MARKPATH</span> | sed <span class="s1">&#39;s/  / /g&#39;</span> | cut -d<span class="s1">&#39; &#39;</span> -f9- | sed <span class="s1">&#39;s/ -/\t-/g&#39;</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
+    ls -l <span class="s2">&quot;$MARKPATH&quot;</span> | sed <span class="s1">&#39;s/  / /g&#39;</span> | cut -d<span class="s1">&#39; &#39;</span> -f9- | sed <span class="s1">&#39;s/ -/\t-/g&#39;</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
 <span class="o">}</span>
 </code></pre></div>
-<p>Put this in your <code>.zshrc</code> or <code>.bashrc</code> and you&#39;re ready to jump. (I have also turned this into a plugin for <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a> called <code>jump</code>, but that&#39;s currently in a <a href="https://github.com/robbyrussell/oh-my-zsh/pull/2045">pull-request</a>.) To add a new bookmark, <code>cd</code> into the directory and <code>mark</code> it with a name to your liking:</p>
+<p>Put this in your <code>.zshrc</code> or <code>.bashrc</code> and you&#39;re ready to jump (Mac OS X users need a slightly different version of the <code>marks</code> function; see below). I have also turned this into a plugin for <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a> called <code>jump</code>, but that&#39;s currently in a <a href="https://github.com/robbyrussell/oh-my-zsh/pull/2045">pull-request</a>. To add a new bookmark, <code>cd</code> into the directory and <code>mark</code> it with a name to your liking:</p>
 <div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> ~/some/very/deep/often-used/directory
 <span class="nv">$ </span>mark deep
 </code></pre></div>
@@ -69,8 +84,38 @@ There are four shell functions <code>jump</code>, <code>mark</code>, <code>unmar
 deep    -&gt; /home/johndoe/some/very/deep/often-used/directory
 foo     -&gt; /usr/bin/foo/bar
 </code></pre></div>
-<p>That&#39;s all there is to it! 
-If you like what I had to say then you may want to <a href="https://twitter.com/jeroenhjanssens/">follow me on Twitter</a>.</p>
+<p>That&#39;s all there is to it! </p>
+
+<h3>Adding tab completion</h3>
+
+<p>In order to add tab completion for the <code>jump</code> and <code>unmark</code> functions, add the following code to your .zshrc (thanks to <a href="https://news.ycombinator.com/item?id=6229468">tiziano88</a>):</p>
+<div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="k">function </span>_completemarks <span class="o">{</span>
+  <span class="nv">reply</span><span class="o">=(</span><span class="k">$(</span>ls <span class="nv">$MARKPATH</span><span class="k">)</span><span class="o">)</span>
+<span class="o">}</span>
+
+compctl -K _completemarks jump
+compctl -K _completemarks unmark
+</code></pre></div>
+<p>or the following to your .bashrc (thanks to <a href="https://news.ycombinator.com/item?id=6229768">microcolonel</a>):</p>
+<div class="highlight"><pre><code class="bash language-bash" data-lang="bash">_completemarks<span class="o">()</span> <span class="o">{</span>
+  <span class="nb">local </span><span class="nv">curw</span><span class="o">=</span><span class="k">${</span><span class="nv">COMP_WORDS</span><span class="p">[COMP_CWORD]</span><span class="k">}</span>
+  <span class="nb">local </span><span class="nv">wordlist</span><span class="o">=</span><span class="k">$(</span>find <span class="nv">$MARKPATH</span> -type l -printf <span class="s2">&quot;%f\n&quot;</span><span class="k">)</span>
+  <span class="nv">COMPREPLY</span><span class="o">=(</span><span class="k">$(</span><span class="nb">compgen</span> -W <span class="s1">&#39;${wordlist[@]}&#39;</span> -- <span class="s2">&quot;$curw&quot;</span><span class="k">)</span><span class="o">)</span>
+  <span class="k">return </span>0
+<span class="o">}</span>
+
+<span class="nb">complete</span> -F _completemarks jump unmark
+</code></pre></div>
+<p>If you now type <code>jump</code> or <code>unmark</code> and then press <TAB>, you see a list of available marks. Neat!</p>
+
+<h3>Note for Mac OS X users</h3>
+
+<p>As pointed out by <a href="https://news.ycombinator.com/item?id=6229428">guygurari</a>, Mac OS X users need a slightly different version of the <code>marks</code> function:</p>
+<div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="k">function </span>marks <span class="o">{</span>
+    <span class="se">\l</span>s -l <span class="s2">&quot;$MARKPATH&quot;</span> | tail -n +2 | sed <span class="s1">&#39;s/  / /g&#39;</span> | cut -d<span class="s1">&#39; &#39;</span> -f9- | awk -F <span class="s1">&#39; -&gt; &#39;</span> <span class="s1">&#39;{printf &quot;%-10s -&gt; %s\n&quot;, $1, $2}&#39;</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>If you like what I had to say then you may want to <a href="https://twitter.com/jeroenhjanssens/">follow me on Twitter</a>.</p>
 
 					</div>
 
