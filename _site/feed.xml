@@ -191,7 +191,7 @@ compctl -K _completemarks unmark
 
 &lt;span class=&quot;nb&quot;&gt;complete&lt;/span&gt; -F _completemarks jump unmark
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;If you now type &lt;code&gt;jump&lt;/code&gt; or &lt;code&gt;unmark&lt;/code&gt; and then press &lt;TAB&gt;, you see a list of available marks. Neat!&lt;/p&gt;
+&lt;p&gt;If you now type &lt;code&gt;jump&lt;/code&gt; or &lt;code&gt;unmark&lt;/code&gt; and then press TAB, you see a list of available marks. Neat!&lt;/p&gt;
 
 &lt;h3&gt;Note for Mac OS X users&lt;/h3&gt;
 

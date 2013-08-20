@@ -93,7 +93,7 @@ _completemarks() {
 complete -F _completemarks jump unmark
 ```
 
-If you now type `jump` or `unmark` and then press <TAB>, you see a list of available marks. Neat!
+If you now type `jump` or `unmark` and then press TAB, you see a list of available marks. Neat!
 
 ### Note for Mac OS X users
 
