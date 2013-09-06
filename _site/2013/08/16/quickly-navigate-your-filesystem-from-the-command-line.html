@@ -38,7 +38,9 @@
 <a href="https://twitter.com/share" class="twitter-share-button" data-via="jeroenhjanssens">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 					<div class="post">
-						<p><em>Update (18-8-2013): Thanks to the many useful suggestions in <a href="https://news.ycombinator.com/item?id=6229001">the discussion on Hacker News</a>, I have added (1) quotes to the code, (2) a section about tab completion, and (3) a note for Mac OS X users.</em></p>
+						<p><em>Update (6-9-2013) This code is now also available as the &quot;jump&quot; plugin in <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a>.</em></p>
+
+<p><em>Update (18-8-2013): Thanks to the many useful suggestions in <a href="https://news.ycombinator.com/item?id=6229001">the discussion on Hacker News</a>, I have added (1) quotes to the code, (2) a section about tab completion, and (3) a note for Mac OS X users.</em></p>
 
 <p>Like many others, I spend most of my day behind a computer.
 In order make the most of it (and to keep my body from complaining too much), I try to maintain an optimized setup.
@@ -68,7 +70,7 @@ There are four shell functions <code>jump</code>, <code>mark</code>, <code>unmar
     ls -l <span class="s2">&quot;$MARKPATH&quot;</span> | sed <span class="s1">&#39;s/  / /g&#39;</span> | cut -d<span class="s1">&#39; &#39;</span> -f9- | sed <span class="s1">&#39;s/ -/\t-/g&#39;</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
 <span class="o">}</span>
 </code></pre></div>
-<p>Put this in your <code>.zshrc</code> or <code>.bashrc</code> and you&#39;re ready to jump (Mac OS X users need a slightly different version of the <code>marks</code> function; see below). I have also turned this into a plugin for <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a> called <code>jump</code>, but that&#39;s currently in a <a href="https://github.com/robbyrussell/oh-my-zsh/pull/2045">pull-request</a>. To add a new bookmark, <code>cd</code> into the directory and <code>mark</code> it with a name to your liking:</p>
+<p>Put this in your <code>.zshrc</code> or <code>.bashrc</code> and you&#39;re ready to jump (Mac OS X users need a slightly different version of the <code>marks</code> function; see below). I have also turned this into a plugin for <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a> called <code>jump</code>. To add a new bookmark, <code>cd</code> into the directory and <code>mark</code> it with a name to your liking:</p>
 <div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> ~/some/very/deep/often-used/directory
 <span class="nv">$ </span>mark deep
 </code></pre></div>

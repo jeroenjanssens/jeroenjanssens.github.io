@@ -117,8 +117,8 @@ an important scoring rule which penalises containers. If such a rule would not b
 &lt;p&gt;If you like what I had to say then you may want to &lt;a href=&quot;https://twitter.com/jeroenhjanssens&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
 				<pubDate>Sat, 31 Aug 2013 08:00:00 -0400</pubDate>
-				<link>http://www.jeroenjanssens.com/2013/08/31/article-extraction-with-scoring-rules.html</link>
-				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/08/31/article-extraction-with-scoring-rules.html</guid>
+				<link>http://www.jeroenjanssens.com/2013/08/31/extracting-text-from-html-with-reporter.html</link>
+				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/08/31/extracting-text-from-html-with-reporter.html</guid>
 			</item>
 		
 			<item>
@@ -238,7 +238,9 @@ an important scoring rule which penalises containers. If such a rule would not b
 		
 			<item>
 				<title>Quickly navigate your filesystem from the command-line</title>
-				<description>&lt;p&gt;&lt;em&gt;Update (18-8-2013): Thanks to the many useful suggestions in &lt;a href=&quot;https://news.ycombinator.com/item?id=6229001&quot;&gt;the discussion on Hacker News&lt;/a&gt;, I have added (1) quotes to the code, (2) a section about tab completion, and (3) a note for Mac OS X users.&lt;/em&gt;&lt;/p&gt;
+				<description>&lt;p&gt;&lt;em&gt;Update (6-9-2013) This code is now also available as the &amp;quot;jump&amp;quot; plugin in &lt;a href=&quot;https://github.com/robbyrussell/oh-my-zsh&quot;&gt;oh-my-zsh&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Update (18-8-2013): Thanks to the many useful suggestions in &lt;a href=&quot;https://news.ycombinator.com/item?id=6229001&quot;&gt;the discussion on Hacker News&lt;/a&gt;, I have added (1) quotes to the code, (2) a section about tab completion, and (3) a note for Mac OS X users.&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;Like many others, I spend most of my day behind a computer.
 In order make the most of it (and to keep my body from complaining too much), I try to maintain an optimized setup.
@@ -268,7 +270,7 @@ There are four shell functions &lt;code&gt;jump&lt;/code&gt;, &lt;code&gt;mark&l
     ls -l &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH&amp;quot;&lt;/span&gt; | sed &lt;span class=&quot;s1&quot;&gt;&amp;#39;s/  / /g&amp;#39;&lt;/span&gt; | cut -d&lt;span class=&quot;s1&quot;&gt;&amp;#39; &amp;#39;&lt;/span&gt; -f9- | sed &lt;span class=&quot;s1&quot;&gt;&amp;#39;s/ -/\t-/g&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Put this in your &lt;code&gt;.zshrc&lt;/code&gt; or &lt;code&gt;.bashrc&lt;/code&gt; and you&amp;#39;re ready to jump (Mac OS X users need a slightly different version of the &lt;code&gt;marks&lt;/code&gt; function; see below). I have also turned this into a plugin for &lt;a href=&quot;https://github.com/robbyrussell/oh-my-zsh&quot;&gt;oh-my-zsh&lt;/a&gt; called &lt;code&gt;jump&lt;/code&gt;, but that&amp;#39;s currently in a &lt;a href=&quot;https://github.com/robbyrussell/oh-my-zsh/pull/2045&quot;&gt;pull-request&lt;/a&gt;. To add a new bookmark, &lt;code&gt;cd&lt;/code&gt; into the directory and &lt;code&gt;mark&lt;/code&gt; it with a name to your liking:&lt;/p&gt;
+&lt;p&gt;Put this in your &lt;code&gt;.zshrc&lt;/code&gt; or &lt;code&gt;.bashrc&lt;/code&gt; and you&amp;#39;re ready to jump (Mac OS X users need a slightly different version of the &lt;code&gt;marks&lt;/code&gt; function; see below). I have also turned this into a plugin for &lt;a href=&quot;https://github.com/robbyrussell/oh-my-zsh&quot;&gt;oh-my-zsh&lt;/a&gt; called &lt;code&gt;jump&lt;/code&gt;. To add a new bookmark, &lt;code&gt;cd&lt;/code&gt; into the directory and &lt;code&gt;mark&lt;/code&gt; it with a name to your liking:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/some/very/deep/often-used/directory
 &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mark deep
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;

@@ -3,6 +3,7 @@ layout: post
 title:  "Quickly navigate your filesystem from the command-line"
 date:   2013-08-16 19:06:19
 ---
+*Update (6-9-2013) This code is now also available as the "jump" plugin in [oh-my-zsh][ohmyzsh].*
 
 *Update (18-8-2013): Thanks to the many useful suggestions in [the discussion on Hacker News][hn], I have added (1) quotes to the code, (2) a section about tab completion, and (3) a note for Mac OS X users.*
 
@@ -37,7 +38,7 @@ function marks {
 }
 ```
 
-Put this in your `.zshrc` or `.bashrc` and you're ready to jump (Mac OS X users need a slightly different version of the `marks` function; see below). I have also turned this into a plugin for [oh-my-zsh][ohmyzsh] called `jump`, but that's currently in a [pull-request][pullrequest]. To add a new bookmark, `cd` into the directory and `mark` it with a name to your liking:
+Put this in your `.zshrc` or `.bashrc` and you're ready to jump (Mac OS X users need a slightly different version of the `marks` function; see below). I have also turned this into a plugin for [oh-my-zsh][ohmyzsh] called `jump`. To add a new bookmark, `cd` into the directory and `mark` it with a name to your liking:
 
 ```bash
 $ cd ~/some/very/deep/often-used/directory
