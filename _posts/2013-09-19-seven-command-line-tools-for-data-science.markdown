@@ -278,5 +278,6 @@ Below is an uncurated list of tools and repositories that others have suggested 
 - [XMLStarlet](http://xmlstar.sourceforge.net/) by [gav](https://news.ycombinator.com/user?id=gav)
 - [data-tools repository](https://github.com/clarkgrubb/data-tools) by [cgrubb](https://news.ycombinator.com/user?id=cgrubb)
 - [csv2sqlite](https://github.com/dergachev/csv2sqlite) by [dergachev](https://news.ycombinator.com/user?id=dergachev)
+- [RecordStream](https://github.com/benbernard/RecordStream) by [revertts](https://news.ycombinator.com/user?id=revertts)
 
 I will soon have a look at all these tools and update the post accordingly. Thanks everybody.

@@ -22,8 +22,7 @@ The tools are:
 &lt;a href=&quot;https://github.com/onyxfish/csvkit&quot;&gt;csvkit&lt;/a&gt;,
 scrape,
 &lt;a href=&quot;https://github.com/parmentf/xml2json&quot;&gt;xml2json&lt;/a&gt;,
-sample, and
-Rio. (The home-made tools &lt;code&gt;scrape&lt;/code&gt;, &lt;code&gt;sample&lt;/code&gt;, and &lt;code&gt;Rio&lt;/code&gt; can be found in this &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox&quot;&gt;data science toolbox&lt;/a&gt;.) Any suggestions, questions, comments, and even pull requests are more than welcome. OSEMN, let&amp;#39;s get started with our first tool: &lt;code&gt;jq&lt;/code&gt;.&lt;/p&gt;
+sample, and Rio. (The home-made tools &lt;code&gt;scrape&lt;/code&gt;, &lt;code&gt;sample&lt;/code&gt;, and &lt;code&gt;Rio&lt;/code&gt; can be found in this &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox&quot;&gt;data science toolbox&lt;/a&gt;.) Any suggestions, questions, comments, and even pull requests are more than welcome. OSEMN, let&amp;#39;s get started with our first tool: &lt;code&gt;jq&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h3&gt;1. jq - sed for JSON&lt;/h3&gt;
 
@@ -223,6 +222,7 @@ Also, if you&amp;#39;ve made any tools yourself, you&amp;#39;re more than welcom
 &lt;li&gt;&lt;a href=&quot;http://xmlstar.sourceforge.net/&quot;&gt;XMLStarlet&lt;/a&gt; by &lt;a href=&quot;https://news.ycombinator.com/user?id=gav&quot;&gt;gav&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://github.com/clarkgrubb/data-tools&quot;&gt;data-tools repository&lt;/a&gt; by &lt;a href=&quot;https://news.ycombinator.com/user?id=cgrubb&quot;&gt;cgrubb&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://github.com/dergachev/csv2sqlite&quot;&gt;csv2sqlite&lt;/a&gt; by &lt;a href=&quot;https://news.ycombinator.com/user?id=dergachev&quot;&gt;dergachev&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/benbernard/RecordStream&quot;&gt;RecordStream&lt;/a&gt; by &lt;a href=&quot;https://news.ycombinator.com/user?id=revertts&quot;&gt;revertts&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;I will soon have a look at all these tools and update the post accordingly. Thanks everybody.&lt;/p&gt;
