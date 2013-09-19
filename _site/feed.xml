@@ -22,8 +22,7 @@ The tools are:
 &lt;a href=&quot;https://github.com/onyxfish/csvkit&quot;&gt;csvkit&lt;/a&gt;,
 scrape,
 &lt;a href=&quot;https://github.com/parmentf/xml2json&quot;&gt;xml2json&lt;/a&gt;,
-sample,
-&lt;a href=&quot;http://www.gnu.org/software/parallel/&quot;&gt;parallel&lt;/a&gt;, and
+sample, and
 Rio. (The home-made tools &lt;code&gt;scrape&lt;/code&gt;, &lt;code&gt;sample&lt;/code&gt;, and &lt;code&gt;Rio&lt;/code&gt; can be found in this &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox&quot;&gt;data science toolbox&lt;/a&gt;.) Any suggestions, questions, comments, and even pull requests are more than welcome. OSEMN, let&amp;#39;s get started with our first tool: &lt;code&gt;jq&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h3&gt;1. jq - sed for JSON&lt;/h3&gt;

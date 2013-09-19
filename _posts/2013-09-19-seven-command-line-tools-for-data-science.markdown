@@ -18,9 +18,7 @@ The tools are:
 [csvkit](https://github.com/onyxfish/csvkit),
 scrape,
 [xml2json](https://github.com/parmentf/xml2json),
-sample,
-[parallel](http://www.gnu.org/software/parallel/), and
-Rio. (The home-made tools `scrape`, `sample`, and `Rio` can be found in this [data science toolbox](https://github.com/jeroenjanssens/data-science-toolbox).) Any suggestions, questions, comments, and even pull requests are more than welcome. OSEMN, let's get started with our first tool: `jq`.
+sample, and Rio. (The home-made tools `scrape`, `sample`, and `Rio` can be found in this [data science toolbox](https://github.com/jeroenjanssens/data-science-toolbox).) Any suggestions, questions, comments, and even pull requests are more than welcome. OSEMN, let's get started with our first tool: `jq`.
 
 ### 1. jq - sed for JSON
 
