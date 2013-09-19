@@ -1,0 +1,164 @@
+classic commands: head, tail, wc, cut, paste, grep, sed, awk.
+
+
+I have collected some tools into a [Github repository](https://github.com/jeroenjanssens/data-science-toolbox)
+
+
+The tools are: 
+Obtaining: 
+Scrubbing: _scrape_, jq, json2csv, xml2json, pyp, crush-tools 
+Exploring: _sample_, gnuplot, _Rio_
+Miscellaneous: parallel,
+
+
+	 curl -s 'http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio' | ./scrape -be 'table.wikitable > tr:not(:first-child)' | xml2json | jq -c '.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]} | select(.ratio | tonumber > 0)'
+
+Seth Brown http://www.drbunsen.org/explorations-in-unix/
+Greg Reda [Useful Unix commands for data science](http://www.gregreda.com/2013/07/15/unix-commands-for-data-science/)
+Hilary Mason and 
+
+
+
+
+
+
+
+
+
+[inline perl](http://en.wikibooks.org/wiki/Ad_Hoc_Data_Analysis_From_The_Unix_Command_Line/Rewriting_The_Data_With_Inline_perl)
+
+
+### 0) sample
+
+For too big data sets
+
+
+
+
+
+
+
+Presidential Candidate Totals
+New York Times API
+http://developer.nytimes.com/
+
+	curl 'http://api.nytimes.com/svc/elections/us/v3/finances/2012/president/totals.json?api-key=826bd26fd986c49fabdf8275785d5fbf:5:68109136' -s > nyt.json
+	
+	{"status":"OK","base_uri":"http://api.nytimes.com/svc/elections/us/v3/finances/2008/","cycle":2008,"copyright":"Copyright (c) 2013 The New York Times Company. All Rights Reserved.","results":[{"candidate_name":"Obama, Barack", ...
+
+	< nyt.json | jq -c '.results[]' > totals.json
+
+s3curl, aws cli
+
+### scrape
+
+	http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio
+	curl 'http://en.wikipedia.org/wiki/List_of_Manhattan_neighborhoods' -s | ./hotsoup -tbe 'table.wikitable > tr:not(:first-child) > td:first-child' | xml2json | jq -c '.html.body.td[].a.title'
+
+ < countries.json | jq -c '.table.tr[] | {country: (.td[1].i.a.title + " " + .td[1].a.title), population: .td[2][] } ' 2>/dev/null | sed -n 2,21p | json2csv -k country,population | sed -e 's/^\" //g;s/\"//g;s/, / /g
+
+
+
+
+	scrape.pl
+	sudo cpan App:scrape
+
+
+
+### 1) jq
+
+
+[jq](http://stedolan.github.io/jq/)
+
+
+
+	< totals.json jq -c '.results[]' > results.json
+
+Be sure to add the `--compact-output` or `-c` command-line option to ensure that each JSON object is on a separate line.
+
+### 2) json2csv
+
+	< results.json json2csv -k name,party,cash_on_hand | sort -r -t, -n -k3 > results.csv
+
+	John McCain,R,32812513.75
+	Barack Obama,D,29911984.0
+	John Edwards,D,4428347.5
+	Hillary Clinton,D,985437.81
+	Ron Paul,R,583886.75
+	Chris Dodd,D,520831.72
+	Fred Thompson,R,201211.09
+	Tom Tancredo,R,167162.81
+	Dennis Kucinich,D,89973.0h
+	Duncan Hunter,R,64210.19
+	Joe Biden,D,43023.78
+	Rudy Giuliani,R,36234.4
+	Bill Richardson,D,32611.75
+	Mike Huckabee,R,31569.34
+	Mitt Romney,R,16655.58
+	James Gilmore,R,16454.73
+	Mike Gravel,D,4581.27
+	Tommy Thompson,R,0.0
+	Sam Brownback,R,-450.67
+
+
+I can't resist to use 
+
+	< totals.csv cut -d, -f3 | paste -s -d+ | bc
+	69946238.80
+
+???csv2json
+
+
+### 3) gnu parallel
+
+	echo "R\nD" | parallel "echo -n {},; grep ',{},' totals.csv | cut -d, -f3 | paste -s -d+ | bc"
+
+	R,33929447.97
+	D,36016790.83
+
+
+### 4) pyp
+
+[pyp](http://code.google.com/p/pyp/)
+
+	http://code.google.com/p/pyp/wiki/pyp_manual
+
+### 5). Rscript: 
+
+Rio
+
+
+
+### 6). gnuplot
+
+
+[gnuplot](http://www.gnuplot.info/)
+
+	gnuplot -e 'set term dumb; set datafile separator ",";  plot "-"'
+
+
+
+
+### 6. crush-tools
+https://code.google.com/p/crush-tools/w/list
+https://code.google.com/p/crush-tools/wiki/DataProcessingScenarios
+
+	< countries.csv | pyp_beta "mm | p[0] | rek('land$') | o"
+	< countries.csv | awk -F, '{ if ($1 ~ "land$") print $0}'
+	< countries.csv | grepfield -d, -f 1 'land$'
+
+	grepfield
+
+
+
+<!--### 10. Serve it: python -mSimpleHTTPServer-->
+<!--Also: [describe](https://github.com/drbunsen/describe)-->
+
+
+Where to download it?
+Why?
+How to use it?
+
+
+
+

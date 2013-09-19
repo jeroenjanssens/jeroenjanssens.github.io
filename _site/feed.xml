@@ -7,6 +7,219 @@
 		<atom:link href="http://www.jeroenjanssens.com/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>7 command-line tools for data science</title>
+				<description>&lt;p&gt;Data science is &lt;a href=&quot;http://www.dataists.com/2010/09/a-taxonomy-of-data-science/&quot;&gt;OSEMN&lt;/a&gt; (pronounced as awesome).
+That is, it involves Obtaining, Scrubbing, Exploring, Modeling, and iNterpreting data.
+As a data scientist, I spend quite a bit of time on the command-line, especially when there&amp;#39;s data to be obtained, scrubbed, or explored. And I&amp;#39;m not alone in this.
+Recently, &lt;a href=&quot;http://www.gregreda.com/2013/07/15/unix-commands-for-data-science/&quot;&gt;Greg Reda discussed&lt;/a&gt; how the classics (e.g., head, cut, grep, sed, and awk) can be used for data science. Prior to that, Seth Brown discussed how to perform basic &lt;a href=&quot;http://www.drbunsen.org/explorations-in-unix/&quot;&gt;exploratory data analysis in Unix&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I would like to continue this discussion by sharing seven command-line tools that I have found useful in my day-to-day work. 
+The tools are:
+&lt;a href=&quot;http://stedolan.github.io/jq/&quot;&gt;jq&lt;/a&gt;,
+&lt;a href=&quot;https://github.com/jehiah/json2csv&quot;&gt;json2csv&lt;/a&gt;,
+&lt;a href=&quot;https://github.com/onyxfish/csvkit&quot;&gt;csvkit&lt;/a&gt;,
+scrape,
+&lt;a href=&quot;https://github.com/parmentf/xml2json&quot;&gt;xml2json&lt;/a&gt;,
+sample,
+&lt;a href=&quot;http://www.gnu.org/software/parallel/&quot;&gt;parallel&lt;/a&gt;, and
+Rio. (The home-made tools &lt;code&gt;scrape&lt;/code&gt;, &lt;code&gt;sample&lt;/code&gt;, and &lt;code&gt;Rio&lt;/code&gt; can be found in this &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox&quot;&gt;data science toolbox&lt;/a&gt;.) Any suggestions, questions, comments, and even pull requests are more than welcome. OSEMN, let&amp;#39;s get started with our first tool: &lt;code&gt;jq&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3&gt;1. jq - sed for JSON&lt;/h3&gt;
+
+&lt;p&gt;JSON is becoming an increasingly common data format, especially as APIs are appearing everywhere. I remember cooking up the ugliest &lt;code&gt;grep&lt;/code&gt; and &lt;code&gt;sed&lt;/code&gt; incantations in order to process JSON. Thanks to &lt;code&gt;jq&lt;/code&gt;, those days are now in the past. &lt;/p&gt;
+
+&lt;p&gt;Imagine we&amp;#39;re interested in the candidate totals of the 2008 presidential election. It so happens that the New York Times has a &lt;a href=&quot;http://developer.nytimes.com/docs/campaign_finance_api/&quot;&gt;Campaign Finance API&lt;/a&gt;. (You can &lt;a href=&quot;http://developer.nytimes.com/apps/mykeys&quot;&gt;get your own API keys&lt;/a&gt; if you want to access any of their APIs.) Let&amp;#39;s get some JSON using &lt;code&gt;curl&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;curl -s &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://api.nytimes.com/svc/elections/us/v3/finances/2008/president/totals.json?api-key=super-secret&amp;#39;&lt;/span&gt; &amp;gt; nyt.json
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;where &lt;code&gt;-s&lt;/code&gt; puts &lt;code&gt;curl&lt;/code&gt; in silent mode. In its simplest form, i.e., &lt;code&gt;jq &amp;#39;.&amp;#39;&lt;/code&gt;, the tool transforms the incomprehensible API response we got:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;{&amp;quot;status&amp;quot;:&amp;quot;OK&amp;quot;,&amp;quot;base_uri&amp;quot;:&amp;quot;http://api.nytimes.com/svc/elections/us/v3/finances/2008/&amp;quot;,&amp;quot;cycle&amp;quot;:2008,&amp;quot;copyright&amp;quot;:&amp;quot;Copyright (c) 2013 The New York Times Company. All Rights Reserved.&amp;quot;,&amp;quot;results&amp;quot;:[{&amp;quot;candidate_name&amp;quot;:&amp;quot;Obama, Barack&amp;quot;,&amp;quot;name&amp;quot;:&amp;quot;Barack Obama&amp;quot;,&amp;quot;party&amp;quot;:&amp;quot;D&amp;quot;,
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;into nicely indented and colored output:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; nyt.json jq &lt;span class=&quot;s1&quot;&gt;&amp;#39;.&amp;#39;&lt;/span&gt; | head
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;json language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;quot;results&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;quot;candidate_id&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;P80003338&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;quot;date_coverage_from&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;2007-01-01&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;quot;date_coverage_to&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;2008-11-24&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;quot;candidate_name&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Obama, Barack&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Barack Obama&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;quot;party&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;D&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Note that the output isn&amp;#39;t necessarily in the same order as the input.
+Besides pretty printing, &lt;code&gt;jq&lt;/code&gt; can also select, filter, and format JSON data, as illustrated by 
+the following command, which returns the name, cash, and party of each candidate that had at least $1,000,000 in cash:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; nyt.json jq -c &lt;span class=&quot;s1&quot;&gt;&amp;#39;.results[] | {name, party, cash: .cash_on_hand} | select(.cash | tonumber &amp;gt; 1000000)&amp;#39;&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;json language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;cash&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;29911984.0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;party&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;D&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Barack Obama&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;cash&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;32812513.75&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;party&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;R&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;John McCain&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;cash&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;4428347.5&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;party&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;D&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;John Edwards&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Please refer to the &lt;a href=&quot;http://stedolan.github.io/jq/manual/&quot;&gt;jq manual&lt;/a&gt; to read about the many other things it can do, but don&amp;#39;t expect it to solve all your data munging problems. 
+Remember, the Unix philosophy favors small programs that do one thing and do it well. 
+And &lt;code&gt;jq&lt;/code&gt;&amp;#39;s functionality is more than sufficient I would say! 
+Now that we have the data we need, it&amp;#39;s time to move on to our second tool: &lt;code&gt;json2csv&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3&gt;2. json2csv - convert JSON to CSV&lt;/h3&gt;
+
+&lt;p&gt;While JSON is a great format for interchanging data, it&amp;#39;s rather unsuitable for most command-line tools. Not to worry, we can easily convert JSON into CSV using &lt;a href=&quot;https://github.com/jehiah/json2csv&quot;&gt;json2csv&lt;/a&gt;. Assuming that we stored the data from the last step in &lt;code&gt;million.json&lt;/code&gt;, simply invoking&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; million.json json2csv -k name,party,cash
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;will convert it to some nicely comma-separated values:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;awk language-awk&quot; data-lang=&quot;awk&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Barack&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Obama&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;29911984.0&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;John&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;McCain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;32812513.75&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;John&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Edwards&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;4428347.5&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Having the data in CSV format allows us to use the classic tools such as &lt;code&gt;cut -d,&lt;/code&gt; and &lt;code&gt;awk -F,&lt;/code&gt;. 
+Others like &lt;code&gt;grep&lt;/code&gt; and &lt;code&gt;sed&lt;/code&gt; don&amp;#39;t really have a notion of fields. 
+Since CSV is the king of tabular file formats, according to the authors of 
+&lt;a href=&quot;http://csvkit.readthedocs.org/&quot;&gt;csvkit&lt;/a&gt;, they created, well, &lt;code&gt;csvkit&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3&gt;3. csvkit - suite of utilities for converting to and working with CSV&lt;/h3&gt;
+
+&lt;p&gt;Rather than being one tool, &lt;a href=&quot;http://csvkit.readthedocs.org/&quot;&gt;csvkit&lt;/a&gt; is a collection of tools that operate on CSV data. Most of these tools expect the CSV data to have a header, so let&amp;#39;s add one. (Ideally, &lt;code&gt;json2csv&lt;/code&gt; would have added the header.)&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;name,party,cash | cat - million.csv &amp;gt; million-header.csv
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We can, for example, sort the candidates by cash with &lt;code&gt;csvsort&lt;/code&gt; and display the data using &lt;code&gt;csvlook&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; million-header.csv csvsort -rc cash | csvlook
+
+|---------------+-------+--------------|
+|  name         | party | cash         |
+|---------------+-------+--------------|
+|  John McCain  | R     | 32812513.75  |
+|  Barack Obama | D     | 29911984.0   |
+|  John Edwards | D     | 4428347.5    |
+|---------------+-------+--------------|
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Looks like the MySQL console doesn&amp;#39;t it? Speaking of databases, you can insert the CSV data into an sqlite database as follows (many other databases are supported as well):&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;csvsql --db sqlite:///myfirst.db --insert million-header.csv
+sqlite3 myfirst.db
+sqlite&amp;gt; .schema million-header
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sql language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;CREATE&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;TABLE&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;&amp;quot;million-header&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+    &lt;span class=&quot;n&quot;&gt;party&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+    &lt;span class=&quot;n&quot;&gt;cash&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;FLOAT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NULL&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In this case, the database columns have the correct data types because the type is inferred from the CSV data.
+ Other tools within &lt;code&gt;csvkit&lt;/code&gt; that might be of interest are: &lt;code&gt;in2csv&lt;/code&gt;, &lt;code&gt;csvgrep&lt;/code&gt;, and &lt;code&gt;csvjoin&lt;/code&gt;. And with &lt;code&gt;csvjson&lt;/code&gt;, the data can even be converted back to JSON. All in all, &lt;code&gt;csvkit&lt;/code&gt; is worth &lt;a href=&quot;http://csvkit.readthedocs.org/&quot;&gt;checking out&lt;/a&gt;. &lt;/p&gt;
+
+&lt;h3&gt;4. scrape - HTML extraction using XPath or CSS selectors&lt;/h3&gt;
+
+&lt;p&gt;JSON APIs sure are nice, but they aren&amp;#39;t the only source of data; a lot of it is &lt;a href=&quot;http://www.ted.com/talks/tim_berners_lee_on_the_next_web.html&quot;&gt;unfortunately still&lt;/a&gt; embedded in HTML. &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox&quot;&gt;scrape&lt;/a&gt; is a python script I put together that employs the &lt;code&gt;lxml&lt;/code&gt; and &lt;code&gt;cssselect&lt;/code&gt; packages to select certain HTML elements by means of an XPath query or &lt;a href=&quot;http://net.tutsplus.com/tutorials/html-css-techniques/the-30-css-selectors-you-must-memorize/&quot;&gt;CSS selector&lt;/a&gt;. (I tried &lt;a href=&quot;https://metacpan.org/module/scrape.pl&quot;&gt;scrape.pl&lt;/a&gt;, but I couldn&amp;#39;t get it to work properly. Moreover, rather than processing HTML from stdin, it expects a url and then downloads the HTML itself.)
+Let&amp;#39;s extract the table from &lt;a href=&quot;http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio&quot;&gt;this Wikipedia article that lists the border and area ratio of each country&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;curl -s &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio&amp;#39;&lt;/span&gt; | scrape -b -e &lt;span class=&quot;s1&quot;&gt;&amp;#39;table.wikitable &amp;gt; tr:not(:first-child)&amp;#39;&lt;/span&gt; | head
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;html language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;tr&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;td&amp;gt;&lt;/span&gt;1&lt;span class=&quot;nt&quot;&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;td&amp;gt;&lt;/span&gt;Vatican City&lt;span class=&quot;nt&quot;&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;td&amp;gt;&lt;/span&gt;3.2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;td&amp;gt;&lt;/span&gt;0.44&lt;span class=&quot;nt&quot;&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;td&amp;gt;&lt;/span&gt;7.2727273&lt;span class=&quot;nt&quot;&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/tr&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The &lt;code&gt;-b&lt;/code&gt; argument lets &lt;code&gt;scrape&lt;/code&gt; enclose the output with &lt;code&gt;&amp;lt;html&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;body&amp;gt;&lt;/code&gt; tags, which is sometimes required by &lt;code&gt;xml2json&lt;/code&gt; to convert correctly the HTML to JSON.&lt;/p&gt;
+
+&lt;h3&gt;5. xml2json - convert XML to JSON&lt;/h3&gt;
+
+&lt;p&gt;As its name implies, &lt;a href=&quot;https://github.com/parmentf/xml2json&quot;&gt;xml2json&lt;/a&gt; takes XML (and HTML) as input and returns JSON as output. Therefore, &lt;code&gt;xml2json&lt;/code&gt; is a great liaison between &lt;code&gt;scrape&lt;/code&gt; and &lt;code&gt;jq&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;curl -s &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio&amp;#39;&lt;/span&gt; | scrape -be &lt;span class=&quot;s1&quot;&gt;&amp;#39;table.wikitable &amp;gt; tr:not(:first-child)&amp;#39;&lt;/span&gt; | xml2json | jq -c &lt;span class=&quot;s1&quot;&gt;&amp;#39;.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]}&amp;#39;&lt;/span&gt; | head
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;json language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;ratio&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;7.2727273&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;surface&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;0.44&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;border&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;3.2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;country&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Vatican City&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;ratio&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;2.2000000&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;surface&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;border&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;4.4&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;country&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Monaco&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;ratio&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;0.6393443&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;surface&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;61&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;border&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;39&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;country&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;San Marino&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;ratio&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;0.4750000&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;surface&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;160&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;border&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;76&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;country&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Liechtenstein&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;ratio&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;0.3000000&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;surface&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;34&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;border&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;10.2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;country&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Sint Maarten (Netherlands)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;ratio&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;0.2570513&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;surface&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;468&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;border&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;120.3&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;country&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Andorra&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;ratio&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;0.2000000&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;surface&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;6&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;border&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;1.2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;country&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Gibraltar (United Kingdom)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;ratio&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;0.1888889&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;surface&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;54&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;border&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;10.2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;country&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Saint Martin (France)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;ratio&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;0.1388244&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;surface&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;2586&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;border&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;359&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;country&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Luxembourg&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;ratio&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;0.0749196&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;surface&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;6220&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;border&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;466&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;country&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Palestinian territories&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Of course this JSON data could then be piped into &lt;code&gt;json2csv&lt;/code&gt; and so forth.&lt;/p&gt;
+
+&lt;h3&gt;6. sample - when you&amp;#39;re in debug mode&lt;/h3&gt;
+
+&lt;p&gt;The second tool I made is &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox/blob/master/sample&quot;&gt;sample&lt;/a&gt;. (It&amp;#39;s based on two scripts in &lt;a href=&quot;https://github.com/bitly/data_hacks&quot;&gt;bitly&amp;#39;s data_hacks&lt;/a&gt;, which contains some other tools worth checking out.) When you&amp;#39;re in the process of formulating your data pipeline and you have a lot of data, then debugging your pipeline can be cumbersome. In that case, &lt;code&gt;sample&lt;/code&gt; might be useful. 
+The tool serves three purposes (which isn&amp;#39;t very Unix-minded, but since it&amp;#39;s mostly useful when you&amp;#39;re in debug mode, that&amp;#39;s not such a big deal). &lt;/p&gt;
+
+&lt;p&gt;The first purpose of &lt;code&gt;sample&lt;/code&gt; is to get a subset of the data by outputting only a certain percentage of the input on a line-by-line basis. The second purpose is to add some delay to the output. This comes in handy when the input is a constant stream (e.g., the Twitter firehose), and the data comes in too fast to see what&amp;#39;s going on.
+The third purpose is to run only for a certain time. The following invocation illustrates all three purposes.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;seq 10000 | sample -r 20% -d 1000 -s 5 | jq &lt;span class=&quot;s1&quot;&gt;&amp;#39;{number: .}&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This way, every input line has a 20% chance of being forwarded to &lt;code&gt;jq&lt;/code&gt;. Moreover, there is a 1000 millisecond delay between each line and after five seconds &lt;code&gt;sample&lt;/code&gt; will stop entirely. Please note that each argument is optional. 
+In order to prevent unnecessary computation, try to put &lt;code&gt;sample&lt;/code&gt; as early as possible in your pipeline (the same argument holds for &lt;code&gt;head&lt;/code&gt; and &lt;code&gt;tail&lt;/code&gt;). Once you&amp;#39;re done debugging you can simply take it out of the pipeline.&lt;/p&gt;
+
+&lt;h3&gt;7. Rio - making R part of the pipeline&lt;/h3&gt;
+
+&lt;p&gt;This post wouldn&amp;#39;t be complete without some R.
+It&amp;#39;s not straightforward to make R/Rscript part of the pipeline since they don&amp;#39;t 
+work with stdin and stdout out of the box.
+Therefore, as a proof of concept, I put together a bash script called &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox/blob/master/Rio&quot;&gt;Rio&lt;/a&gt;. &lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Rio&lt;/code&gt; works as follows.
+First, the CSV provided to stdin is redirected to a temporary file and lets R read that into a data frame &lt;code&gt;df&lt;/code&gt;.
+Second, the specified commands in the &lt;code&gt;-e&lt;/code&gt; option are executed.
+Third, the output of the last command is redirected to stdout. 
+Allow me to demonstrate three one-liners that use the Iris dataset (don&amp;#39;t mind the url).&lt;/p&gt;
+
+&lt;p&gt;Display the five-number-summary of each field.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;curl -s &lt;span class=&quot;s1&quot;&gt;&amp;#39;https://raw.github.com/pydata/pandas/master/pandas/tests/data/iris.csv&amp;#39;&lt;/span&gt; &amp;gt; iris.csv
+&amp;lt; iris.csv Rio -e &lt;span class=&quot;s1&quot;&gt;&amp;#39;summary(df)&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;  SepalLength      SepalWidth     PetalLength      PetalWidth   
+ Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+ 1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+ Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+ Mean   :5.843   Mean   :3.054   Mean   :3.759   Mean   :1.199  
+ 3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+ Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
+     Name          
+ Length:150        
+ Class :character  
+ Mode  :character 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If you specify the &lt;code&gt;-s&lt;/code&gt; option, the &lt;code&gt;sqldf&lt;/code&gt; package will be imported.
+In case tthe output is a data frame, CSV will be written to stdout. This enables you to further process that data using other tools.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; iris.csv Rio -se &lt;span class=&quot;s1&quot;&gt;&amp;#39;sqldf(&amp;quot;select * from df where df.SepalLength &amp;gt; 7.5&amp;quot;)&amp;#39;&lt;/span&gt; | csvlook
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;|--------------+------------+-------------+------------+-----------------|
+|  SepalLength | SepalWidth | PetalLength | PetalWidth | Name            |
+|--------------+------------+-------------+------------+-----------------|
+|  7.6         | 3          | 6.6         | 2.1        | Iris-virginica  |
+|  7.7         | 3.8        | 6.7         | 2.2        | Iris-virginica  |
+|  7.7         | 2.6        | 6.9         | 2.3        | Iris-virginica  |
+|  7.7         | 2.8        | 6.7         | 2          | Iris-virginica  |
+|  7.9         | 3.8        | 6.4         | 2          | Iris-virginica  |
+|  7.7         | 3          | 6.1         | 2.3        | Iris-virginica  |
+|--------------+------------+-------------+------------+-----------------|
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If you specify the &lt;code&gt;-g&lt;/code&gt; option, &lt;code&gt;ggplot2&lt;/code&gt; gets imported and a ggplot object called &lt;code&gt;g&lt;/code&gt; with &lt;code&gt;df&lt;/code&gt; as the data is initialized.
+If the final output is a ggplot object, a PNG will be written to stdout.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; iris.csv Rio -ge &lt;span class=&quot;s1&quot;&gt;&amp;#39;g+geom_point(aes(x=SepalLength,y=SepalWidth,colour=Name))&amp;#39;&lt;/span&gt; &amp;gt; iris.png
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/img/iris.png&quot; alt=&quot;iris.csv&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;I made this tool so that I could take advantage of the power of R on the command-line. Of course it has its limits, but at least there&amp;#39;s no need to learn &lt;a href=&quot;http://www.gnuplot.info&quot;&gt;gnuplot&lt;/a&gt; any more.&lt;/p&gt;
+
+&lt;h3&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;I have shown you seven command-line tools that I use in my daily work as a data scientist.
+While each tool is useful in its own way, I often find myself combining them with, or just resorting to, the classics such as &lt;code&gt;grep&lt;/code&gt;, &lt;code&gt;sed&lt;/code&gt;, and &lt;code&gt;awk&lt;/code&gt;. Combining such small tools into a larger pipeline is what makes them really powerful.&lt;/p&gt;
+
+&lt;p&gt;I&amp;#39;m curious to hear what you think about this list and what command-line tools you like to use.
+Also, if you&amp;#39;ve made any tools yourself, you&amp;#39;re more than welcome to add them to this &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox&quot;&gt;data science toolbox&lt;/a&gt;. &lt;/p&gt;
+
+&lt;p&gt;Don&amp;#39;t worry if you don&amp;#39;t regard yourself as a toolmaker. The next time you&amp;#39;re cooking up that exotic pipeline, consider to put it in a file, add a &lt;a href=&quot;http://en.wikipedia.org/wiki/Shebang_%28Unix%29&quot;&gt;shebang&lt;/a&gt;, parametrize it with some &lt;code&gt;$1&lt;/code&gt;s and &lt;code&gt;$2&lt;/code&gt;s, and &lt;code&gt;chmod +x&lt;/code&gt; it. That&amp;#39;s all there is to it. Who knows, you might even become interested in applying the &lt;a href=&quot;http://www.faqs.org/docs/artu/ch01s06.html&quot;&gt;Unix philosophy&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;While the power of the command-line should not be underestimated when it comes to Obtaining, Scrubbing, and Exploring data, it can only get you so far. When you&amp;#39;re ready to do some more serious Exploring, Modelling, and iNterpretation of your data, you&amp;#39;re probably better off continuing your work in a statistical computing environment, such as &lt;a href=&quot;http://www.r-project.org/&quot;&gt;R&lt;/a&gt; or &lt;a href=&quot;http://ipython.org/notebook.html&quot;&gt;IPython notebook&lt;/a&gt;+&lt;a href=&quot;http://pandas.pydata.org/&quot;&gt;pandas&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you enjoyed this post, then you may want to &lt;a href=&quot;https://twitter.com/jeroenhjanssens/&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+				<pubDate>Thu, 19 Sep 2013 08:00:00 -0400</pubDate>
+				<link>http://www.jeroenjanssens.com/2013/09/19/seven-command-line-tools-for-data-science.html</link>
+				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/09/19/seven-command-line-tools-for-data-science.html</guid>
+			</item>
+		
+			<item>
 				<title>Extracting text from HTML with Reporter</title>
 				<description>&lt;p&gt;&lt;em&gt;Note: This post originally appeared on November 11, 2012 on &lt;a href=&quot;http://visualrevenue.com/blog&quot;&gt;Visual Revenue&amp;#39;s blog&lt;/a&gt;. The text from the &lt;a href=&quot;https://github.com/visualrevenue/reporter&quot;&gt;Github repository&lt;/a&gt; has been appended for completeness.&lt;/em&gt;&lt;/p&gt;
 
