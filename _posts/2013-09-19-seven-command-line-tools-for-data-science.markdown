@@ -4,7 +4,7 @@ title:  "7 command-line tools for data science"
 date:   2013-09-19 12:00:00
 ---
 
-*Join the [discussion on Hacker News](https://news.ycombinator.com/item?id=6412190)! Tools suggested by others can be found at the bottom of the post.* 
+*Tools suggested by others can be found at the bottom of the post.* 
 
 Data science is [OSEMN](http://www.dataists.com/2010/09/a-taxonomy-of-data-science/) (pronounced as awesome).
 That is, it involves Obtaining, Scrubbing, Exploring, Modeling, and iNterpreting data.
