@@ -4,7 +4,7 @@ title:  "7 command-line tools for data science"
 date:   2013-09-19 12:00:00
 ---
 
-*Join the [discussion on Hacker News](https://news.ycombinator.com/item?id=6412190)!*
+*Join the [discussion on Hacker News](https://news.ycombinator.com/item?id=6412190)! Tools suggested by others can be found at the bottom of the post.* 
 
 Data science is [OSEMN](http://www.dataists.com/2010/09/a-taxonomy-of-data-science/) (pronounced as awesome).
 That is, it involves Obtaining, Scrubbing, Exploring, Modeling, and iNterpreting data.
@@ -271,3 +271,14 @@ While the power of the command-line should not be underestimated when it comes t
 If you enjoyed this post, then you may want to [follow me on Twitter][twitter].
 
 [twitter]: https://twitter.com/jeroenhjanssens/
+
+
+### Command-line tools suggested by others
+
+Below is an uncurated list of tools and repositories that others have suggested via [twitter][twitter] or [Hacker News](https://news.ycombinator.com/item?id=6412190). 
+
+- [XMLStarlet](http://xmlstar.sourceforge.net/) by [gav](https://news.ycombinator.com/user?id=gav)
+- [data-tools repository](https://github.com/clarkgrubb/data-tools) by [cgrubb](https://news.ycombinator.com/user?id=cgrubb)
+- [csv2sqlite](https://github.com/dergachev/csv2sqlite) by [dergachev](https://news.ycombinator.com/user?id=dergachev)
+
+I will soon have a look at all these tools and update the post accordingly. Thanks everybody.

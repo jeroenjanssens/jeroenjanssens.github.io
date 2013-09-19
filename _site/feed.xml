@@ -8,7 +8,7 @@
 		
 			<item>
 				<title>7 command-line tools for data science</title>
-				<description>&lt;p&gt;&lt;em&gt;Join the &lt;a href=&quot;https://news.ycombinator.com/item?id=6412190&quot;&gt;discussion on Hacker News&lt;/a&gt;!&lt;/em&gt;&lt;/p&gt;
+				<description>&lt;p&gt;&lt;em&gt;Join the &lt;a href=&quot;https://news.ycombinator.com/item?id=6412190&quot;&gt;discussion on Hacker News&lt;/a&gt;! Tools suggested by others can be found at the bottom of the post.&lt;/em&gt; &lt;/p&gt;
 
 &lt;p&gt;Data science is &lt;a href=&quot;http://www.dataists.com/2010/09/a-taxonomy-of-data-science/&quot;&gt;OSEMN&lt;/a&gt; (pronounced as awesome).
 That is, it involves Obtaining, Scrubbing, Exploring, Modeling, and iNterpreting data.
@@ -215,6 +215,18 @@ Also, if you&amp;#39;ve made any tools yourself, you&amp;#39;re more than welcom
 &lt;p&gt;While the power of the command-line should not be underestimated when it comes to Obtaining, Scrubbing, and Exploring data, it can only get you so far. When you&amp;#39;re ready to do some more serious Exploring, Modelling, and iNterpretation of your data, you&amp;#39;re probably better off continuing your work in a statistical computing environment, such as &lt;a href=&quot;http://www.r-project.org/&quot;&gt;R&lt;/a&gt; or &lt;a href=&quot;http://ipython.org/notebook.html&quot;&gt;IPython notebook&lt;/a&gt;+&lt;a href=&quot;http://pandas.pydata.org/&quot;&gt;pandas&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;If you enjoyed this post, then you may want to &lt;a href=&quot;https://twitter.com/jeroenhjanssens/&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3&gt;Command-line tools suggested by others&lt;/h3&gt;
+
+&lt;p&gt;Below is an uncurated list of tools and repositories that others have suggested via &lt;a href=&quot;https://twitter.com/jeroenhjanssens/&quot;&gt;twitter&lt;/a&gt; or &lt;a href=&quot;https://news.ycombinator.com/item?id=6412190&quot;&gt;Hacker News&lt;/a&gt;. &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://xmlstar.sourceforge.net/&quot;&gt;XMLStarlet&lt;/a&gt; by &lt;a href=&quot;https://news.ycombinator.com/user?id=gav&quot;&gt;gav&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/clarkgrubb/data-tools&quot;&gt;data-tools repository&lt;/a&gt; by &lt;a href=&quot;https://news.ycombinator.com/user?id=cgrubb&quot;&gt;cgrubb&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/dergachev/csv2sqlite&quot;&gt;csv2sqlite&lt;/a&gt; by &lt;a href=&quot;https://news.ycombinator.com/user?id=dergachev&quot;&gt;dergachev&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I will soon have a look at all these tools and update the post accordingly. Thanks everybody.&lt;/p&gt;
 </description>
 				<pubDate>Thu, 19 Sep 2013 08:00:00 -0400</pubDate>
 				<link>http://www.jeroenjanssens.com/2013/09/19/seven-command-line-tools-for-data-science.html</link>
