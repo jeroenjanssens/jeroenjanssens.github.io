@@ -275,6 +275,7 @@ a {
 /* line 121, ../_sass/screen.sass */
 .posts .date {
   font-family: "Roboto Slab", "ff-tisa-web-pro", Georgia, Cambria, "Times New Roman", Times, serif;
+  width: 7em;
 }
 
 /* line 125, ../_sass/screen.sass */
