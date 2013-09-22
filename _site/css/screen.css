@@ -76,43 +76,54 @@ html {
 }
 
 /* line 22, ../_sass/screen.sass */
+img#face {
+  float: right;
+  display: relative;
+  width: 6.5625em;
+  height: 6.5625em;
+  margin-left: 2em;
+  margin-top: 0.4em;
+  border: 2px solid #333333;
+}
+
+/* line 31, ../_sass/screen.sass */
 em {
   font-style: italic;
 }
 
-/* line 25, ../_sass/screen.sass */
+/* line 34, ../_sass/screen.sass */
 strong {
   font-weight: bold;
 }
 
-/* line 28, ../_sass/screen.sass */
+/* line 37, ../_sass/screen.sass */
 div.post > ul {
   list-style-type: disc;
   list-style-position: outside;
   margin-left: 2em;
 }
-/* line 32, ../_sass/screen.sass */
+/* line 41, ../_sass/screen.sass */
 div.post > ul > li {
   padding: 0.25em;
 }
 
-/* line 35, ../_sass/screen.sass */
+/* line 44, ../_sass/screen.sass */
 div.post > ol {
   list-style-type: decimal;
   list-style-position: outside;
   margin-left: 2em;
 }
-/* line 39, ../_sass/screen.sass */
+/* line 48, ../_sass/screen.sass */
 div.post > ol > li {
   padding: 0.25em;
 }
 
-/* line 42, ../_sass/screen.sass */
+/* line 51, ../_sass/screen.sass */
 html, body {
   height: 100%;
 }
 
-/* line 45, ../_sass/screen.sass */
+/* line 54, ../_sass/screen.sass */
 body {
   background-color: white;
   font-family: "Roboto Slab", "ff-tisa-web-pro", Georgia, Cambria, "Times New Roman", Times, serif;
@@ -120,41 +131,41 @@ body {
   color: #111111;
 }
 
-/* line 51, ../_sass/screen.sass */
+/* line 60, ../_sass/screen.sass */
 h1, h2, h3 {
   font-family: "Cabin Condensed", sans-serif;
   font-weight: 600;
 }
 
-/* line 55, ../_sass/screen.sass */
+/* line 64, ../_sass/screen.sass */
 h1 {
   font-size: 2.75em;
   line-height: 1.09091em;
 }
 
-/* line 58, ../_sass/screen.sass */
+/* line 67, ../_sass/screen.sass */
 h2 {
   font-size: 1.75em;
   line-height: 1.71429em;
 }
 
-/* line 61, ../_sass/screen.sass */
+/* line 70, ../_sass/screen.sass */
 h3 {
   font-size: 1.375em;
   line-height: 2.18182em;
 }
 
-/* line 64, ../_sass/screen.sass */
+/* line 73, ../_sass/screen.sass */
 p {
   margin: 1em 0;
 }
 
-/* line 67, ../_sass/screen.sass */
+/* line 76, ../_sass/screen.sass */
 a {
   color: #e08105;
 }
 
-/* line 70, ../_sass/screen.sass */
+/* line 79, ../_sass/screen.sass */
 #site {
   text-align: justify;
   width: 42em;
@@ -163,12 +174,12 @@ a {
   padding-bottom: 3em;
 }
 
-/* line 77, ../_sass/screen.sass */
+/* line 86, ../_sass/screen.sass */
 #header {
   text-transform: lowercase;
   margin-bottom: 3em;
 }
-/* line 80, ../_sass/screen.sass */
+/* line 89, ../_sass/screen.sass */
 #header a {
   color: inherit;
   text-decoration: inherit;
@@ -197,7 +208,7 @@ a {
   color: #fa9b1e;
 }
 
-/* line 86, ../_sass/screen.sass */
+/* line 95, ../_sass/screen.sass */
 #description {
   position: relative;
   float: left;
@@ -205,12 +216,12 @@ a {
   color: gray;
 }
 
-/* line 92, ../_sass/screen.sass */
+/* line 101, ../_sass/screen.sass */
 #social {
   position: relative;
   float: right;
 }
-/* line 95, ../_sass/screen.sass */
+/* line 104, ../_sass/screen.sass */
 #social > ul {
   margin: 0;
   padding: 0;
@@ -241,19 +252,19 @@ a {
 #social > ul li.last {
   padding-right: 0;
 }
-/* line 97, ../_sass/screen.sass */
+/* line 106, ../_sass/screen.sass */
 #social > ul > li a {
   font-family: "Cabin Condensed", sans-serif;
   font-weight: 600;
 }
 
-/* line 101, ../_sass/screen.sass */
+/* line 110, ../_sass/screen.sass */
 .twitter-share-button {
   margin-left: 1em;
   margin-top: 0.1em;
 }
 
-/* line 105, ../_sass/screen.sass */
+/* line 114, ../_sass/screen.sass */
 .date {
   color: gray;
   font-family: "Cabin Condensed", sans-serif;
@@ -261,12 +272,12 @@ a {
   float: left;
 }
 
-/* line 112, ../_sass/screen.sass */
+/* line 121, ../_sass/screen.sass */
 .posts .date {
   font-family: "Roboto Slab", "ff-tisa-web-pro", Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
-/* line 116, ../_sass/screen.sass */
+/* line 125, ../_sass/screen.sass */
 p > code {
   font-family: "Ubuntu Mono";
   background-color: #dddddd;
@@ -276,7 +287,7 @@ p > code {
   border-radius: 0.25em / 0.25em;
 }
 
-/* line 126, ../_sass/screen.sass */
+/* line 135, ../_sass/screen.sass */
 pre {
   white-space: pre-wrap;
   white-space: -moz-pre-wrap;
@@ -285,7 +296,7 @@ pre {
   word-wrap: break-word;
 }
 
-/* line 134, ../_sass/screen.sass */
+/* line 143, ../_sass/screen.sass */
 div.highlight {
   -webkit-border-radius: 0.5em 0.5em;
   -moz-border-radius: 0.5em / 0.5em;
@@ -297,216 +308,216 @@ div.highlight {
   background-color: #444444;
   padding: 0.5em 0.75em;
 }
-/* line 142, ../_sass/screen.sass */
+/* line 151, ../_sass/screen.sass */
 div.highlight code, div.highlight pre {
   color: #fdce93;
 }
-/* line 145, ../_sass/screen.sass */
+/* line 154, ../_sass/screen.sass */
 div.highlight .hll {
   background-color: #222222;
 }
-/* line 147, ../_sass/screen.sass */
+/* line 156, ../_sass/screen.sass */
 div.highlight .c {
   color: #7f9f7f;
 }
-/* line 149, ../_sass/screen.sass */
+/* line 158, ../_sass/screen.sass */
 div.highlight .err {
   color: #e37170;
   background-color: #3d3535;
 }
-/* line 152, ../_sass/screen.sass */
+/* line 161, ../_sass/screen.sass */
 div.highlight .g {
   color: #7f9f7f;
 }
-/* line 154, ../_sass/screen.sass */
+/* line 163, ../_sass/screen.sass */
 div.highlight .k {
   color: #f0dfaf;
 }
-/* line 156, ../_sass/screen.sass */
+/* line 165, ../_sass/screen.sass */
 div.highlight .l {
   color: #cccccc;
 }
-/* line 158, ../_sass/screen.sass */
+/* line 167, ../_sass/screen.sass */
 div.highlight .n {
   color: #dcdccc;
 }
-/* line 160, ../_sass/screen.sass */
+/* line 169, ../_sass/screen.sass */
 div.highlight .o {
   color: #f0efd0;
 }
-/* line 162, ../_sass/screen.sass */
+/* line 171, ../_sass/screen.sass */
 div.highlight .x {
   color: #cccccc;
 }
-/* line 164, ../_sass/screen.sass */
+/* line 173, ../_sass/screen.sass */
 div.highlight .p {
   color: #41706f;
 }
-/* line 166, ../_sass/screen.sass */
+/* line 175, ../_sass/screen.sass */
 div.highlight .cm, div.highlight .cp, div.highlight .c1 {
   color: #7f9f7f;
 }
-/* line 168, ../_sass/screen.sass */
+/* line 177, ../_sass/screen.sass */
 div.highlight .cs {
   color: #cd0000;
   font-weight: bold;
 }
-/* line 171, ../_sass/screen.sass */
+/* line 180, ../_sass/screen.sass */
 div.highlight .gd {
   color: #cd0000;
 }
-/* line 173, ../_sass/screen.sass */
+/* line 182, ../_sass/screen.sass */
 div.highlight .ge {
   color: #cccccc;
   font-style: italic;
 }
-/* line 176, ../_sass/screen.sass */
+/* line 185, ../_sass/screen.sass */
 div.highlight .gr {
   color: red;
 }
-/* line 178, ../_sass/screen.sass */
+/* line 187, ../_sass/screen.sass */
 div.highlight .gh {
   color: #dcdccc;
   font-weight: bold;
 }
-/* line 181, ../_sass/screen.sass */
+/* line 190, ../_sass/screen.sass */
 div.highlight .gi {
   color: #00cd00;
 }
-/* line 183, ../_sass/screen.sass */
+/* line 192, ../_sass/screen.sass */
 div.highlight .go {
   color: gray;
 }
-/* line 185, ../_sass/screen.sass */
+/* line 194, ../_sass/screen.sass */
 div.highlight .gp {
   color: #dcdccc;
   font-weight: bold;
 }
-/* line 188, ../_sass/screen.sass */
+/* line 197, ../_sass/screen.sass */
 div.highlight .gs {
   color: #cccccc;
   font-weight: bold;
 }
-/* line 191, ../_sass/screen.sass */
+/* line 200, ../_sass/screen.sass */
 div.highlight .gu {
   color: purple;
   font-weight: bold;
 }
-/* line 194, ../_sass/screen.sass */
+/* line 203, ../_sass/screen.sass */
 div.highlight .gt {
   color: #0040d0;
 }
-/* line 196, ../_sass/screen.sass */
+/* line 205, ../_sass/screen.sass */
 div.highlight .kc {
   color: #dca3a3;
 }
-/* line 198, ../_sass/screen.sass */
+/* line 207, ../_sass/screen.sass */
 div.highlight .kd {
   color: #ffff86;
 }
-/* line 200, ../_sass/screen.sass */
+/* line 209, ../_sass/screen.sass */
 div.highlight .kn {
   color: #dfaf8f;
   font-weight: bold;
 }
-/* line 203, ../_sass/screen.sass */
+/* line 212, ../_sass/screen.sass */
 div.highlight .kp {
   color: #cdcf99;
 }
-/* line 205, ../_sass/screen.sass */
+/* line 214, ../_sass/screen.sass */
 div.highlight .kr {
   color: #cdcd00;
 }
-/* line 207, ../_sass/screen.sass */
+/* line 216, ../_sass/screen.sass */
 div.highlight .kt {
   color: #00cd00;
 }
-/* line 209, ../_sass/screen.sass */
+/* line 218, ../_sass/screen.sass */
 div.highlight .ld {
   color: #cc9393;
 }
-/* line 211, ../_sass/screen.sass */
+/* line 220, ../_sass/screen.sass */
 div.highlight .m {
   color: #8cd0d3;
 }
-/* line 213, ../_sass/screen.sass */
+/* line 222, ../_sass/screen.sass */
 div.highlight .s {
   color: #cc9393;
 }
-/* line 215, ../_sass/screen.sass */
+/* line 224, ../_sass/screen.sass */
 div.highlight .na {
   color: #9ac39f;
 }
-/* line 217, ../_sass/screen.sass */
+/* line 226, ../_sass/screen.sass */
 div.highlight .nb, div.highlight .nc {
   color: #efef8f;
 }
-/* line 219, ../_sass/screen.sass */
+/* line 228, ../_sass/screen.sass */
 div.highlight .no, div.highlight .nd {
   color: #cccccc;
 }
-/* line 221, ../_sass/screen.sass */
+/* line 230, ../_sass/screen.sass */
 div.highlight .ni {
   color: #c28182;
 }
-/* line 223, ../_sass/screen.sass */
+/* line 232, ../_sass/screen.sass */
 div.highlight .ne {
   color: #c3bf9f;
   font-weight: bold;
 }
-/* line 226, ../_sass/screen.sass */
+/* line 235, ../_sass/screen.sass */
 div.highlight .nf {
   color: #efef8f;
 }
-/* line 228, ../_sass/screen.sass */
+/* line 237, ../_sass/screen.sass */
 div.highlight .nl {
   color: #cccccc;
 }
-/* line 230, ../_sass/screen.sass */
+/* line 239, ../_sass/screen.sass */
 div.highlight .nn {
   color: #8fbede;
 }
-/* line 232, ../_sass/screen.sass */
+/* line 241, ../_sass/screen.sass */
 div.highlight .nx, div.highlight .py {
   color: #cccccc;
 }
-/* line 234, ../_sass/screen.sass */
+/* line 243, ../_sass/screen.sass */
 div.highlight .nt {
   color: #9ac39f;
 }
-/* line 236, ../_sass/screen.sass */
+/* line 245, ../_sass/screen.sass */
 div.highlight .nv {
   color: #dcdccc;
 }
-/* line 238, ../_sass/screen.sass */
+/* line 247, ../_sass/screen.sass */
 div.highlight .ow {
   color: #f0efd0;
 }
-/* line 240, ../_sass/screen.sass */
+/* line 249, ../_sass/screen.sass */
 div.highlight .w {
   color: #cccccc;
 }
-/* line 242, ../_sass/screen.sass */
+/* line 251, ../_sass/screen.sass */
 div.highlight .mf, div.highlight .mh, div.highlight .mi, div.highlight .mo {
   color: #8cd0d3;
 }
-/* line 244, ../_sass/screen.sass */
+/* line 253, ../_sass/screen.sass */
 div.highlight .sb, div.highlight .sc, div.highlight .sd, div.highlight .s2, div.highlight .se, div.highlight .sh, div.highlight .si, div.highlight .sx, div.highlight .sr, div.highlight .s1, div.highlight .ss {
   color: #cc9393;
 }
-/* line 246, ../_sass/screen.sass */
+/* line 255, ../_sass/screen.sass */
 div.highlight .bp, div.highlight .vc {
   color: #efef8f;
 }
-/* line 248, ../_sass/screen.sass */
+/* line 257, ../_sass/screen.sass */
 div.highlight .vg {
   color: #dcdccc;
 }
-/* line 250, ../_sass/screen.sass */
+/* line 259, ../_sass/screen.sass */
 div.highlight .vi {
   color: #ffffc7;
 }
-/* line 252, ../_sass/screen.sass */
+/* line 261, ../_sass/screen.sass */
 div.highlight .il {
   color: #8cd0d3;
 }
