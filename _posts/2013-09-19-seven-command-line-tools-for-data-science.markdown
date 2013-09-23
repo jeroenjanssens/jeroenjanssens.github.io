@@ -4,8 +4,6 @@ title:  "7 command-line tools for data science"
 date:   2013-09-19 12:00:00
 ---
 
-*Tools suggested by others can be found at the bottom of the post.* 
-
 Data science is [OSEMN](http://www.dataists.com/2010/09/a-taxonomy-of-data-science/) (pronounced as awesome).
 That is, it involves Obtaining, Scrubbing, Exploring, Modeling, and iNterpreting data.
 As a data scientist, I spend quite a bit of time on the command-line, especially when there's data to be obtained, scrubbed, or explored. And I'm not alone in this.
@@ -18,7 +16,9 @@ The tools are:
 [csvkit](https://github.com/onyxfish/csvkit),
 scrape,
 [xml2json](https://github.com/parmentf/xml2json),
-sample, and Rio. (The home-made tools `scrape`, `sample`, and `Rio` can be found in this [data science toolbox](https://github.com/jeroenjanssens/data-science-toolbox).) Any suggestions, questions, comments, and even pull requests are more than welcome. OSEMN, let's get started with our first tool: `jq`.
+sample, and Rio. (The home-made tools `scrape`, `sample`, and `Rio` can be found in this [data science toolbox](https://github.com/jeroenjanssens/data-science-toolbox).) Any suggestions, questions, comments, and even pull requests are more than welcome.
+(Tools suggested by others can be found towards the bottom of the post.)
+OSEMN, let's get started with our first tool: `jq`.
 
 ### 1. jq - sed for JSON
 
@@ -93,7 +93,7 @@ Since CSV is the king of tabular file formats, according to the authors of
 
 ### 3. csvkit - suite of utilities for converting to and working with CSV
 
-Rather than being one tool, [csvkit](http://csvkit.readthedocs.org/) is a collection of tools that operate on CSV data. Most of these tools expect the CSV data to have a header, so let's add one. (Ideally, `json2csv` would have added the header.)
+Rather than being one tool, [csvkit](http://csvkit.readthedocs.org/) is a collection of tools that operate on CSV data. Most of these tools expect the CSV data to have a header, so let's add one. (Since the publication of this post, `json2csv` has been updated to print the header with the `-p` option.)
 
 ```bash
 echo name,party,cash | cat - million.csv > million-header.csv
@@ -251,7 +251,24 @@ If the final output is a ggplot object, a PNG will be written to stdout.
 
 I made this tool so that I could take advantage of the power of R on the command-line. Of course it has its limits, but at least there's no need to learn [gnuplot](http://www.gnuplot.info) any more.
 
+### Command-line tools suggested by others
 
+Below is an uncurated list of tools and repositories that others have suggested via [twitter][twitter] or [Hacker News](https://news.ycombinator.com/item?id=6412190) (last updated on 23-09-2013 07:15 EST). Thanks everybody.
+
+- [BigMLer](http://bigmler.readthedocs.org/en/latest/) by [aficionado](https://news.ycombinator.com/user?id=aficionado)
+- [crush-tools](https://code.google.com/p/crush-tools/) by [mjn](https://news.ycombinator.com/user?id=mjn)
+- [csv2sqlite](https://github.com/dergachev/csv2sqlite) by [dergachev](https://news.ycombinator.com/user?id=dergachev)
+- [csvquote](https://github.com/dbro/csvquote) by [susi22](https://news.ycombinator.com/user?id=susi22)
+- [data-tools repository](https://github.com/clarkgrubb/data-tools) by [cgrubb](https://news.ycombinator.com/user?id=cgrubb)
+- [feedgnuplot](https://github.com/dkogan/feedgnuplot) by [dima55](https://news.ycombinator.com/user?id=dima55)
+- [Grinder repository](https://github.com/cgutteridge/Grinder/tree/master/bin) by [@cgutteridge](https://twitter.com/cgutteridge)
+- [HDF5 Tools](http://www.hdfgroup.org/HDF5/doc/RM/Tools.html) by [susi22](https://news.ycombinator.com/user?id=susi22)
+- [littler](http://code.google.com/p/littler/) by [@eddelbuettel](https://twitter.com/eddelbuettel)
+- [mallet](http://gibrown.wordpress.com/2013/01/26/unix-bi-grams-tri-grams-and-topic-modeling/) by [gibrown](https://news.ycombinator.com/user?id=gibrown)
+- [RecordStream](https://github.com/benbernard/RecordStream) by [revertts](https://news.ycombinator.com/user?id=revertts)
+- [subsample](https://github.com/paulgb/subsample) by [paulgb](https://news.ycombinator.com/user?id=paulgb)
+- [xls2csv](http://search.cpan.org/~ken/xls2csv-1.07/script/xls2csv) by [@sheeshee](https://twitter.com/sheeshee)
+- [XMLStarlet](http://xmlstar.sourceforge.net/) by [gav](https://news.ycombinator.com/user?id=gav)
 
 
 ### Conclusion
@@ -269,15 +286,3 @@ While the power of the command-line should not be underestimated when it comes t
 If you enjoyed this post, then you may want to [follow me on Twitter][twitter].
 
 [twitter]: https://twitter.com/jeroenhjanssens/
-
-
-### Command-line tools suggested by others
-
-Below is an uncurated list of tools and repositories that others have suggested via [twitter][twitter] or [Hacker News](https://news.ycombinator.com/item?id=6412190). 
-
-- [XMLStarlet](http://xmlstar.sourceforge.net/) by [gav](https://news.ycombinator.com/user?id=gav)
-- [data-tools repository](https://github.com/clarkgrubb/data-tools) by [cgrubb](https://news.ycombinator.com/user?id=cgrubb)
-- [csv2sqlite](https://github.com/dergachev/csv2sqlite) by [dergachev](https://news.ycombinator.com/user?id=dergachev)
-- [RecordStream](https://github.com/benbernard/RecordStream) by [revertts](https://news.ycombinator.com/user?id=revertts)
-
-I will soon have a look at all these tools and update the post accordingly. Thanks everybody.
