@@ -7,6 +7,20 @@
 		<atom:link href="http://www.jeroenjanssens.com/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>sudo make me a visualization!</title>
+				<description>&lt;p&gt;Last Monday I gave an Ignite talk at &lt;a href=&quot;http://strataconf.com/stratany2013/public/schedule/detail/32182&quot;&gt;Strata NYC&lt;/a&gt; about using command-line tools for data science.
+Giving a talk where the slides auto-advance after 15 seconds is a challenging, but ultimately very rewarding experience! Even though the preview image below suggests otherwise, there&amp;#39;s no beatboxing in this video.&lt;/p&gt;
+
+&lt;iframe style=&quot;display:block;margin: 0 auto;&quot; width=&quot;640&quot; height=&quot;360&quot; src=&quot;//www.youtube.com/embed/X__Z0phLxMY&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;p&gt;On a related note, I&amp;#39;m writing a book titled &amp;quot;Data Science at the Command-line&amp;quot;, which will be published by O&amp;#39;Reilly somewhere in 2014. If you&amp;#39;re interested in receiving updates regarding the book then you should &lt;a href=&quot;https://twitter.com/jeroenhjanssens/&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+				<pubDate>Thu, 31 Oct 2013 20:00:00 -0400</pubDate>
+				<link>http://www.jeroenjanssens.com/2013/10/31/sudo-make-me-a-visualization.html</link>
+				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/10/31/sudo-make-me-a-visualization.html</guid>
+			</item>
+		
+			<item>
 				<title>7 command-line tools for data science</title>
 				<description>&lt;p&gt;Data science is &lt;a href=&quot;http://www.dataists.com/2010/09/a-taxonomy-of-data-science/&quot;&gt;OSEMN&lt;/a&gt; (pronounced as awesome).
 That is, it involves Obtaining, Scrubbing, Exploring, Modeling, and iNterpreting data.
@@ -235,7 +249,7 @@ Also, if you&amp;#39;ve made any tools yourself, you&amp;#39;re more than welcom
 
 &lt;p&gt;If you enjoyed this post, then you may want to &lt;a href=&quot;https://twitter.com/jeroenhjanssens/&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
-				<pubDate>Thu, 19 Sep 2013 08:00:00 -0400</pubDate>
+				<pubDate>Thu, 19 Sep 2013 12:00:00 -0400</pubDate>
 				<link>http://www.jeroenjanssens.com/2013/09/19/seven-command-line-tools-for-data-science.html</link>
 				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/09/19/seven-command-line-tools-for-data-science.html</guid>
 			</item>
@@ -350,7 +364,7 @@ an important scoring rule which penalises containers. If such a rule would not b
 
 &lt;p&gt;If you like what I had to say then you may want to &lt;a href=&quot;https://twitter.com/jeroenhjanssens&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
-				<pubDate>Sat, 31 Aug 2013 08:00:00 -0400</pubDate>
+				<pubDate>Sat, 31 Aug 2013 12:00:00 -0400</pubDate>
 				<link>http://www.jeroenjanssens.com/2013/08/31/extracting-text-from-html-with-reporter.html</link>
 				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/08/31/extracting-text-from-html-with-reporter.html</guid>
 			</item>
@@ -465,7 +479,7 @@ an important scoring rule which penalises containers. If such a rule would not b
 
 &lt;p&gt;If you like what I had to say then you may want to &lt;a href=&quot;https://twitter.com/jeroenhjanssens&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
-				<pubDate>Sun, 18 Aug 2013 06:00:00 -0400</pubDate>
+				<pubDate>Sun, 18 Aug 2013 10:00:00 -0400</pubDate>
 				<link>http://www.jeroenjanssens.com/2013/08/18/bayesian-headline-testing-at-visual-revenue.html</link>
 				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/08/18/bayesian-headline-testing-at-visual-revenue.html</guid>
 			</item>
@@ -553,7 +567,7 @@ compctl -K _completemarks unmark
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;If you like what I had to say then you may want to &lt;a href=&quot;https://twitter.com/jeroenhjanssens/&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
-				<pubDate>Fri, 16 Aug 2013 15:06:19 -0400</pubDate>
+				<pubDate>Fri, 16 Aug 2013 19:06:19 -0400</pubDate>
 				<link>http://www.jeroenjanssens.com/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html</link>
 				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html</guid>
 			</item>
