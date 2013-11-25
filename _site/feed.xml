@@ -7,6 +7,23 @@
 		<atom:link href="http://www.jeroenjanssens.com/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>Stochastic Outlier Selection</title>
+				<description>&lt;h3&gt;Quick links&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://bl.ocks.org/jeroenjanssens/7608890&quot;&gt;Detecting anomalous senators (interactive visualization in D3)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/jeroenjanssens/sos/blob/master/doc/sos-ticc-tr-2012-001.pdf?raw=true&quot;&gt;Technical report (Janssens, Huszar, Postma, and van den Herik, 2012, PDF)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/jeroenjanssens/sos&quot;&gt;Command-line tool and Python implementation (Github repository)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Video and slides of presentation at &lt;a href=&quot;http://www.meetup.com/NYC-Machine-Learning/events/149093182/&quot;&gt;NYC ML meetup&lt;/a&gt; (Not yet available)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/jeroenjanssens/phd-thesis&quot;&gt;Ph.D. thesis Outlier Selection and One-Class Classification (Github repository)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+				<pubDate>Sun, 24 Nov 2013 17:06:19 +0000</pubDate>
+				<link>http://www.jeroenjanssens.com/2013/11/24/stochastic-outlier-selection.html</link>
+				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/11/24/stochastic-outlier-selection.html</guid>
+			</item>
+		
+			<item>
 				<title>sudo make me a visualization!</title>
 				<description>&lt;p&gt;Last Monday I gave an Ignite talk at &lt;a href=&quot;http://strataconf.com/stratany2013/public/schedule/detail/32182&quot;&gt;Strata NYC&lt;/a&gt; about using command-line tools for data science.
 Giving a talk where the slides auto-advance after 15 seconds is a challenging, but ultimately very rewarding experience! Even though the preview image below suggests otherwise, there&amp;#39;s no beatboxing in this video.&lt;/p&gt;
@@ -15,7 +32,7 @@ Giving a talk where the slides auto-advance after 15 seconds is a challenging, b
 
 &lt;p&gt;On a related note, I&amp;#39;m writing a book titled &amp;quot;Data Science at the Command-line&amp;quot;, which will be published by O&amp;#39;Reilly somewhere in 2014. If you&amp;#39;re interested in receiving updates regarding the book then you should &lt;a href=&quot;https://twitter.com/jeroenhjanssens/&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
-				<pubDate>Thu, 31 Oct 2013 20:00:00 -0400</pubDate>
+				<pubDate>Thu, 31 Oct 2013 20:00:00 +0000</pubDate>
 				<link>http://www.jeroenjanssens.com/2013/10/31/sudo-make-me-a-visualization.html</link>
 				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/10/31/sudo-make-me-a-visualization.html</guid>
 			</item>
@@ -49,7 +66,7 @@ OSEMN, let&amp;#39;s get started with our first tool: &lt;code&gt;jq&lt;/code&gt
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;{&amp;quot;status&amp;quot;:&amp;quot;OK&amp;quot;,&amp;quot;base_uri&amp;quot;:&amp;quot;http://api.nytimes.com/svc/elections/us/v3/finances/2008/&amp;quot;,&amp;quot;cycle&amp;quot;:2008,&amp;quot;copyright&amp;quot;:&amp;quot;Copyright (c) 2013 The New York Times Company. All Rights Reserved.&amp;quot;,&amp;quot;results&amp;quot;:[{&amp;quot;candidate_name&amp;quot;:&amp;quot;Obama, Barack&amp;quot;,&amp;quot;name&amp;quot;:&amp;quot;Barack Obama&amp;quot;,&amp;quot;party&amp;quot;:&amp;quot;D&amp;quot;,
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;into nicely indented and colored output:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; nyt.json jq &lt;span class=&quot;s1&quot;&gt;&amp;#39;.&amp;#39;&lt;/span&gt; | head
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; nyt.json jq &lt;span class=&quot;s1&quot;&gt;&amp;#39;.&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; head
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;json language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;nt&quot;&gt;&amp;quot;results&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -91,18 +108,18 @@ Since CSV is the king of tabular file formats, according to the authors of
 &lt;h3&gt;3. csvkit - suite of utilities for converting to and working with CSV&lt;/h3&gt;
 
 &lt;p&gt;Rather than being one tool, &lt;a href=&quot;http://csvkit.readthedocs.org/&quot;&gt;csvkit&lt;/a&gt; is a collection of tools that operate on CSV data. Most of these tools expect the CSV data to have a header, so let&amp;#39;s add one. (Since the publication of this post, &lt;code&gt;json2csv&lt;/code&gt; has been updated to print the header with the &lt;code&gt;-p&lt;/code&gt; option.)&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;name,party,cash | cat - million.csv &amp;gt; million-header.csv
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;name,party,cash &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; cat - million.csv &amp;gt; million-header.csv
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;We can, for example, sort the candidates by cash with &lt;code&gt;csvsort&lt;/code&gt; and display the data using &lt;code&gt;csvlook&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; million-header.csv csvsort -rc cash | csvlook
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; million-header.csv csvsort -rc cash &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; csvlook
 
-|---------------+-------+--------------|
-|  name         | party | cash         |
-|---------------+-------+--------------|
-|  John McCain  | R     | 32812513.75  |
-|  Barack Obama | D     | 29911984.0   |
-|  John Edwards | D     | 4428347.5    |
-|---------------+-------+--------------|
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;---------------+-------+--------------&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;  name         &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; party &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; cash         &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;---------------+-------+--------------&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;  John McCain  &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; R     &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; 32812513.75  &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;  Barack Obama &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; D     &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; 29911984.0   &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;  John Edwards &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; D     &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; 4428347.5    &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;---------------+-------+--------------&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Looks like the MySQL console doesn&amp;#39;t it? Speaking of databases, you can insert the CSV data into an sqlite database as follows (many other databases are supported as well):&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;csvsql --db sqlite:///myfirst.db --insert million-header.csv
@@ -121,7 +138,7 @@ sqlite&amp;gt; .schema million-header
 
 &lt;p&gt;JSON APIs sure are nice, but they aren&amp;#39;t the only source of data; a lot of it is &lt;a href=&quot;http://www.ted.com/talks/tim_berners_lee_on_the_next_web.html&quot;&gt;unfortunately still&lt;/a&gt; embedded in HTML. &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox&quot;&gt;scrape&lt;/a&gt; is a python script I put together that employs the &lt;code&gt;lxml&lt;/code&gt; and &lt;code&gt;cssselect&lt;/code&gt; packages to select certain HTML elements by means of an XPath query or &lt;a href=&quot;http://net.tutsplus.com/tutorials/html-css-techniques/the-30-css-selectors-you-must-memorize/&quot;&gt;CSS selector&lt;/a&gt;. (I tried &lt;a href=&quot;https://metacpan.org/module/scrape.pl&quot;&gt;scrape.pl&lt;/a&gt;, but I couldn&amp;#39;t get it to work properly. Moreover, rather than processing HTML from stdin, it expects a url and then downloads the HTML itself.)
 Let&amp;#39;s extract the table from &lt;a href=&quot;http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio&quot;&gt;this Wikipedia article that lists the border and area ratio of each country&lt;/a&gt;.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;curl -s &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio&amp;#39;&lt;/span&gt; | scrape -b -e &lt;span class=&quot;s1&quot;&gt;&amp;#39;table.wikitable &amp;gt; tr:not(:first-child)&amp;#39;&lt;/span&gt; | head
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;curl -s &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; scrape -b -e &lt;span class=&quot;s1&quot;&gt;&amp;#39;table.wikitable &amp;gt; tr:not(:first-child)&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; head
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;html language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
@@ -138,7 +155,7 @@ Let&amp;#39;s extract the table from &lt;a href=&quot;http://en.wikipedia.org/wi
 &lt;h3&gt;5. xml2json - convert XML to JSON&lt;/h3&gt;
 
 &lt;p&gt;As its name implies, &lt;a href=&quot;https://github.com/parmentf/xml2json&quot;&gt;xml2json&lt;/a&gt; takes XML (and HTML) as input and returns JSON as output. Therefore, &lt;code&gt;xml2json&lt;/code&gt; is a great liaison between &lt;code&gt;scrape&lt;/code&gt; and &lt;code&gt;jq&lt;/code&gt;.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;curl -s &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio&amp;#39;&lt;/span&gt; | scrape -be &lt;span class=&quot;s1&quot;&gt;&amp;#39;table.wikitable &amp;gt; tr:not(:first-child)&amp;#39;&lt;/span&gt; | xml2json | jq -c &lt;span class=&quot;s1&quot;&gt;&amp;#39;.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]}&amp;#39;&lt;/span&gt; | head
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;curl -s &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; scrape -be &lt;span class=&quot;s1&quot;&gt;&amp;#39;table.wikitable &amp;gt; tr:not(:first-child)&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; xml2json &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; jq -c &lt;span class=&quot;s1&quot;&gt;&amp;#39;.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]}&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; head
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;json language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;ratio&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;7.2727273&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;surface&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;0.44&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;border&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;3.2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;country&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Vatican City&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;ratio&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;2.2000000&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;surface&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;border&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;4.4&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;country&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Monaco&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;ratio&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;0.6393443&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;surface&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;61&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;border&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;39&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;country&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;San Marino&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
@@ -159,7 +176,7 @@ The tool serves three purposes (which isn&amp;#39;t very Unix-minded, but since 
 
 &lt;p&gt;The first purpose of &lt;code&gt;sample&lt;/code&gt; is to get a subset of the data by outputting only a certain percentage of the input on a line-by-line basis. The second purpose is to add some delay to the output. This comes in handy when the input is a constant stream (e.g., the Twitter firehose), and the data comes in too fast to see what&amp;#39;s going on.
 The third purpose is to run only for a certain time. The following invocation illustrates all three purposes.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;seq 10000 | sample -r 20% -d 1000 -s 5 | jq &lt;span class=&quot;s1&quot;&gt;&amp;#39;{number: .}&amp;#39;&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;seq 10000 &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; sample -r 20% -d 1000 -s 5 &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; jq &lt;span class=&quot;s1&quot;&gt;&amp;#39;{number: .}&amp;#39;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This way, every input line has a 20% chance of being forwarded to &lt;code&gt;jq&lt;/code&gt;. Moreover, there is a 1000 millisecond delay between each line and after five seconds &lt;code&gt;sample&lt;/code&gt; will stop entirely. Please note that each argument is optional. 
 In order to prevent unnecessary computation, try to put &lt;code&gt;sample&lt;/code&gt; as early as possible in your pipeline (the same argument holds for &lt;code&gt;head&lt;/code&gt; and &lt;code&gt;tail&lt;/code&gt;). Once you&amp;#39;re done debugging you can simply take it out of the pipeline.&lt;/p&gt;
@@ -194,7 +211,7 @@ Allow me to demonstrate three one-liners that use the Iris dataset (don&amp;#39;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;If you specify the &lt;code&gt;-s&lt;/code&gt; option, the &lt;code&gt;sqldf&lt;/code&gt; package will be imported.
 In case tthe output is a data frame, CSV will be written to stdout. This enables you to further process that data using other tools.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; iris.csv Rio -se &lt;span class=&quot;s1&quot;&gt;&amp;#39;sqldf(&amp;quot;select * from df where df.SepalLength &amp;gt; 7.5&amp;quot;)&amp;#39;&lt;/span&gt; | csvlook
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; iris.csv Rio -se &lt;span class=&quot;s1&quot;&gt;&amp;#39;sqldf(&amp;quot;select * from df where df.SepalLength &amp;gt; 7.5&amp;quot;)&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; csvlook
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;|--------------+------------+-------------+------------+-----------------|
 |  SepalLength | SepalWidth | PetalLength | PetalWidth | Name            |
 |--------------+------------+-------------+------------+-----------------|
@@ -249,7 +266,7 @@ Also, if you&amp;#39;ve made any tools yourself, you&amp;#39;re more than welcom
 
 &lt;p&gt;If you enjoyed this post, then you may want to &lt;a href=&quot;https://twitter.com/jeroenhjanssens/&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
-				<pubDate>Thu, 19 Sep 2013 12:00:00 -0400</pubDate>
+				<pubDate>Thu, 19 Sep 2013 12:00:00 +0000</pubDate>
 				<link>http://www.jeroenjanssens.com/2013/09/19/seven-command-line-tools-for-data-science.html</link>
 				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/09/19/seven-command-line-tools-for-data-science.html</guid>
 			</item>
@@ -364,7 +381,7 @@ an important scoring rule which penalises containers. If such a rule would not b
 
 &lt;p&gt;If you like what I had to say then you may want to &lt;a href=&quot;https://twitter.com/jeroenhjanssens&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
-				<pubDate>Sat, 31 Aug 2013 12:00:00 -0400</pubDate>
+				<pubDate>Sat, 31 Aug 2013 12:00:00 +0000</pubDate>
 				<link>http://www.jeroenjanssens.com/2013/08/31/extracting-text-from-html-with-reporter.html</link>
 				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/08/31/extracting-text-from-html-with-reporter.html</guid>
 			</item>
@@ -479,7 +496,7 @@ an important scoring rule which penalises containers. If such a rule would not b
 
 &lt;p&gt;If you like what I had to say then you may want to &lt;a href=&quot;https://twitter.com/jeroenhjanssens&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
-				<pubDate>Sun, 18 Aug 2013 10:00:00 -0400</pubDate>
+				<pubDate>Sun, 18 Aug 2013 10:00:00 +0000</pubDate>
 				<link>http://www.jeroenjanssens.com/2013/08/18/bayesian-headline-testing-at-visual-revenue.html</link>
 				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/08/18/bayesian-headline-testing-at-visual-revenue.html</guid>
 			</item>
@@ -509,13 +526,13 @@ There are four shell functions &lt;code&gt;jump&lt;/code&gt;, &lt;code&gt;mark&l
     &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; -P &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH/$1&amp;quot;&lt;/span&gt; 2&amp;gt;/dev/null &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;No such mark: $1&amp;quot;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;mark &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
-    mkdir -p &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH&amp;quot;&lt;/span&gt;; ln -s &lt;span class=&quot;s2&quot;&gt;&amp;quot;$(pwd)&amp;quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH/$1&amp;quot;&lt;/span&gt;
+    mkdir -p &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; ln -s &lt;span class=&quot;s2&quot;&gt;&amp;quot;$(pwd)&amp;quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH/$1&amp;quot;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;unmark &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
     rm -i &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH/$1&amp;quot;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;marks &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    ls -l &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH&amp;quot;&lt;/span&gt; | sed &lt;span class=&quot;s1&quot;&gt;&amp;#39;s/  / /g&amp;#39;&lt;/span&gt; | cut -d&lt;span class=&quot;s1&quot;&gt;&amp;#39; &amp;#39;&lt;/span&gt; -f9- | sed &lt;span class=&quot;s1&quot;&gt;&amp;#39;s/ -/\t-/g&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt;
+    ls -l &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; sed &lt;span class=&quot;s1&quot;&gt;&amp;#39;s/  / /g&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; cut -d&lt;span class=&quot;s1&quot;&gt;&amp;#39; &amp;#39;&lt;/span&gt; -f9- &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; sed &lt;span class=&quot;s1&quot;&gt;&amp;#39;s/ -/\t-/g&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Put this in your &lt;code&gt;.zshrc&lt;/code&gt; or &lt;code&gt;.bashrc&lt;/code&gt; and you&amp;#39;re ready to jump (Mac OS X users need a slightly different version of the &lt;code&gt;marks&lt;/code&gt; function; see below). I have also turned this into a plugin for &lt;a href=&quot;https://github.com/robbyrussell/oh-my-zsh&quot;&gt;oh-my-zsh&lt;/a&gt; called &lt;code&gt;jump&lt;/code&gt;. To add a new bookmark, &lt;code&gt;cd&lt;/code&gt; into the directory and &lt;code&gt;mark&lt;/code&gt; it with a name to your liking:&lt;/p&gt;
@@ -562,12 +579,12 @@ compctl -K _completemarks unmark
 
 &lt;p&gt;As pointed out by &lt;a href=&quot;https://news.ycombinator.com/item?id=6229428&quot;&gt;guygurari&lt;/a&gt;, Mac OS X users need a slightly different version of the &lt;code&gt;marks&lt;/code&gt; function:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;marks &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;se&quot;&gt;\l&lt;/span&gt;s -l &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH&amp;quot;&lt;/span&gt; | tail -n +2 | sed &lt;span class=&quot;s1&quot;&gt;&amp;#39;s/  / /g&amp;#39;&lt;/span&gt; | cut -d&lt;span class=&quot;s1&quot;&gt;&amp;#39; &amp;#39;&lt;/span&gt; -f9- | awk -F &lt;span class=&quot;s1&quot;&gt;&amp;#39; -&amp;gt; &amp;#39;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;{printf &amp;quot;%-10s -&amp;gt; %s\n&amp;quot;, $1, $2}&amp;#39;&lt;/span&gt;
+    &lt;span class=&quot;se&quot;&gt;\l&lt;/span&gt;s -l &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; tail -n +2 &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; sed &lt;span class=&quot;s1&quot;&gt;&amp;#39;s/  / /g&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; cut -d&lt;span class=&quot;s1&quot;&gt;&amp;#39; &amp;#39;&lt;/span&gt; -f9- &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; awk -F &lt;span class=&quot;s1&quot;&gt;&amp;#39; -&amp;gt; &amp;#39;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;{printf &amp;quot;%-10s -&amp;gt; %s\n&amp;quot;, $1, $2}&amp;#39;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;If you like what I had to say then you may want to &lt;a href=&quot;https://twitter.com/jeroenhjanssens/&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
-				<pubDate>Fri, 16 Aug 2013 19:06:19 -0400</pubDate>
+				<pubDate>Fri, 16 Aug 2013 19:06:19 +0000</pubDate>
 				<link>http://www.jeroenjanssens.com/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html</link>
 				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html</guid>
 			</item>

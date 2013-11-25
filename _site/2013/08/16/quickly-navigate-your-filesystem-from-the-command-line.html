@@ -2,12 +2,29 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<link rel="icon" href="/favicon.png" type="image/png" />
+		<link rel="shortcut icon" href="/favicon.ico" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title>Quickly navigate your filesystem from the command-line</title>
 		<meta name="viewport" content="width=device-width">
 		<meta name="description" content="Dutch Data Scientist in Old New Amsterdam">
 		<link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
 		<link rel="alternate" type="application/rss+xml" title="Jeroen Janssens" href="http://www.jeroenjanssens.com/feed.xml">
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:site" content="@jeroenhjanssens">
+		<meta name="twitter:creator" content="@jeroenhjanssens">
+		
+		  <meta name="twitter:title" content="Quickly navigate your filesystem from the command-line">
+		
+		
+		<meta name="twitter:url" content="http://www.jeroenjanssens.com/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html">
+		
+		
+		  <meta name="twitter:description" content="Dutch Data Scientist in Old New Amsterdam">
+		
+		
+		  <meta name="twitter:image:src" content="http://www.jeroenjanssens.com/img/jeroenjanssens.jpg">
+		
 	</head>
 	<body>
 		<script>
@@ -35,10 +52,8 @@
 			<div id="content">
 									<h2>Quickly navigate your filesystem from the command-line</h2>
 					<div class="date">Published on 16 August 2013</div>
-<a href="https://twitter.com/share" class="twitter-share-button" data-via="jeroenhjanssens">Tweet</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-<a href="https://twitter.com/jeroenhjanssens" class="twitter-follow-button" data-show-count="false">Follow @jeroenhjanssens</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+					<a href="https://twitter.com/share" class="twitter-share-button" data-via="jeroenhjanssens">Tweet</a>
+					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 					<div class="post">
 						<p><em>Update (6-9-2013) This code is now also available as the &quot;jump&quot; plugin in <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a>.</em></p>
 
@@ -63,13 +78,13 @@ There are four shell functions <code>jump</code>, <code>mark</code>, <code>unmar
     <span class="nb">cd</span> -P <span class="s2">&quot;$MARKPATH/$1&quot;</span> 2&gt;/dev/null <span class="o">||</span> <span class="nb">echo</span> <span class="s2">&quot;No such mark: $1&quot;</span>
 <span class="o">}</span>
 <span class="k">function </span>mark <span class="o">{</span> 
-    mkdir -p <span class="s2">&quot;$MARKPATH&quot;</span>; ln -s <span class="s2">&quot;$(pwd)&quot;</span> <span class="s2">&quot;$MARKPATH/$1&quot;</span>
+    mkdir -p <span class="s2">&quot;$MARKPATH&quot;</span><span class="p">;</span> ln -s <span class="s2">&quot;$(pwd)&quot;</span> <span class="s2">&quot;$MARKPATH/$1&quot;</span>
 <span class="o">}</span>
 <span class="k">function </span>unmark <span class="o">{</span> 
     rm -i <span class="s2">&quot;$MARKPATH/$1&quot;</span>
 <span class="o">}</span>
 <span class="k">function </span>marks <span class="o">{</span>
-    ls -l <span class="s2">&quot;$MARKPATH&quot;</span> | sed <span class="s1">&#39;s/  / /g&#39;</span> | cut -d<span class="s1">&#39; &#39;</span> -f9- | sed <span class="s1">&#39;s/ -/\t-/g&#39;</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
+    ls -l <span class="s2">&quot;$MARKPATH&quot;</span> <span class="p">|</span> sed <span class="s1">&#39;s/  / /g&#39;</span> <span class="p">|</span> cut -d<span class="s1">&#39; &#39;</span> -f9- <span class="p">|</span> sed <span class="s1">&#39;s/ -/\t-/g&#39;</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
 <span class="o">}</span>
 </code></pre></div>
 <p>Put this in your <code>.zshrc</code> or <code>.bashrc</code> and you&#39;re ready to jump (Mac OS X users need a slightly different version of the <code>marks</code> function; see below). I have also turned this into a plugin for <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a> called <code>jump</code>. To add a new bookmark, <code>cd</code> into the directory and <code>mark</code> it with a name to your liking:</p>
@@ -116,7 +131,7 @@ compctl -K _completemarks unmark
 
 <p>As pointed out by <a href="https://news.ycombinator.com/item?id=6229428">guygurari</a>, Mac OS X users need a slightly different version of the <code>marks</code> function:</p>
 <div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="k">function </span>marks <span class="o">{</span>
-    <span class="se">\l</span>s -l <span class="s2">&quot;$MARKPATH&quot;</span> | tail -n +2 | sed <span class="s1">&#39;s/  / /g&#39;</span> | cut -d<span class="s1">&#39; &#39;</span> -f9- | awk -F <span class="s1">&#39; -&gt; &#39;</span> <span class="s1">&#39;{printf &quot;%-10s -&gt; %s\n&quot;, $1, $2}&#39;</span>
+    <span class="se">\l</span>s -l <span class="s2">&quot;$MARKPATH&quot;</span> <span class="p">|</span> tail -n +2 <span class="p">|</span> sed <span class="s1">&#39;s/  / /g&#39;</span> <span class="p">|</span> cut -d<span class="s1">&#39; &#39;</span> -f9- <span class="p">|</span> awk -F <span class="s1">&#39; -&gt; &#39;</span> <span class="s1">&#39;{printf &quot;%-10s -&gt; %s\n&quot;, $1, $2}&#39;</span>
 <span class="o">}</span>
 </code></pre></div>
 <p>If you like what I had to say then you may want to <a href="https://twitter.com/jeroenhjanssens/">follow me on Twitter</a>.</p>

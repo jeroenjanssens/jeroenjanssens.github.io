@@ -1,15 +1,15 @@
 ---
 layout: post
 title:  "Stochastic Outlier Selection"
-date:   2013-24-11 17:06:19
+date:   2013-11-24 17:06:19
 ---
 
-## Quick links
+### Quick links
 
 - [Detecting anomalous senators (interactive visualization in D3)][demo]
-- [Technical report (PDF)][tr]
+- [Technical report (Janssens, Huszar, Postma, and van den Herik, 2012, PDF)][tr]
 - [Command-line tool and Python implementation (Github repository)][repo]
-- Video and slides of presentation at [NYC Machine Learning meetup][meetup] (Not yet available)
+- Video and slides of presentation at [NYC ML meetup][meetup] (Not yet available)
 - [Ph.D. thesis Outlier Selection and One-Class Classification (Github repository)][thesis]
 
 

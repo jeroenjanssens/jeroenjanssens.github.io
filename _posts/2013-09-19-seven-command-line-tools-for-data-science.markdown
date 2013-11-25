@@ -2,6 +2,8 @@
 layout: post
 title:  "7 command-line tools for data science"
 date:   2013-09-19 12:00:00
+description: "Data science involves Obtaining, Scrubbing, Exploring, Modeling, and iNterpreting data. As a data scientist, I spend quite a bit of time on the command-line, especially when there's data to be obtained, scrubbed, or explored. And I'm not alone in this. Recently, Greg Reda discussed how the classics (e.g., head, cut, grep, sed, and awk) can be used for data science. Prior to that, Seth Brown discussed how to perform basic exploratory data analysis in Unix. I would like to continue this discussion by sharing seven command-line tools that I have found useful in my day-to-day work. The tools are: jq, json2csv, csvkit, scrape, xml2json, sample, and Rio."
+image:  /img/iris.png
 ---
 
 Data science is [OSEMN](http://www.dataists.com/2010/09/a-taxonomy-of-data-science/) (pronounced as awesome).

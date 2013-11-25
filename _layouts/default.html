@@ -2,12 +2,35 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<link rel="icon" href="/favicon.png" type="image/png" />
+		<link rel="shortcut icon" href="/favicon.ico" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title>{{ page.title }}</title>
 		<meta name="viewport" content="width=device-width">
 		<meta name="description" content="{{ site.description }}">
 		<link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
 		<link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ site.url }}/feed.xml">
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:site" content="@jeroenhjanssens">
+		<meta name="twitter:creator" content="@jeroenhjanssens">
+		{% if page.title %}
+		  <meta name="twitter:title" content="{{ page.title }}">
+		{% else %}
+		<meta name="twitter:title" content="{{ site.title }}">
+		{% endif %}
+		{% if page.url %}
+		<meta name="twitter:url" content="{{ site.url }}{{ page.url }}">
+		{% endif %}
+		{% if page.description %}
+		  <meta name="twitter:description" content="{{ page.description }}">
+		{% else %}
+		  <meta name="twitter:description" content="{{ site.description }}">
+		{% endif %}
+		{% if page.image %}
+		  <meta name="twitter:image:src" content="{{ site.url }}{{ page.image }}">
+		{% else %}
+		  <meta name="twitter:image:src" content="{{ site.url }}/img/jeroenjanssens.jpg">
+		{% endif %}
 	</head>
 	<body>
 		<script>
