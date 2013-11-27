@@ -21,10 +21,10 @@
 		<meta name="twitter:url" content="http://www.jeroenjanssens.com/2013/11/24/stochastic-outlier-selection.html">
 		
 		
-		  <meta name="twitter:description" content="Dutch Data Scientist in Old New Amsterdam">
+		  <meta name="twitter:description" content="SOS is an unsupervised outlier-selection algorithm that computes for each data point an outlier probability. It employs the concept of affinity to quantify the relationship between data points.">
 		
 		
-		  <meta name="twitter:image:src" content="http://www.jeroenjanssens.com/img/jeroenjanssens.jpg">
+		  <meta name="twitter:image:src" content="http://www.jeroenjanssens.comimg/twitter-sos.png">
 		
 	</head>
 	<body>
@@ -56,15 +56,106 @@
 					<a href="https://twitter.com/share" class="twitter-share-button" data-via="jeroenhjanssens">Tweet</a>
 					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 					<div class="post">
-						<h3>Quick links</h3>
+						<p>My Ph.D., which I completed earlier this year, was about <a href="https://github.com/jeroenjanssens/phd-thesis">outlier selection and one-class classification</a>. During this time I learned about quite a few machine learning algorithms; especially about outlier-selection algorithms and one-class classifiers, of course. With some help of <a href="https://twitter.com/fhuszar">Ferenc Huszár</a> and <a href="http://homepage.tudelft.nl/19j49/Home.html">Laurens van der Maaten</a>, I also came up with a new outlier-selection algorithm called <a href="https://github.com/jeroenjanssens/sos">Stochastic Outlier Selection</a> (SOS), which I would like to briefly describe here.</p>
 
-<ul>
-<li><a href="http://bl.ocks.org/jeroenjanssens/7608890">Detecting anomalous senators (interactive visualization in D3)</a></li>
-<li><a href="https://github.com/jeroenjanssens/sos/blob/master/doc/sos-ticc-tr-2012-001.pdf?raw=true">Technical report (Janssens, Huszar, Postma, and van den Herik, 2012, PDF)</a></li>
-<li><a href="https://github.com/jeroenjanssens/sos">Command-line tool and Python implementation (Github repository)</a></li>
-<li>Video and slides of presentation at <a href="http://www.meetup.com/NYC-Machine-Learning/events/149093182/">NYC ML meetup</a> (Not yet available)</li>
-<li><a href="https://github.com/jeroenjanssens/phd-thesis">Ph.D. thesis Outlier Selection and One-Class Classification (Github repository)</a></li>
-</ul>
+<p><img src="/img/sos-densities.png" alt=""></p>
+
+<p>If you prefer a more detailed discussion about the algorithm, the experiments, and the results, you can read either the <a href="https://github.com/jeroenjanssens/sos/blob/master/doc/sos-ticc-tr-2012-001.pdf?raw=true">technical report (PDF)</a> or chapter 4 of <a href="https://github.com/jeroenjanssens/phd-thesis">my Ph.D. thesis</a>. In case you can&#39;t wait to see whether your own dataset contains any outliers then there&#39;s a <a href="https://github.com/jeroenjanssens/sos">Python implementation of SOS</a> which you can also use from the command-line.</p>
+
+<h3>Affinity-based outlier selection</h3>
+
+<p>SOS is an unsupervised outlier-selection algorithm that takes as input either a feature matrix or a dissimilarity matrix and outputs for each data point an outlier probability. 
+Intuitively, a data point is considered to be an outlier when the other data points have insufficient affinity with it. Allow me to explain this using the following two-dimensional toy dataset.</p>
+
+<p><img src="/img/sos-toydataset.png" alt=""></p>
+
+<p>The right part of the figure shows that the feature matrix <strong>X</strong> is transformed into a dissimilarity matrix <strong>D</strong> using the Euclidean distance. (Any dissimilarity measure could have been used here.)
+Using the dissimilarity matrix <strong>D</strong>, SOS computes an affinity matrix <strong>A</strong>, a binding probability matrix <strong>B</strong>, and finally, the outlier probability vector <strong>Φ</strong>, because Greek letters are cool.</p>
+
+<p><img src="/img/sos-matrices.png" alt=""></p>
+
+<p>The use of the concept of affinity is inspired by <a href="http://homepage.tudelft.nl/19j49/t-SNE.html">t-Distributed Stochastic Neighbor Embedding</a> (t-SNE), which is a non-linear dimensionality reduction technique created by <a href="http://homepage.tudelft.nl/19j49/Home.html">Laurens van der Maaten</a> and <a href="http://www.cs.toronto.edu/%7Ehinton/">Geoffrey Hinton</a>. Both algorithms use the concept of affinity to quantify the relationship between data points. t-SNE uses it to preserve the local structure of a high-dimensional dataset and SOS uses it to select outliers.
+The affinity a certain data point has with another data point decreases Gaussian-like with respect to their dissimilarity.</p>
+
+<p><img src="/img/sos-d2a.png" alt=""></p>
+
+<p>Each data point has a variance associated with it. The variance depends on the density of the neighborhood. A higher density implies a lower variance. In fact, the variance is set such that each data point has effectively the same number of neighbors. 
+This number is controlled via the only parameter of SOS, called perplexity.</p>
+
+<p><img src="/img/sos-variances.png" alt=""></p>
+
+<p>Perplexity can be interpreted as the <em>k</em> in <em>k</em>-nearest neighbor algorithms. The difference is that in SOS being a neighbor is not a binary property, but a probabilistic one. The following figure illustrates the binding probabilities data point <strong>x1</strong> (or vertex <strong>v1</strong> because we have switched to a graph representation of the dataset) has with the other five data points.</p>
+
+<p><img src="/img/sos-binding.png" alt=""></p>
+
+<p>The binding probability matrix is just the affinity matrix such that the rows sum to 1. To obtain the outlier probability of data point we compute the joint probability that the other data points will <em>not</em> bind to it.</p>
+
+<p><img src="/img/sos-closedform.png" alt=""></p>
+
+<p>This simple equation corresponds to the intuition behind SOS mentioned earlier: a data point is considered to be an outlier when the other data points have insufficient affinity with it. The proof behind this equation is unfortunately beyond the scope of this post. </p>
+
+<p>SOS has been evaluated on a variety of real-world and synthetic datasets, and compared to four other outlier-selection algorithms. The following figure shows the weighted AUC performance on 18 real-world datasets.</p>
+
+<p><img src="/img/sos-results.png" alt=""></p>
+
+<p>As you can see, SOS has a higher performance on most of these real-world datasets. 
+However, there&#39;s still the no-free-lunch theorem, which basically says that no algorithm uniformly outperforms all other algorithms on all datasets. 
+So, if you&#39;d like to select some outliers on your own dataset, check out SOS by all means, but keep in mind that you may obtain a higher performance with a different outlier-selection algorithm. The real questions are: which one and why?</p>
+
+<p>As this was a very brief description of SOS, I had to skip over many details. 
+Again, in case you&#39;re interested, you can read either the <a href="https://github.com/jeroenjanssens/sos/blob/master/doc/sos-ticc-tr-2012-001.pdf?raw=true">technical report (PDF)</a> or chapter 4 of <a href="https://github.com/jeroenjanssens/phd-thesis">my Ph.D. thesis</a>. In the next section I apply SOS to roll call voting data. </p>
+
+<h3><a name="detecting-anomalous-senators"></a>Detecting anomalous senators</h3>
+
+<p>Last week, I had the pleasure to talk about outlier selection and one-class classification at the <a href="http://www.meetup.com/NYC-Machine-Learning/events/149093182/">NYC Machine Learning meetup</a>. (The video and slides will soon be put online by <a href="http://g33ktalk.com/">G33ktalk</a>.) In order to not just show fancy graphs and boring equations I created a <a href="http://bl.ocks.org/jeroenjanssens/7608890">demo in D3 and CoffeeScript</a>, of which you see a screenshot below. In the <a href="http://bl.ocks.org/jeroenjanssens/7608890">demo</a>, I apply SOS on roll call voting data, which is inspired by <a href="http://vikparuchuri.com/blog/how-divided-is-the-senate/">this post on visualizing the senate</a> by Vik Paruchuri. 
+The demo illustrates how the approximated outlier probability of each senator evolves as more Stochastic Neighbor Graphs (SNG) are being sampled. (Please note that SNGs are not discussed in this post.)</p>
+
+<p><a href="http://bl.ocks.org/jeroenjanssens/7608890"><img src="/img/sos-senators.png" alt="Detecting anomalous senators"></a></p>
+
+<p>Let&#39;s see how the approximated outlier probabilities compare to the outlier probabilities computed on the command-line. Recently, I started using <a href="https://github.com/Factual/drake#drake">drake</a> to organize my data workflow. (If you care about reproducibility, then I recommend you try it out.) The following <code>Drakefile</code> shows how to fetch the roll call voting data, extract its features and labels, and apply the <a href="https://github.com/jeroenjanssens/sos/blob/master/bin/sos">Python implementation of SOS</a> with a perplexity of 50 to it. </p>
+<div class="highlight"><pre><code class="bash language-bash" data-lang="bash">cat Drakefile
+
+<span class="p">;</span><span class="c"># Get dataset</span>
+dataset.csv &lt;- <span class="o">[</span>-timecheck<span class="o">]</span>
+    curl -s https://raw.github.com/VikParuchuri/political-positions/master/113_frame.csv &gt; <span class="nv">$OUTPUT</span>
+
+<span class="p">;</span><span class="c"># Extract features</span>
+features.csv &lt;- dataset.csv
+    csvcut <span class="nv">$INPUT</span> -C 1,name,party,state <span class="p">|</span> sed <span class="s1">&#39;1d;s/NA/4/g&#39;</span> &gt; <span class="nv">$OUTPUT</span>
+
+<span class="p">;</span><span class="c"># Extract labels</span>
+labels.csv &lt;- dataset.csv
+    csvcut <span class="nv">$INPUT</span> -c name,party,state &gt; <span class="nv">$OUTPUT</span>
+
+<span class="p">;</span><span class="c"># Compute outlier probabilities using SOS</span>
+outlier.csv &lt;- features.csv
+    <span class="nb">echo</span> <span class="s1">&#39;outlier&#39;</span> &gt; <span class="nv">$OUTPUT</span>
+    &lt; <span class="nv">$INPUT</span> sos -p 50 &gt;&gt; <span class="nv">$OUTPUT</span>
+
+<span class="p">;</span><span class="c"># Combine labels and outlier probabilities and sort</span>
+result.csv &lt;- labels.csv, outlier.csv
+    paste -d, <span class="nv">$INPUT0</span> <span class="nv">$INPUT1</span> <span class="p">|</span> csvsort -rc outlier &gt; <span class="nv">$OUTPUT</span>
+</code></pre></div><div class="highlight"><pre><code class="text language-text" data-lang="text">drake
+head result.csv | csvlook
+
+|-------------+-------+-------+-------------|
+|  name       | party | state | outlier     |
+|-------------+-------+-------+-------------|
+|  Cowan      | D     | MA    | 0.91758412  |
+|  Lautenberg | D     | NJ    | 0.89442425  |
+|  Chiesa     | R     | NJ    | 0.8457114   |
+|  Markey     | D     | MA    | 0.7813504   |
+|  Kerry      | D     | MA    | 0.75302407  |
+|  Wyden      | D     | OR    | 0.70110306  |
+|  Murkowski  | R     | AK    | 0.68868458  |
+|  Alexander  | R     | TN    | 0.626972    |
+|  Vitter     | R     | LA    | 0.59739462  |
+|-------------+-------+-------+-------------|
+</code></pre></div>
+<p>The tools <code>csvcut</code>, <code>csvsort</code>, and <code>csvlook</code> are part of <a href="http://csvkit.readthedocs.org/">csvkit</a>. 
+You may notice that the outlier probabilities shown in the screenshot do not match the exact ones computed with <code>sos</code>. That&#39;s because (1) the screenshot was taken not long after the demo started and (2) the demo was running in Chrome, which apparently has a different implementation of <code>Math.random</code>. In Firefox, the approximated outlier probabilities will match the exact ones, eventually.</p>
+
+<p>If you enjoyed this post and would like to know when the video and slides will be online, then you should <a href="https://twitter.com/jeroenhjanssens/">follow me on Twitter</a>.</p>
 
 					</div>
 
