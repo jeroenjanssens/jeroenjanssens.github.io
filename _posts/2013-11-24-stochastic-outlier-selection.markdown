@@ -3,7 +3,7 @@ layout: post
 title:  "Stochastic Outlier Selection"
 date:   2013-11-24 17:06:19
 description: "SOS is an unsupervised outlier-selection algorithm that computes for each data point an outlier probability. It employs the concept of affinity to quantify the relationship between data points."
-image: img/twitter-sos.png
+image: /img/twitter-sos.png
 ---
 
 My Ph.D., which I completed earlier this year, was about [outlier selection and one-class classification][thesis]. During this time I learned about quite a few machine learning algorithms; especially about outlier-selection algorithms and one-class classifiers, of course. With some help of [Ferenc Huszár](https://twitter.com/fhuszar) and [Laurens van der Maaten](http://homepage.tudelft.nl/19j49/Home.html), I also came up with a new outlier-selection algorithm called [Stochastic Outlier Selection][repo] (SOS), which I would like to briefly describe here.
