@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="icon" href="/favicon.png" type="image/png" />
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>Lean, mean data science machine</title>
+		<meta name="viewport" content="width=device-width">
+		<meta name="description" content="Dutch Data Scientist in Old New Amsterdam">
+		<link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+		<link rel="alternate" type="application/rss+xml" title="Jeroen Janssens" href="http://www.jeroenjanssens.com/feed.xml">
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:site" content="@jeroenhjanssens">
+		<meta name="twitter:domain" content="jeroenjanssens.com">
+		<meta name="twitter:creator" content="@jeroenhjanssens">
+		
+		  <meta name="twitter:title" content="Lean, mean data science machine">
+		
+		
+		<meta name="twitter:url" content="http://www.jeroenjanssens.com/2013/12/07/lean-mean-data-science-machine.html">
+		
+		
+		  <meta name="twitter:description" content="I am sharing a virtual environment that enables you to follow along with all the commands and tools discussed in my upcoming book Data Science at the Command Line.">
+		
+		
+		  <meta name="twitter:image:src" content="http://www.jeroenjanssens.com/img/vagrant.png">
+		
+	</head>
+	<body>
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-43246574-1', 'jeroenjanssens.com');
+		  ga('send', 'pageview');
+		</script>
+		<div id="site">
+			<div id="header">
+				<h1><a href="/">Jeroen Janssens</a></h1>
+				<div id="description">Dutch Data Scientist in Old New Amsterdam</div>
+				<div id="social">
+					<ul>
+						<li><a href="http://twitter.com/jeroenhjanssens/">Twitter</a></li>
+						<li><a href="http://github.com/jeroenjanssens/">Github</a></li>
+						<li><a href="http://www.linkedin.com/in/jeroenjanssens">LinkedIn</a></li>
+						<li><a href="http://www.jeroenjanssens.com/feed.xml">RSS</a></li>
+					<ul>
+				</div>
+			</div>
+			<div id="content">
+									<h2>Lean, mean data science machine</h2>
+					<div class="date">Published on 07 December 2013</div>
+					<a href="https://twitter.com/share" class="twitter-share-button" data-via="jeroenhjanssens">Tweet</a>
+					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+					<div class="post">
+						<p>Data scientists love to create interesting models and exciting data visualizations. However, before they get to that point, usually much effort goes into obtaining, scrubbing, and exploring the required data. I argue that the *nix command-line, although invented decades ago, remains a powerful environment for processing data. It provides a read-eval-print loop (REPL) that is often much more convenient for exploratory data analysis than the edit-compile-run-debug cycle associated with large programs and even scripts.</p>
+
+<p>Unfortunately, setting up a workable environment and installing the latest command-line tools can be quite a pain. This post describes how to alleviate that pain and how to get you started doing data science on the command-line in a matter minutes.</p>
+
+<h3>Data Science at the Command Line</h3>
+
+<p>I am currently authoring a book titled &quot;Data Science at the Command Line&quot;, which will be published by O&#39;Reilly in summer 2014.
+The main goal of the book is to teach why, how, and when the command-line could be employed for data science. The tentative outline is as follows:</p>
+
+<ol>
+<li>Introduction</li>
+<li>Getting Started</li>
+<li>Step 1: Obtaining Data</li>
+<li>Creating Reusable Command-line Tools</li>
+<li>Step 2: Scrubbing Data</li>
+<li>Managing Your Data Workflow</li>
+<li>Step 3: Exploring Data</li>
+<li>Speeding Up Data-Intensive Commands</li>
+<li>Step 4: Modeling Data</li>
+<li>Poor Man&#39;s MapReduce</li>
+<li>Step 5: Interpreting Data</li>
+<li>Conclusion</li>
+</ol>
+
+<p>Naturally, the book will be drenched with commands and source code. It is important that the text, the code, and the output of the code are consistent with each other. Manually running the code and copy-pasting the output is a cumbersome and error-prone process. 
+To automate this process, I have created a script (a <a href="http://www.dexy.it/">dexy</a> filter to be precise) that will (1) extract all the source code from the text, (2) run these in an isolated environment, and (3) paste the output back into the text. From here the O&#39;Reilly toolchain takes over and converts the text to a variety of digital formats. Very smooth.</p>
+
+<h3>Vagrant environment</h3>
+
+<p>The isolated environment is created and configured using <a href="http://www.vagrantup.com/">Vagrant</a>, which is basically a wrapper around VirtualBox and other virtualization software such AWS EC2. With a few commands, a fresh virtual machine is spun up and configured according to a simple script. It was <a href="http://miningthesocialweb.com/2013/11/23/confessions-of-a-prolific-moonlighter-with-a-chronic-writing-disorder">Matthew Russell&#39;s Ignite talk</a> that inspired me to use Vagrant; he provides one for his book <a href="http://miningthesocialweb.com">Mining the Social Web</a> that is focused more on Python.
+If my Vagrant environment would be provided with Data Science at the Command Line, then the reader would be able to follow along with the commands and source code. But since my mission is to enable everybody to do data science at the command-line as soon as possible, I have decided to make it available right now.</p>
+
+<p>Currently, the environment includes the <a href="http://jeroenjanssens.com/2013/09/19/seven-command-line-tools-for-data-science.html">seven command-line tools I discussed</a> a while ago and <a href="http://www.gnu.org/software/parallel/">GNU parallel</a>, which will be discussed in Chapter 8. Just like the book itself, the environment is a work in progress. In order to be able to run <a href="https://github.com/jeroenjanssens/data-science-toolbox/blob/master/tools/Rio">Rio</a> (one of the seven tools), I had to include the latest version of <code>R</code>, together with the packages <code>ggplot2</code>, <code>sqldf</code>, and <code>plyr</code>. I am aware that many of you would prefer the Python scientific stack to be included as well. However, because of disk-space and provision-time constraints, I doubt whether it is desirable (or even possible) to create an environment that includes everything. Perhaps that we can devise a solution where you select which tools, packages, and languages you would like to have installed. As mentioned, it is a work in progress and my main goal is to get you up and running on the command-line.</p>
+
+<h3>Installation</h3>
+
+<p>The environment is currently configured to run on top of <a href="https://www.virtualbox.org">VirtualBox</a>. (I am looking into the option to deploy it on an AWS EC2 instance.)
+So, first you will need to install <a href="https://www.virtualbox.org">VirtualBox</a>. 
+Second you need to install <a href="http://www.vagrantup.com/">Vagrant</a>. 
+Third, you need to download the environment by cloning the data science toolbox. (If you do not want to use <code>git</code> you can also <a href="https://github.com/jeroenjanssens/data-science-toolbox/archive/master.zip">download the zip file</a>.)</p>
+<div class="highlight"><pre><code class="bash language-bash" data-lang="bash">git clone https://github.com/jeroenjanssens/data-science-toolbox.git
+<span class="nb">cd </span>data-science-toolbox/box
+</code></pre></div>
+<p>Running <code>vagrant up</code> in the <code>box</code> directory will download the base box (Ubuntu 12.04 LTS 64-bit), spin up a virtual machine, and provision it. (Now would be the perfect time to think about any command-line scripts you may have lying around and donate them to the <a href="http://datasciencetoolbox.org">data science toolbox</a>.) Once the provisioning is complete, you will be able to log into your own lean, mean data science machine: </p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">vagrant ssh
+</code></pre></div>
+<p>Run the following command to test whether everything has been installed correctly:</p>
+<div class="highlight"><pre><code class="bash language-bash" data-lang="bash">curl -s <span class="s1">&#39;http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio&#39;</span> <span class="p">|</span> scrape -be <span class="s1">&#39;table.wikitable &gt; tr:not(:first-child)&#39;</span> <span class="p">|</span> xml2json <span class="p">|</span> jq -c <span class="s1">&#39;.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]}&#39;</span> <span class="p">|</span> json2csv -p -k<span class="o">=</span>country,ratio <span class="p">|</span> Rio -se<span class="s1">&#39;sqldf(&quot;select * from df where ratio &gt; 0.3 order by ratio desc&quot;)&#39;</span> <span class="p">|</span> csvlook
+</code></pre></div><div class="highlight"><pre><code class="text language-text" data-lang="text">|----------------+------------|
+|  country       | ratio      |
+|----------------+------------|
+|  Vatican City  | 7.2727273  |
+|  Monaco        | 2.2        |
+|  San Marino    | 0.6393443  |
+|  Liechtenstein | 0.475      |
+|----------------+------------|
+</code></pre></div>
+<p>The virtual machine is not entirely isolated. Files that you put in the <code>box</code> directory will be accessible from the <code>/vagrant</code> directory in the virtual machine. This allows you to use both the tools you already have installed and the command-line tools provided by the environment. If you want to install any of these tools on your own machine, then you can run the relevant commands from the <a href="https://github.com/jeroenjanssens/data-science-toolbox/blob/master/box/bootstrap.sh">provisioning script</a>. </p>
+
+<h3>Conclusion</h3>
+
+<p>While the command-line is a very powerful environment to process data, manually installing the latest command-line tools is not straightforward. Vagrant allows you to spin up a virtual machine and to install all the tools automatically.
+In this post I have shared with you the exact same Vagrant environment as that I am using for my upcoming book, in the hope that it will be useful to get you started with doing data science at the command line.
+Please let me know if you have any questions, suggestions, or contributions.</p>
+
+<p>Best wishes,</p>
+
+<p>Jeroen <br>
+<a href="https://twitter.com/jeroenhjanssens/">@jeroenhjanssens</a></p>
+
+					</div>
+
+			</div>
+		</div>
+	</body>
+</html>

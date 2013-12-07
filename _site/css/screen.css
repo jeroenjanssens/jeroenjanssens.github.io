@@ -100,22 +100,22 @@ strong {
 div.post > ul {
   list-style-type: disc;
   list-style-position: outside;
-  margin-left: 2em;
+  margin-left: 3em;
 }
 /* line 41, ../_sass/screen.sass */
 div.post > ul > li {
-  padding: 0.25em;
+  padding: 0.1em;
 }
 
 /* line 44, ../_sass/screen.sass */
 div.post > ol {
   list-style-type: decimal;
   list-style-position: outside;
-  margin-left: 2em;
+  margin-left: 3em;
 }
 /* line 48, ../_sass/screen.sass */
 div.post > ol > li {
-  padding: 0.25em;
+  padding: 0.1em;
 }
 
 /* line 51, ../_sass/screen.sass */

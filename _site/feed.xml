@@ -7,6 +7,83 @@
 		<atom:link href="http://www.jeroenjanssens.com/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>Lean, mean data science machine</title>
+				<description>&lt;p&gt;Data scientists love to create interesting models and exciting data visualizations. However, before they get to that point, usually much effort goes into obtaining, scrubbing, and exploring the required data. I argue that the *nix command-line, although invented decades ago, remains a powerful environment for processing data. It provides a read-eval-print loop (REPL) that is often much more convenient for exploratory data analysis than the edit-compile-run-debug cycle associated with large programs and even scripts.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, setting up a workable environment and installing the latest command-line tools can be quite a pain. This post describes how to alleviate that pain and how to get you started doing data science on the command-line in a matter minutes.&lt;/p&gt;
+
+&lt;h3&gt;Data Science at the Command Line&lt;/h3&gt;
+
+&lt;p&gt;I am currently authoring a book titled &amp;quot;Data Science at the Command Line&amp;quot;, which will be published by O&amp;#39;Reilly in summer 2014.
+The main goal of the book is to teach why, how, and when the command-line could be employed for data science. The tentative outline is as follows:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Introduction&lt;/li&gt;
+&lt;li&gt;Getting Started&lt;/li&gt;
+&lt;li&gt;Step 1: Obtaining Data&lt;/li&gt;
+&lt;li&gt;Creating Reusable Command-line Tools&lt;/li&gt;
+&lt;li&gt;Step 2: Scrubbing Data&lt;/li&gt;
+&lt;li&gt;Managing Your Data Workflow&lt;/li&gt;
+&lt;li&gt;Step 3: Exploring Data&lt;/li&gt;
+&lt;li&gt;Speeding Up Data-Intensive Commands&lt;/li&gt;
+&lt;li&gt;Step 4: Modeling Data&lt;/li&gt;
+&lt;li&gt;Poor Man&amp;#39;s MapReduce&lt;/li&gt;
+&lt;li&gt;Step 5: Interpreting Data&lt;/li&gt;
+&lt;li&gt;Conclusion&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Naturally, the book will be drenched with commands and source code. It is important that the text, the code, and the output of the code are consistent with each other. Manually running the code and copy-pasting the output is a cumbersome and error-prone process. 
+To automate this process, I have created a script (a &lt;a href=&quot;http://www.dexy.it/&quot;&gt;dexy&lt;/a&gt; filter to be precise) that will (1) extract all the source code from the text, (2) run these in an isolated environment, and (3) paste the output back into the text. From here the O&amp;#39;Reilly toolchain takes over and converts the text to a variety of digital formats. Very smooth.&lt;/p&gt;
+
+&lt;h3&gt;Vagrant environment&lt;/h3&gt;
+
+&lt;p&gt;The isolated environment is created and configured using &lt;a href=&quot;http://www.vagrantup.com/&quot;&gt;Vagrant&lt;/a&gt;, which is basically a wrapper around VirtualBox and other virtualization software such AWS EC2. With a few commands, a fresh virtual machine is spun up and configured according to a simple script. It was &lt;a href=&quot;http://miningthesocialweb.com/2013/11/23/confessions-of-a-prolific-moonlighter-with-a-chronic-writing-disorder&quot;&gt;Matthew Russell&amp;#39;s Ignite talk&lt;/a&gt; that inspired me to use Vagrant; he provides one for his book &lt;a href=&quot;http://miningthesocialweb.com&quot;&gt;Mining the Social Web&lt;/a&gt; that is focused more on Python.
+If my Vagrant environment would be provided with Data Science at the Command Line, then the reader would be able to follow along with the commands and source code. But since my mission is to enable everybody to do data science at the command-line as soon as possible, I have decided to make it available right now.&lt;/p&gt;
+
+&lt;p&gt;Currently, the environment includes the &lt;a href=&quot;http://jeroenjanssens.com/2013/09/19/seven-command-line-tools-for-data-science.html&quot;&gt;seven command-line tools I discussed&lt;/a&gt; a while ago and &lt;a href=&quot;http://www.gnu.org/software/parallel/&quot;&gt;GNU parallel&lt;/a&gt;, which will be discussed in Chapter 8. Just like the book itself, the environment is a work in progress. In order to be able to run &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox/blob/master/tools/Rio&quot;&gt;Rio&lt;/a&gt; (one of the seven tools), I had to include the latest version of &lt;code&gt;R&lt;/code&gt;, together with the packages &lt;code&gt;ggplot2&lt;/code&gt;, &lt;code&gt;sqldf&lt;/code&gt;, and &lt;code&gt;plyr&lt;/code&gt;. I am aware that many of you would prefer the Python scientific stack to be included as well. However, because of disk-space and provision-time constraints, I doubt whether it is desirable (or even possible) to create an environment that includes everything. Perhaps that we can devise a solution where you select which tools, packages, and languages you would like to have installed. As mentioned, it is a work in progress and my main goal is to get you up and running on the command-line.&lt;/p&gt;
+
+&lt;h3&gt;Installation&lt;/h3&gt;
+
+&lt;p&gt;The environment is currently configured to run on top of &lt;a href=&quot;https://www.virtualbox.org&quot;&gt;VirtualBox&lt;/a&gt;. (I am looking into the option to deploy it on an AWS EC2 instance.)
+So, first you will need to install &lt;a href=&quot;https://www.virtualbox.org&quot;&gt;VirtualBox&lt;/a&gt;. 
+Second you need to install &lt;a href=&quot;http://www.vagrantup.com/&quot;&gt;Vagrant&lt;/a&gt;. 
+Third, you need to download the environment by cloning the data science toolbox. (If you do not want to use &lt;code&gt;git&lt;/code&gt; you can also &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox/archive/master.zip&quot;&gt;download the zip file&lt;/a&gt;.)&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;git clone https://github.com/jeroenjanssens/data-science-toolbox.git
+&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;data-science-toolbox/box
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Running &lt;code&gt;vagrant up&lt;/code&gt; in the &lt;code&gt;box&lt;/code&gt; directory will download the base box (Ubuntu 12.04 LTS 64-bit), spin up a virtual machine, and provision it. (Now would be the perfect time to think about any command-line scripts you may have lying around and donate them to the &lt;a href=&quot;http://datasciencetoolbox.org&quot;&gt;data science toolbox&lt;/a&gt;.) Once the provisioning is complete, you will be able to log into your own lean, mean data science machine: &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;vagrant ssh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Run the following command to test whether everything has been installed correctly:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;curl -s &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; scrape -be &lt;span class=&quot;s1&quot;&gt;&amp;#39;table.wikitable &amp;gt; tr:not(:first-child)&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; xml2json &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; jq -c &lt;span class=&quot;s1&quot;&gt;&amp;#39;.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]}&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; json2csv -p -k&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;country,ratio &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; Rio -se&lt;span class=&quot;s1&quot;&gt;&amp;#39;sqldf(&amp;quot;select * from df where ratio &amp;gt; 0.3 order by ratio desc&amp;quot;)&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; csvlook
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;|----------------+------------|
+|  country       | ratio      |
+|----------------+------------|
+|  Vatican City  | 7.2727273  |
+|  Monaco        | 2.2        |
+|  San Marino    | 0.6393443  |
+|  Liechtenstein | 0.475      |
+|----------------+------------|
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The virtual machine is not entirely isolated. Files that you put in the &lt;code&gt;box&lt;/code&gt; directory will be accessible from the &lt;code&gt;/vagrant&lt;/code&gt; directory in the virtual machine. This allows you to use both the tools you already have installed and the command-line tools provided by the environment. If you want to install any of these tools on your own machine, then you can run the relevant commands from the &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox/blob/master/box/bootstrap.sh&quot;&gt;provisioning script&lt;/a&gt;. &lt;/p&gt;
+
+&lt;h3&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;While the command-line is a very powerful environment to process data, manually installing the latest command-line tools is not straightforward. Vagrant allows you to spin up a virtual machine and to install all the tools automatically.
+In this post I have shared with you the exact same Vagrant environment as that I am using for my upcoming book, in the hope that it will be useful to get you started with doing data science at the command line.
+Please let me know if you have any questions, suggestions, or contributions.&lt;/p&gt;
+
+&lt;p&gt;Best wishes,&lt;/p&gt;
+
+&lt;p&gt;Jeroen &lt;br&gt;
+&lt;a href=&quot;https://twitter.com/jeroenhjanssens/&quot;&gt;@jeroenhjanssens&lt;/a&gt;&lt;/p&gt;
+</description>
+				<pubDate>Sat, 07 Dec 2013 09:00:00 +0000</pubDate>
+				<link>http://www.jeroenjanssens.com/2013/12/07/lean-mean-data-science-machine.html</link>
+				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/12/07/lean-mean-data-science-machine.html</guid>
+			</item>
+		
+			<item>
 				<title>Stochastic Outlier Selection</title>
 				<description>&lt;p&gt;My Ph.D., which I completed earlier this year, was about &lt;a href=&quot;https://github.com/jeroenjanssens/phd-thesis&quot;&gt;outlier selection and one-class classification&lt;/a&gt;. During this time I learned about quite a few machine learning algorithms; especially about outlier-selection algorithms and one-class classifiers, of course. With some help of &lt;a href=&quot;https://twitter.com/fhuszar&quot;&gt;Ferenc Huszár&lt;/a&gt; and &lt;a href=&quot;http://homepage.tudelft.nl/19j49/Home.html&quot;&gt;Laurens van der Maaten&lt;/a&gt;, I also came up with a new outlier-selection algorithm called &lt;a href=&quot;https://github.com/jeroenjanssens/sos&quot;&gt;Stochastic Outlier Selection&lt;/a&gt; (SOS), which I would like to briefly describe here.&lt;/p&gt;
 
