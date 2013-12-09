@@ -3,6 +3,7 @@
 @import compass/typography/vertical_rhythm
 @import compass/typography/lists
 @import compass/css3/border-radius
+@import compass/utilities/tables
 @import url(http://fonts.googleapis.com/css?family=Cabin+Condensed:600,400|Roboto+Slab:400,700|Ubuntu+Mono:400,700)
 
 $base-font-size: 16px
@@ -18,6 +19,30 @@ $csocialh: $orange
 $clink: darken($orange, 10%)
 
 +establish-baseline
+$yes: rgb(144, 255, 144)
+$no: rgb(255, 144, 144)
+
+table
+  +adjust-font-size-to(12px)
+  +table-scaffolding
+  +inner-table-borders(1px)
+  +outer-table-borders(1px)
+  td
+    text-align: center
+  td.yes
+    background-color: $yes
+  td.no
+    background-color: $no
+  tbody
+    th
+      text-align: left
+  tr
+    td:last-child
+      text-align: left
+    th:last-child
+      text-align: left
+  //+alternating-rows($table-color, adjust-hue($table-color, -120deg), #222)
+
 
 img#face
   float: right
