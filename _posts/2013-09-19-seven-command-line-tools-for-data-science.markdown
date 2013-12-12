@@ -6,6 +6,8 @@ description: "In this post I would like to share seven command-line tools that I
 image:  /img/iris.png
 ---
 
+*Update (7-12-2013) You can now easily install these seven command-line tools with the [Data Science Toolbox virtual environment](http://jeroenjanssens.com/2013/12/07/lean-mean-data-science-machine.html).*
+
 Data science is [OSEMN](http://www.dataists.com/2010/09/a-taxonomy-of-data-science/) (pronounced as awesome).
 That is, it involves Obtaining, Scrubbing, Exploring, Modeling, and iNterpreting data.
 As a data scientist, I spend quite a bit of time on the command-line, especially when there's data to be obtained, scrubbed, or explored. And I'm not alone in this.

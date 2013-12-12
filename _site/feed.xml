@@ -309,7 +309,9 @@ Giving a talk where the slides auto-advance after 15 seconds is a challenging, b
 		
 			<item>
 				<title>7 command-line tools for data science</title>
-				<description>&lt;p&gt;Data science is &lt;a href=&quot;http://www.dataists.com/2010/09/a-taxonomy-of-data-science/&quot;&gt;OSEMN&lt;/a&gt; (pronounced as awesome).
+				<description>&lt;p&gt;&lt;em&gt;Update (7-12-2013) You can now easily install these seven command-line tools with the &lt;a href=&quot;http://jeroenjanssens.com/2013/12/07/lean-mean-data-science-machine.html&quot;&gt;Data Science Toolbox virtual environment&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Data science is &lt;a href=&quot;http://www.dataists.com/2010/09/a-taxonomy-of-data-science/&quot;&gt;OSEMN&lt;/a&gt; (pronounced as awesome).
 That is, it involves Obtaining, Scrubbing, Exploring, Modeling, and iNterpreting data.
 As a data scientist, I spend quite a bit of time on the command-line, especially when there&amp;#39;s data to be obtained, scrubbed, or explored. And I&amp;#39;m not alone in this.
 Recently, &lt;a href=&quot;http://www.gregreda.com/2013/07/15/unix-commands-for-data-science/&quot;&gt;Greg Reda discussed&lt;/a&gt; how the classics (e.g., head, cut, grep, sed, and awk) can be used for data science. Prior to that, Seth Brown discussed how to perform basic &lt;a href=&quot;http://www.drbunsen.org/explorations-in-unix/&quot;&gt;exploratory data analysis in Unix&lt;/a&gt;.&lt;/p&gt;
