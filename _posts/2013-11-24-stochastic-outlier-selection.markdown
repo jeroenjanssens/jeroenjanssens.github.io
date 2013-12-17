@@ -6,6 +6,8 @@ description: "SOS is an unsupervised outlier-selection algorithm that computes f
 image: /img/twitter-sos.png
 ---
 
+*Update (13-12-2013) [Hakka Labs](http://www.hakkalabs.co/), who kindly recorded my talk at the [NYC Machine Learning meetup][meetup], have put the [video and slides online](http://www.hakkalabs.co/articles/outlier-selection-and-one-class-classification-by-jeroen-janssens).*
+
 My Ph.D., which I completed earlier this year, was about [outlier selection and one-class classification][thesis]. During this time I learned about quite a few machine learning algorithms; especially about outlier-selection algorithms and one-class classifiers, of course. With some help of [Ferenc Huszár](https://twitter.com/fhuszar) and [Laurens van der Maaten](http://homepage.tudelft.nl/19j49/Home.html), I also came up with a new outlier-selection algorithm called [Stochastic Outlier Selection][repo] (SOS), which I would like to briefly describe here.
 
 ![](/img/sos-densities.png)
@@ -57,7 +59,7 @@ Again, in case you're interested, you can read either the [technical report (PDF
 
 ### <a name="detecting-anomalous-senators"></a>Detecting anomalous senators
 
-Last week, I had the pleasure to talk about outlier selection and one-class classification at the [NYC Machine Learning meetup][meetup]. (The video and slides will soon be put online by [G33ktalk](http://g33ktalk.com/).) In order to not just show fancy graphs and boring equations I created a [demo in D3 and CoffeeScript][demo], of which you see a screenshot below. In the [demo][demo], I apply SOS on roll call voting data, which is inspired by [this post on visualizing the senate](http://vikparuchuri.com/blog/how-divided-is-the-senate/) by Vik Paruchuri. 
+Last week, I had the pleasure to talk about outlier selection and one-class classification at the [NYC Machine Learning meetup][meetup]. [Hakka Labs](http://www.hakkalabs.co/) recorded it, and put the [video and slides online](http://www.hakkalabs.co/articles/outlier-selection-and-one-class-classification-by-jeroen-janssens). In order to not just show fancy graphs and boring equations I created a [demo in D3 and CoffeeScript][demo], of which you see a screenshot below. In the [demo][demo], I apply SOS on roll call voting data, which is inspired by [this post on visualizing the senate](http://vikparuchuri.com/blog/how-divided-is-the-senate/) by Vik Paruchuri. 
 The demo illustrates how the approximated outlier probability of each senator evolves as more Stochastic Neighbor Graphs (SNG) are being sampled. (Please note that SNGs are not discussed in this post.)
 
 [![Detecting anomalous senators](/img/sos-senators.png)][demo]
