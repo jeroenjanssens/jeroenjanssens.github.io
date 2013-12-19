@@ -112,7 +112,7 @@ head result.csv | csvlook
 The tools `csvcut`, `csvsort`, and `csvlook` are part of [csvkit](http://csvkit.readthedocs.org/). 
 You may notice that the outlier probabilities shown in the screenshot do not match the exact ones computed with `sos`. That's because (1) the screenshot was taken not long after the demo started and (2) the demo was running in Chrome, which apparently has a different implementation of `Math.random`. In Firefox, the approximated outlier probabilities will match the exact ones, eventually.
 
-If you enjoyed this post and would like to know when the video and slides will be online, then you should [follow me on Twitter][twitter].
+If you enjoyed this post then you should [follow me on Twitter][twitter].
 
 
 [thesis]: https://github.com/jeroenjanssens/phd-thesis

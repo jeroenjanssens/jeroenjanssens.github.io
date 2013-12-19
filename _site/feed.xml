@@ -288,7 +288,7 @@ head result.csv | csvlook
 &lt;p&gt;The tools &lt;code&gt;csvcut&lt;/code&gt;, &lt;code&gt;csvsort&lt;/code&gt;, and &lt;code&gt;csvlook&lt;/code&gt; are part of &lt;a href=&quot;http://csvkit.readthedocs.org/&quot;&gt;csvkit&lt;/a&gt;. 
 You may notice that the outlier probabilities shown in the screenshot do not match the exact ones computed with &lt;code&gt;sos&lt;/code&gt;. That&amp;#39;s because (1) the screenshot was taken not long after the demo started and (2) the demo was running in Chrome, which apparently has a different implementation of &lt;code&gt;Math.random&lt;/code&gt;. In Firefox, the approximated outlier probabilities will match the exact ones, eventually.&lt;/p&gt;
 
-&lt;p&gt;If you enjoyed this post and would like to know when the video and slides will be online, then you should &lt;a href=&quot;https://twitter.com/jeroenhjanssens/&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;If you enjoyed this post then you should &lt;a href=&quot;https://twitter.com/jeroenhjanssens/&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
 				<pubDate>Sun, 24 Nov 2013 17:06:19 +0000</pubDate>
 				<link>http://www.jeroenjanssens.com/2013/11/24/stochastic-outlier-selection.html</link>
