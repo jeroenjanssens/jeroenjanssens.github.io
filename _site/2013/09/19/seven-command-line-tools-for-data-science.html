@@ -191,7 +191,7 @@ Let&#39;s extract the table from <a href="http://en.wikipedia.org/wiki/List_of_c
 
 <h3>6. sample - when you&#39;re in debug mode</h3>
 
-<p>The second tool I made is <a href="https://github.com/jeroenjanssens/data-science-toolbox/blob/master/sample">sample</a>. (It&#39;s based on two scripts in <a href="https://github.com/bitly/data_hacks">bitly&#39;s data_hacks</a>, which contains some other tools worth checking out.) When you&#39;re in the process of formulating your data pipeline and you have a lot of data, then debugging your pipeline can be cumbersome. In that case, <code>sample</code> might be useful. 
+<p>The second tool I made is <a href="https://github.com/jeroenjanssens/data-science-toolbox/blob/master/tools/sample">sample</a>. (It&#39;s based on two scripts in <a href="https://github.com/bitly/data_hacks">bitly&#39;s data_hacks</a>, which contains some other tools worth checking out.) When you&#39;re in the process of formulating your data pipeline and you have a lot of data, then debugging your pipeline can be cumbersome. In that case, <code>sample</code> might be useful. 
 The tool serves three purposes (which isn&#39;t very Unix-minded, but since it&#39;s mostly useful when you&#39;re in debug mode, that&#39;s not such a big deal). </p>
 
 <p>The first purpose of <code>sample</code> is to get a subset of the data by outputting only a certain percentage of the input on a line-by-line basis. The second purpose is to add some delay to the output. This comes in handy when the input is a constant stream (e.g., the Twitter firehose), and the data comes in too fast to see what&#39;s going on.
@@ -206,7 +206,7 @@ In order to prevent unnecessary computation, try to put <code>sample</code> as e
 <p>This post wouldn&#39;t be complete without some R.
 It&#39;s not straightforward to make R/Rscript part of the pipeline since they don&#39;t 
 work with stdin and stdout out of the box.
-Therefore, as a proof of concept, I put together a bash script called <a href="https://github.com/jeroenjanssens/data-science-toolbox/blob/master/Rio">Rio</a>. </p>
+Therefore, as a proof of concept, I put together a bash script called <a href="https://github.com/jeroenjanssens/data-science-toolbox/blob/master/tools/Rio">Rio</a>. </p>
 
 <p><code>Rio</code> works as follows.
 First, the CSV provided to stdin is redirected to a temporary file and lets R read that into a data frame <code>df</code>.

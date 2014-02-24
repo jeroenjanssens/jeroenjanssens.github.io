@@ -182,7 +182,7 @@ Of course this JSON data could then be piped into `json2csv` and so forth.
 
 ### 6. sample - when you're in debug mode
 
-The second tool I made is [sample](https://github.com/jeroenjanssens/data-science-toolbox/blob/master/sample). (It's based on two scripts in [bitly's data_hacks](https://github.com/bitly/data_hacks), which contains some other tools worth checking out.) When you're in the process of formulating your data pipeline and you have a lot of data, then debugging your pipeline can be cumbersome. In that case, `sample` might be useful. 
+The second tool I made is [sample](https://github.com/jeroenjanssens/data-science-toolbox/blob/master/tools/sample). (It's based on two scripts in [bitly's data_hacks](https://github.com/bitly/data_hacks), which contains some other tools worth checking out.) When you're in the process of formulating your data pipeline and you have a lot of data, then debugging your pipeline can be cumbersome. In that case, `sample` might be useful. 
 The tool serves three purposes (which isn't very Unix-minded, but since it's mostly useful when you're in debug mode, that's not such a big deal). 
 
 The first purpose of `sample` is to get a subset of the data by outputting only a certain percentage of the input on a line-by-line basis. The second purpose is to add some delay to the output. This comes in handy when the input is a constant stream (e.g., the Twitter firehose), and the data comes in too fast to see what's going on.
@@ -202,7 +202,7 @@ In order to prevent unnecessary computation, try to put `sample` as early as pos
 This post wouldn't be complete without some R.
 It's not straightforward to make R/Rscript part of the pipeline since they don't 
 work with stdin and stdout out of the box.
-Therefore, as a proof of concept, I put together a bash script called [Rio](https://github.com/jeroenjanssens/data-science-toolbox/blob/master/Rio). 
+Therefore, as a proof of concept, I put together a bash script called [Rio](https://github.com/jeroenjanssens/data-science-toolbox/blob/master/tools/Rio). 
 
 `Rio` works as follows.
 First, the CSV provided to stdin is redirected to a temporary file and lets R read that into a data frame `df`.

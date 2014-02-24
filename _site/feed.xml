@@ -445,7 +445,7 @@ Let&amp;#39;s extract the table from &lt;a href=&quot;http://en.wikipedia.org/wi
 
 &lt;h3&gt;6. sample - when you&amp;#39;re in debug mode&lt;/h3&gt;
 
-&lt;p&gt;The second tool I made is &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox/blob/master/sample&quot;&gt;sample&lt;/a&gt;. (It&amp;#39;s based on two scripts in &lt;a href=&quot;https://github.com/bitly/data_hacks&quot;&gt;bitly&amp;#39;s data_hacks&lt;/a&gt;, which contains some other tools worth checking out.) When you&amp;#39;re in the process of formulating your data pipeline and you have a lot of data, then debugging your pipeline can be cumbersome. In that case, &lt;code&gt;sample&lt;/code&gt; might be useful. 
+&lt;p&gt;The second tool I made is &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox/blob/master/tools/sample&quot;&gt;sample&lt;/a&gt;. (It&amp;#39;s based on two scripts in &lt;a href=&quot;https://github.com/bitly/data_hacks&quot;&gt;bitly&amp;#39;s data_hacks&lt;/a&gt;, which contains some other tools worth checking out.) When you&amp;#39;re in the process of formulating your data pipeline and you have a lot of data, then debugging your pipeline can be cumbersome. In that case, &lt;code&gt;sample&lt;/code&gt; might be useful. 
 The tool serves three purposes (which isn&amp;#39;t very Unix-minded, but since it&amp;#39;s mostly useful when you&amp;#39;re in debug mode, that&amp;#39;s not such a big deal). &lt;/p&gt;
 
 &lt;p&gt;The first purpose of &lt;code&gt;sample&lt;/code&gt; is to get a subset of the data by outputting only a certain percentage of the input on a line-by-line basis. The second purpose is to add some delay to the output. This comes in handy when the input is a constant stream (e.g., the Twitter firehose), and the data comes in too fast to see what&amp;#39;s going on.
@@ -460,7 +460,7 @@ In order to prevent unnecessary computation, try to put &lt;code&gt;sample&lt;/c
 &lt;p&gt;This post wouldn&amp;#39;t be complete without some R.
 It&amp;#39;s not straightforward to make R/Rscript part of the pipeline since they don&amp;#39;t 
 work with stdin and stdout out of the box.
-Therefore, as a proof of concept, I put together a bash script called &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox/blob/master/Rio&quot;&gt;Rio&lt;/a&gt;. &lt;/p&gt;
+Therefore, as a proof of concept, I put together a bash script called &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox/blob/master/tools/Rio&quot;&gt;Rio&lt;/a&gt;. &lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;Rio&lt;/code&gt; works as follows.
 First, the CSV provided to stdin is redirected to a temporary file and lets R read that into a data frame &lt;code&gt;df&lt;/code&gt;.
