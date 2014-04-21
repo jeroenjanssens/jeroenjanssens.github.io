@@ -6,6 +6,8 @@ description: "I am sharing a virtual environment that enables you to follow alon
 image: /img/vagrant.png
 ---
 
+*Update (1-4-2014) Be sure to check out the brand new [Data Science Toolbox](http://www.datasciencetoolbox.org)!*
+
 *Update (9-12-2013) I have compared my Vagrant environment with three other virtual environments for data science ([see below](#comparison-of-virtual-environments-for-data-science)).*
 
 Data scientists love to create interesting models and exciting data visualizations. However, before they get to that point, usually much effort goes into obtaining, scrubbing, and exploring the required data. I argue that the \*nix command-line, although invented decades ago, remains a powerful environment for processing data. It provides a read-eval-print loop (REPL) that is often much more convenient for exploratory data analysis than the edit-compile-run-debug cycle associated with large programs and even scripts.

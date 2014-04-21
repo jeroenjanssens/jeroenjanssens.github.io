@@ -8,7 +8,9 @@
 		
 			<item>
 				<title>Lean, mean data science machine</title>
-				<description>&lt;p&gt;&lt;em&gt;Update (9-12-2013) I have compared my Vagrant environment with three other virtual environments for data science (&lt;a href=&quot;#comparison-of-virtual-environments-for-data-science&quot;&gt;see below&lt;/a&gt;).&lt;/em&gt;&lt;/p&gt;
+				<description>&lt;p&gt;&lt;em&gt;Update (1-4-2014) Be sure to check out the brand new &lt;a href=&quot;http://www.datasciencetoolbox.org&quot;&gt;Data Science Toolbox&lt;/a&gt;!&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Update (9-12-2013) I have compared my Vagrant environment with three other virtual environments for data science (&lt;a href=&quot;#comparison-of-virtual-environments-for-data-science&quot;&gt;see below&lt;/a&gt;).&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;Data scientists love to create interesting models and exciting data visualizations. However, before they get to that point, usually much effort goes into obtaining, scrubbing, and exploring the required data. I argue that the *nix command-line, although invented decades ago, remains a powerful environment for processing data. It provides a read-eval-print loop (REPL) that is often much more convenient for exploratory data analysis than the edit-compile-run-debug cycle associated with large programs and even scripts.&lt;/p&gt;
 
