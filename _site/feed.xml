@@ -313,7 +313,7 @@ Giving a talk where the slides auto-advance after 15 seconds is a challenging, b
 		
 			<item>
 				<title>7 command-line tools for data science</title>
-				<description>&lt;p&gt;&lt;em&gt;Update (7-12-2013) You can now easily install these seven command-line tools with the &lt;a href=&quot;http://jeroenjanssens.com/2013/12/07/lean-mean-data-science-machine.html&quot;&gt;Data Science Toolbox virtual environment&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+				<description>&lt;p&gt;&lt;em&gt;Update (7-17-2014) Check out my new book &lt;a href=&quot;http://shop.oreilly.com/product/0636920032823.do&quot;&gt;Data Science at the Command Line&lt;/a&gt;, which contains over 70 command-line tools for doing data science!&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;Data science is &lt;a href=&quot;http://www.dataists.com/2010/09/a-taxonomy-of-data-science/&quot;&gt;OSEMN&lt;/a&gt; (pronounced as awesome).
 That is, it involves Obtaining, Scrubbing, Exploring, Modeling, and iNterpreting data.
