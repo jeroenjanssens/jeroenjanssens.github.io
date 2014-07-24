@@ -287,6 +287,6 @@ Don't worry if you don't regard yourself as a toolmaker. The next time you're co
 
 While the power of the command-line should not be underestimated when it comes to Obtaining, Scrubbing, and Exploring data, it can only get you so far. When you're ready to do some more serious Exploring, Modelling, and iNterpretation of your data, you're probably better off continuing your work in a statistical computing environment, such as [R](http://www.r-project.org/) or [IPython notebook](http://ipython.org/notebook.html)+[pandas](http://pandas.pydata.org/).
 
-If you enjoyed this post, then you may want to [follow me on Twitter][twitter].
+If you enjoyed this post, then you may be interested in my new book [Data Science at the Command Line](http://shop.oreilly.com/product/0636920032823.do).
 
 [twitter]: https://twitter.com/jeroenhjanssens/

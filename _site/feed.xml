@@ -540,7 +540,7 @@ Also, if you&amp;#39;ve made any tools yourself, you&amp;#39;re more than welcom
 
 &lt;p&gt;While the power of the command-line should not be underestimated when it comes to Obtaining, Scrubbing, and Exploring data, it can only get you so far. When you&amp;#39;re ready to do some more serious Exploring, Modelling, and iNterpretation of your data, you&amp;#39;re probably better off continuing your work in a statistical computing environment, such as &lt;a href=&quot;http://www.r-project.org/&quot;&gt;R&lt;/a&gt; or &lt;a href=&quot;http://ipython.org/notebook.html&quot;&gt;IPython notebook&lt;/a&gt;+&lt;a href=&quot;http://pandas.pydata.org/&quot;&gt;pandas&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;If you enjoyed this post, then you may want to &lt;a href=&quot;https://twitter.com/jeroenhjanssens/&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;If you enjoyed this post, then you may be interested in my new book &lt;a href=&quot;http://shop.oreilly.com/product/0636920032823.do&quot;&gt;Data Science at the Command Line&lt;/a&gt;.&lt;/p&gt;
 </description>
 				<pubDate>Thu, 19 Sep 2013 12:00:00 +0000</pubDate>
 				<link>http://www.jeroenjanssens.com/2013/09/19/seven-command-line-tools-for-data-science.html</link>
