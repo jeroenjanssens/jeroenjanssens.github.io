@@ -6,7 +6,7 @@ description: "In this post I would like to share seven command-line tools that I
 image:  /img/iris.png
 ---
 
-*Update (7-17-2014) Check out my new book [Data Science at the Command Line](http://shop.oreilly.com/product/0636920032823.do), which contains over 70 command-line tools for doing data science!*
+*Update (7-17-2014) Check out my new book [Data Science at the Command Line](http://datascienceatthecommandline.com), which contains over 70 command-line tools for doing data science!*
 
 Data science is [OSEMN](http://www.dataists.com/2010/09/a-taxonomy-of-data-science/) (pronounced as awesome).
 That is, it involves Obtaining, Scrubbing, Exploring, Modeling, and iNterpreting data.
@@ -287,6 +287,6 @@ Don't worry if you don't regard yourself as a toolmaker. The next time you're co
 
 While the power of the command-line should not be underestimated when it comes to Obtaining, Scrubbing, and Exploring data, it can only get you so far. When you're ready to do some more serious Exploring, Modelling, and iNterpretation of your data, you're probably better off continuing your work in a statistical computing environment, such as [R](http://www.r-project.org/) or [IPython notebook](http://ipython.org/notebook.html)+[pandas](http://pandas.pydata.org/).
 
-If you enjoyed this post, then you may be interested in my new book [Data Science at the Command Line](http://shop.oreilly.com/product/0636920032823.do).
+If you enjoyed this post, then you may be interested in my new book [Data Science at the Command Line](http://datascienceatthecommandline.com).
 
 [twitter]: https://twitter.com/jeroenhjanssens/
