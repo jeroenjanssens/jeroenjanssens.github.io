@@ -7,6 +7,25 @@
 		<atom:link href="http://www.jeroenjanssens.com/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>Data Science at the Command Line just got real!</title>
+				<description>&lt;p&gt;I&amp;#39;m happy to tell you that my book Data Science at the Command Line just came out.&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; lang=&quot;en&quot;&gt;&lt;p&gt;Data Science at the Command Line just got real! &lt;a href=&quot;http://t.co/fgncBiJd9i&quot;&gt;http://t.co/fgncBiJd9i&lt;/a&gt; &lt;a href=&quot;http://t.co/1JjiDKIOc4&quot;&gt;pic.twitter.com/1JjiDKIOc4&lt;/a&gt;&lt;/p&gt;&amp;mdash; Jeroen Janssens (@jeroenhjanssens) &lt;a href=&quot;https://twitter.com/jeroenhjanssens/status/520239869336248320&quot;&gt;October 9, 2014&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Its &lt;a href=&quot;http://datascienceatthecommandline.com&quot;&gt;companion website&lt;/a&gt; contains information about where to get it, past and upcoming related events, all the command-line tools it discusses, and the associated virtual machine. Now that the book is finished, I&amp;#39;m looking forward to write some more blog posts again.&lt;/p&gt;
+
+&lt;p&gt;Best,&lt;/p&gt;
+
+&lt;p&gt;Jeroen&lt;/p&gt;
+</description>
+				<pubDate>Thu, 09 Oct 2014 09:00:00 +0000</pubDate>
+				<link>http://www.jeroenjanssens.com/2014/10/09/data-science-at-the-command-line-just-got-real.html</link>
+				<guid isPermaLink="true">http://www.jeroenjanssens.com/2014/10/09/data-science-at-the-command-line-just-got-real.html</guid>
+			</item>
+		
+			<item>
 				<title>Lean, mean data science machine</title>
 				<description>&lt;p&gt;&lt;em&gt;Update (1-4-2014) Be sure to check out the brand new &lt;a href=&quot;http://www.datasciencetoolbox.org&quot;&gt;Data Science Toolbox&lt;/a&gt;!&lt;/em&gt;&lt;/p&gt;
 
