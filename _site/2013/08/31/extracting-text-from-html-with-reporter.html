@@ -7,10 +7,13 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title>Extracting text from HTML with Reporter</title>
 		<meta name="viewport" content="width=device-width">
-		<meta name="description" content="Dutch Data Scientist in Old New Amsterdam">
+		<meta name="description" content="Dutch Data Scientist, Toolmaker, Unix Philosopher">
 		<link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
 		<link rel="alternate" type="application/rss+xml" title="Jeroen Janssens" href="http://www.jeroenjanssens.com/feed.xml">
-		<meta name="twitter:card" content="summary">
+
+		
+      <meta name="twitter:card" content="summary">
+		
 		<meta name="twitter:site" content="@jeroenhjanssens">
 		<meta name="twitter:domain" content="jeroenjanssens.com">
 		<meta name="twitter:creator" content="@jeroenhjanssens">
@@ -21,7 +24,7 @@
 		<meta name="twitter:url" content="http://www.jeroenjanssens.com/2013/08/31/extracting-text-from-html-with-reporter.html">
 		
 		
-		  <meta name="twitter:description" content="Dutch Data Scientist in Old New Amsterdam">
+		  <meta name="twitter:description" content="Dutch Data Scientist, Toolmaker, Unix Philosopher">
 		
 		
 		  <meta name="twitter:image:src" content="http://www.jeroenjanssens.com/img/jeroenjanssens.jpg">
@@ -41,9 +44,10 @@
 		<div id="site">
 			<div id="header">
 				<h1><a href="/">Jeroen Janssens</a></h1>
-				<div id="description">Dutch Data Scientist in Old New Amsterdam</div>
+				<div id="description">Dutch Data Scientist, Toolmaker, Unix Philosopher</div>
 				<div id="social">
 					<ul>
+						<li><a href="http://datascienceatthecommandline.com">My Book</a></li>
 						<li><a href="http://twitter.com/jeroenhjanssens/">Twitter</a></li>
 						<li><a href="http://github.com/jeroenjanssens/">Github</a></li>
 						<li><a href="http://www.linkedin.com/in/jeroenjanssens">LinkedIn</a></li>
@@ -86,7 +90,7 @@
 <h3>Usage</h3>
 
 <p>Reporter can be invoked from the command line:</p>
-<div class="highlight"><pre><code class="bash language-bash" data-lang="bash"><span class="nv">$ </span>reporter.py --url URL
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>reporter.py --url URL
 </code></pre></div>
 <p>The HTML from URL will be parsed by <a href="http://www.crummy.com/software/BeautifulSoup/bs4/doc/">Beautiful Soup</a> and the main
 text will be printed on stdout. If the <strong>--debug</strong> flag is added, the text and HTML will be saved to file. The HTML will be styled as follows. Each tag will get a background color based on its score, ranging from red (low score) to green (high score). Moreover, the tag that is selected as news container (see below) will have a blue dashed line.</p>
@@ -98,7 +102,7 @@ text will be printed on stdout. If the <strong>--debug</strong> flag is added, t
 <p>Please see <strong>./reporter.py --help</strong> for more options.</p>
 
 <p>Reporter can also be used from Python:</p>
-<div class="highlight"><pre><code class="python language-python" data-lang="python"><span class="n">my_reporter</span> <span class="o">=</span> <span class="n">Reporter</span><span class="p">()</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">my_reporter</span> <span class="o">=</span> <span class="n">Reporter</span><span class="p">()</span>
 <span class="n">my_reporter</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&#39;http://example.com&#39;</span><span class="p">)</span>
 <span class="k">print</span> <span class="n">my_reporter</span><span class="o">.</span><span class="n">report_news</span><span class="p">()</span>
 </code></pre></div>
@@ -108,7 +112,7 @@ text will be printed on stdout. If the <strong>--debug</strong> flag is added, t
 
 <p>The main part of the scoring algorithm is based on traversing the parsed HTML and works as follows. Reporter traverses the HTML in reverse order, i.e., it starts at the leaves of the DOM tree. Each tag is scored either as a paragraph or as a container. A tag is considered to be a paragraph (in the abstract sense, not in the P sense) when it contains more than 10 characters*, otherwise it is considered to be a container. The exact scoring of a tag is defined in the <strong>Autocue</strong>. An Autocue is a list of scoring rules that get triggered at various stages. For example, when a tag is to be scored as a paragraph, one rule may count the number of words and return 2 points per word. Once a tag (and its siblings) are scored, its parent is scored. If the parent is also considered to be a paragraph, which happens, for
 instance, with the P tag in: </p>
-<div class="highlight"><pre><code class="html language-html" data-lang="html"><span class="nt">&lt;DIV&gt;&lt;P&gt;</span>Hello World, this is the <span class="nt">&lt;B&gt;</span>Reporter package<span class="nt">&lt;/B&gt;&lt;/P&gt;&lt;/DIV&gt;</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;DIV&gt;&lt;P&gt;</span>Hello World, this is the <span class="nt">&lt;B&gt;</span>Reporter package<span class="nt">&lt;/B&gt;&lt;/P&gt;&lt;/DIV&gt;</span>
 </code></pre></div>
 <p>the scores of the B tag are discarded and the complete text is re-scored. The DIV tag is scored as a container because (in this case) it contains no text by itself. In fact, there is
 an important scoring rule which penalises containers. If such a rule would not be included, the HTML tag would always receive the highest score, which would not be very effective. </p>
@@ -120,10 +124,10 @@ an important scoring rule which penalises containers. If such a rule would not b
 
 <ul>
 <li><p><strong>HTML</strong>, operates on the raw HTML. For example: split a paragraph with two consecutive line breaks into two paragraphs</p>
-<div class="highlight"><pre><code class="python language-python" data-lang="python"><span class="n">default_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">RegExReplacer</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&#39;&lt;br */? *&gt;[</span><span class="se">\\</span><span class="s">r</span><span class="se">\\</span><span class="s">n]\*&lt;br */? *&gt;&#39;</span><span class="p">,</span> <span class="n">repl</span><span class="o">=</span><span class="s">&#39;&lt;/p&gt;&lt;p&gt;&#39;</span><span class="p">),</span> <span class="n">HTML</span><span class="p">))</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">default_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">RegExReplacer</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&#39;&lt;br */? *&gt;[</span><span class="se">\\</span><span class="s">r</span><span class="se">\\</span><span class="s">n]\*&lt;br */? *&gt;&#39;</span><span class="p">,</span> <span class="n">repl</span><span class="o">=</span><span class="s">&#39;&lt;/p&gt;&lt;p&gt;&#39;</span><span class="p">),</span> <span class="n">HTML</span><span class="p">))</span>
 </code></pre></div></li>
 <li><p><strong>PRE_TRAVERSAL</strong>, scores or prunes (deletes tags) before the DOM is traversed. This is useful for getting rid of specific tags such as footers, or give positive scores to certain tags For example, delete all comments (specific to a certain news property):</p>
-<div class="highlight"><pre><code class="python language-python" data-lang="python"><span class="n">default</span>\<span class="n">_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">CSSSelector</span><span class="p">(</span><span class="s">&quot;div#comments&quot;</span><span class="p">,</span> <span class="n">Pruner</span><span class="p">()),</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">default</span>\<span class="n">_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">CSSSelector</span><span class="p">(</span><span class="s">&quot;div#comments&quot;</span><span class="p">,</span> <span class="n">Pruner</span><span class="p">()),</span>
 <span class="n">PRE</span>\<span class="n">_TRAVERSAL</span><span class="p">))</span>
 </code></pre></div></li>
 </ul>
@@ -132,10 +136,10 @@ an important scoring rule which penalises containers. If such a rule would not b
 
 <ul>
 <li><p><strong>EVAL_PARAGRAPH</strong>, scores a tag as a paragraph. For example, by counting words.</p>
-<div class="highlight"><pre><code class="python language-python" data-lang="python"><span class="n">default</span>\<span class="n">_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">Scorer</span><span class="p">(</span><span class="n">RegExMatcher</span><span class="p">(</span><span class="s">&quot;(\w)+([&#39;`]\w)?&quot;</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;word&quot;</span><span class="p">),</span> <span class="n">reset_children</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span> <span class="n">EVAL_PARAGRAPH</span><span class="p">))</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">default</span>\<span class="n">_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">Scorer</span><span class="p">(</span><span class="n">RegExMatcher</span><span class="p">(</span><span class="s">&quot;(\w)+([&#39;`]\w)?&quot;</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;word&quot;</span><span class="p">),</span> <span class="n">reset_children</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span> <span class="n">EVAL_PARAGRAPH</span><span class="p">))</span>
 </code></pre></div></li>
 <li><p><strong>EVAL_CONTAINER</strong>, scores a tag as a container. For example, combining the scores of the children tags with a 70 points penalty, giving a minimal score of 0.</p>
-<div class="highlight"><pre><code class="python language-python" data-lang="python"><span class="n">default_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">ScoreAggregator</span><span class="p">(</span><span class="n">start_score</span><span class="o">=-</span><span class="mi">70</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">EVAL_CONTAINER</span><span class="p">))</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">default_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">ScoreAggregator</span><span class="p">(</span><span class="n">start_score</span><span class="o">=-</span><span class="mi">70</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">EVAL_CONTAINER</span><span class="p">))</span>
 </code></pre></div></li>
 </ul>
 
@@ -148,16 +152,22 @@ an important scoring rule which penalises containers. If such a rule would not b
 <p>The tag with the highest score is selected as news container.</p>
 
 <ul>
-<li><p><strong>NEWS_CONTAINER</strong> is like POST_TRAVERSAL but only applies to the tag that is selected as news container.</p>
+<li><strong>NEWS_CONTAINER</strong> is like POST_TRAVERSAL but only applies to the tag that is selected as news container.</li>
+</ul>
 
 <p>Example: penalize DIVs inside the news container:</p>
-<div class="highlight"><pre><code class="python language-python" data-lang="python"><span class="n">default_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">CSSSelector</span><span class="p">(</span><span class="s">&quot;div&quot;</span><span class="p">,</span> <span class="n">Scorer</span><span class="p">(</span><span class="n">FixedValue</span><span class="p">(</span><span class="o">-</span><span class="mi">60</span><span class="p">))),</span> <span class="n">NEWS_CONTAINER</span><span class="p">))</span>
+<div class="highlight"><pre><code class="language-text" data-lang="text">```python
+default_autocue.append((CSSSelector(&quot;div&quot;, Scorer(FixedValue(-60))), NEWS_CONTAINER))
+```
 </code></pre></div>
 <p>Example: Get rid of any tags that have a score below -50:</p>
-<div class="highlight"><pre><code class="python language-python" data-lang="python"><span class="n">default_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">ScoreSelector</span><span class="p">(</span><span class="n">threshold</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&quot;upper&quot;</span><span class="p">,</span> <span class="n">actor</span><span class="o">=</span><span class="n">Pruner</span><span class="p">()),</span> <span class="n">NEWS_CONTAINER</span><span class="p">))</span>
-</code></pre></div></li>
+<div class="highlight"><pre><code class="language-text" data-lang="text">```python
+default_autocue.append((ScoreSelector(threshold=-50, mode=&quot;upper&quot;, actor=Pruner()), NEWS_CONTAINER))
+```
+</code></pre></div>
+<ul>
 <li><p><strong>NEWS_TEXT</strong>, operates on the text inside the news container. For example, put all text on one line:</p>
-<div class="highlight"><pre><code class="python language-python" data-lang="python"><span class="n">default_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">RegExReplacer</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&#39;\s+&#39;</span><span class="p">,</span> <span class="n">repl</span><span class="o">=</span><span class="s">&#39; &#39;</span><span class="p">),</span> <span class="n">NEWS_TEXT</span><span class="p">))</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">default_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">RegExReplacer</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&#39;\s+&#39;</span><span class="p">,</span> <span class="n">repl</span><span class="o">=</span><span class="s">&#39; &#39;</span><span class="p">),</span> <span class="n">NEWS_TEXT</span><span class="p">))</span>
 </code></pre></div></li>
 </ul>
 

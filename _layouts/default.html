@@ -10,7 +10,12 @@
 		<meta name="description" content="{{ site.description }}">
 		<link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
 		<link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ site.url }}/feed.xml">
-		<meta name="twitter:card" content="summary">
+
+		{% if page.twitter_card %}
+      <meta name="twitter:card" content="{{ page.twitter_card }}">
+    {% else %}
+      <meta name="twitter:card" content="summary">
+		{% endif %}
 		<meta name="twitter:site" content="@jeroenhjanssens">
 		<meta name="twitter:domain" content="jeroenjanssens.com">
 		<meta name="twitter:creator" content="@jeroenhjanssens">
@@ -50,6 +55,7 @@
 				<div id="description">{{ site.description }}</div>
 				<div id="social">
 					<ul>
+						<li><a href="http://datascienceatthecommandline.com">My Book</a></li>
 						<li><a href="http://twitter.com/jeroenhjanssens/">Twitter</a></li>
 						<li><a href="http://github.com/jeroenjanssens/">Github</a></li>
 						<li><a href="http://www.linkedin.com/in/jeroenjanssens">LinkedIn</a></li>

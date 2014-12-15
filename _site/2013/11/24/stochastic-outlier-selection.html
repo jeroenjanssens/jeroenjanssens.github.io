@@ -7,10 +7,13 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title>Stochastic Outlier Selection</title>
 		<meta name="viewport" content="width=device-width">
-		<meta name="description" content="Dutch Data Scientist in Old New Amsterdam">
+		<meta name="description" content="Dutch Data Scientist, Toolmaker, Unix Philosopher">
 		<link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
 		<link rel="alternate" type="application/rss+xml" title="Jeroen Janssens" href="http://www.jeroenjanssens.com/feed.xml">
-		<meta name="twitter:card" content="summary">
+
+		
+      <meta name="twitter:card" content="summary">
+		
 		<meta name="twitter:site" content="@jeroenhjanssens">
 		<meta name="twitter:domain" content="jeroenjanssens.com">
 		<meta name="twitter:creator" content="@jeroenhjanssens">
@@ -41,9 +44,10 @@
 		<div id="site">
 			<div id="header">
 				<h1><a href="/">Jeroen Janssens</a></h1>
-				<div id="description">Dutch Data Scientist in Old New Amsterdam</div>
+				<div id="description">Dutch Data Scientist, Toolmaker, Unix Philosopher</div>
 				<div id="social">
 					<ul>
+						<li><a href="http://datascienceatthecommandline.com">My Book</a></li>
 						<li><a href="http://twitter.com/jeroenhjanssens/">Twitter</a></li>
 						<li><a href="http://github.com/jeroenjanssens/">Github</a></li>
 						<li><a href="http://www.linkedin.com/in/jeroenjanssens">LinkedIn</a></li>
@@ -116,7 +120,7 @@ The demo illustrates how the approximated outlier probability of each senator ev
 <p><a href="http://bl.ocks.org/jeroenjanssens/7608890"><img src="/img/sos-senators.png" alt="Detecting anomalous senators"></a></p>
 
 <p>Let&#39;s see how the approximated outlier probabilities compare to the outlier probabilities computed on the command-line. Recently, I started using <a href="https://github.com/Factual/drake#drake">drake</a> to organize my data workflow. (If you care about reproducibility, then I recommend you try it out.) The following <code>Drakefile</code> shows how to fetch the roll call voting data, extract its features and labels, and apply the <a href="https://github.com/jeroenjanssens/sos/blob/master/bin/sos">Python implementation of SOS</a> with a perplexity of 50 to it. </p>
-<div class="highlight"><pre><code class="bash language-bash" data-lang="bash">cat Drakefile
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">cat Drakefile
 
 <span class="p">;</span><span class="c"># Get dataset</span>
 dataset.csv &lt;- <span class="o">[</span>-timecheck<span class="o">]</span>
@@ -133,12 +137,12 @@ labels.csv &lt;- dataset.csv
 <span class="p">;</span><span class="c"># Compute outlier probabilities using SOS</span>
 outlier.csv &lt;- features.csv
     <span class="nb">echo</span> <span class="s1">&#39;outlier&#39;</span> &gt; <span class="nv">$OUTPUT</span>
-    &lt; <span class="nv">$INPUT</span> sos -p 50 &gt;&gt; <span class="nv">$OUTPUT</span>
+    &lt; <span class="nv">$INPUT</span> sos -p <span class="m">50</span> &gt;&gt; <span class="nv">$OUTPUT</span>
 
 <span class="p">;</span><span class="c"># Combine labels and outlier probabilities and sort</span>
 result.csv &lt;- labels.csv, outlier.csv
     paste -d, <span class="nv">$INPUT0</span> <span class="nv">$INPUT1</span> <span class="p">|</span> csvsort -rc outlier &gt; <span class="nv">$OUTPUT</span>
-</code></pre></div><div class="highlight"><pre><code class="text language-text" data-lang="text">drake
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">drake
 head result.csv | csvlook
 
 |-------------+-------+-------+-------------|

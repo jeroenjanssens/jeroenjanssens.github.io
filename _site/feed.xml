@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Jeroen Janssens</title>
-		<description>Dutch Data Scientist in Old New Amsterdam</description>
+		<description>Dutch Data Scientist, Toolmaker, Unix Philosopher</description>
 		<link>http://www.jeroenjanssens.com</link>
 		<atom:link href="http://www.jeroenjanssens.com/feed.xml" rel="self" type="application/rss+xml" />
 		
@@ -12,7 +12,7 @@
 
 &lt;blockquote class=&quot;twitter-tweet&quot; lang=&quot;en&quot;&gt;&lt;p&gt;Data Science at the Command Line just got real! &lt;a href=&quot;http://t.co/fgncBiJd9i&quot;&gt;http://t.co/fgncBiJd9i&lt;/a&gt; &lt;a href=&quot;http://t.co/1JjiDKIOc4&quot;&gt;pic.twitter.com/1JjiDKIOc4&lt;/a&gt;&lt;/p&gt;&amp;mdash; Jeroen Janssens (@jeroenhjanssens) &lt;a href=&quot;https://twitter.com/jeroenhjanssens/status/520239869336248320&quot;&gt;October 9, 2014&lt;/a&gt;&lt;/blockquote&gt;
 
-&lt;script async src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;p&gt;&lt;script async src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;Its &lt;a href=&quot;http://datascienceatthecommandline.com&quot;&gt;companion website&lt;/a&gt; contains information about where to get it, past and upcoming related events, all the command-line tools it discusses, and the associated virtual machine. Now that the book is finished, I&amp;#39;m looking forward to write some more blog posts again.&lt;/p&gt;
 
@@ -20,7 +20,7 @@
 
 &lt;p&gt;Jeroen&lt;/p&gt;
 </description>
-				<pubDate>Thu, 09 Oct 2014 09:00:00 +0000</pubDate>
+				<pubDate>Thu, 09 Oct 2014 11:00:00 +0200</pubDate>
 				<link>http://www.jeroenjanssens.com/2014/10/09/data-science-at-the-command-line-just-got-real.html</link>
 				<guid isPermaLink="true">http://www.jeroenjanssens.com/2014/10/09/data-science-at-the-command-line-just-got-real.html</guid>
 			</item>
@@ -71,15 +71,15 @@ If my Vagrant environment would be provided with Data Science at the Command Lin
 So, first you will need to install &lt;a href=&quot;https://www.virtualbox.org&quot;&gt;VirtualBox&lt;/a&gt;. 
 Second you need to install &lt;a href=&quot;http://www.vagrantup.com/&quot;&gt;Vagrant&lt;/a&gt;. 
 Third, you need to download the environment by cloning the data science toolbox. (If you do not want to use &lt;code&gt;git&lt;/code&gt; you can also &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox/archive/master.zip&quot;&gt;download the zip file&lt;/a&gt;.)&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;git clone https://github.com/jeroenjanssens/data-science-toolbox.git
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;git clone https://github.com/jeroenjanssens/data-science-toolbox.git
 &lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;data-science-toolbox/box
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Running &lt;code&gt;vagrant up&lt;/code&gt; in the &lt;code&gt;box&lt;/code&gt; directory will download the base box (Ubuntu 12.04 LTS 64-bit), spin up a virtual machine, and provision it. (Now would be the perfect time to think about any command-line scripts you may have lying around and donate them to the &lt;a href=&quot;http://datasciencetoolbox.org&quot;&gt;data science toolbox&lt;/a&gt;.) Once the provisioning is complete, you will be able to log into your own lean, mean data science machine: &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;vagrant ssh
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;vagrant ssh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Run the following command to test whether everything has been installed correctly:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;curl -s &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; scrape -be &lt;span class=&quot;s1&quot;&gt;&amp;#39;table.wikitable &amp;gt; tr:not(:first-child)&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; xml2json &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; jq -c &lt;span class=&quot;s1&quot;&gt;&amp;#39;.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]}&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; json2csv -p -k&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;country,ratio &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; Rio -se&lt;span class=&quot;s1&quot;&gt;&amp;#39;sqldf(&amp;quot;select * from df where ratio &amp;gt; 0.3 order by ratio desc&amp;quot;)&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; csvlook
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;|----------------+------------|
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;curl -s &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; scrape -be &lt;span class=&quot;s1&quot;&gt;&amp;#39;table.wikitable &amp;gt; tr:not(:first-child)&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; xml2json &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; jq -c &lt;span class=&quot;s1&quot;&gt;&amp;#39;.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]}&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; json2csv -p -k&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;country,ratio &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; Rio -se&lt;span class=&quot;s1&quot;&gt;&amp;#39;sqldf(&amp;quot;select * from df where ratio &amp;gt; 0.3 order by ratio desc&amp;quot;)&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; csvlook
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;|----------------+------------|
 |  country       | ratio      |
 |----------------+------------|
 |  Vatican City  | 7.2727273  |
@@ -201,7 +201,7 @@ Please let me know if you have any questions, suggestions, or contributions.&lt;
 &lt;p&gt;Jeroen &lt;br&gt;
 &lt;a href=&quot;https://twitter.com/jeroenhjanssens/&quot;&gt;@jeroenhjanssens&lt;/a&gt;&lt;/p&gt;
 </description>
-				<pubDate>Sat, 07 Dec 2013 09:00:00 +0000</pubDate>
+				<pubDate>Sat, 07 Dec 2013 10:00:00 +0100</pubDate>
 				<link>http://www.jeroenjanssens.com/2013/12/07/lean-mean-data-science-machine.html</link>
 				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/12/07/lean-mean-data-science-machine.html</guid>
 			</item>
@@ -267,7 +267,7 @@ The demo illustrates how the approximated outlier probability of each senator ev
 &lt;p&gt;&lt;a href=&quot;http://bl.ocks.org/jeroenjanssens/7608890&quot;&gt;&lt;img src=&quot;/img/sos-senators.png&quot; alt=&quot;Detecting anomalous senators&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Let&amp;#39;s see how the approximated outlier probabilities compare to the outlier probabilities computed on the command-line. Recently, I started using &lt;a href=&quot;https://github.com/Factual/drake#drake&quot;&gt;drake&lt;/a&gt; to organize my data workflow. (If you care about reproducibility, then I recommend you try it out.) The following &lt;code&gt;Drakefile&lt;/code&gt; shows how to fetch the roll call voting data, extract its features and labels, and apply the &lt;a href=&quot;https://github.com/jeroenjanssens/sos/blob/master/bin/sos&quot;&gt;Python implementation of SOS&lt;/a&gt; with a perplexity of 50 to it. &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;cat Drakefile
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;cat Drakefile
 
 &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;# Get dataset&lt;/span&gt;
 dataset.csv &amp;lt;- &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;-timecheck&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
@@ -284,12 +284,12 @@ labels.csv &amp;lt;- dataset.csv
 &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;# Compute outlier probabilities using SOS&lt;/span&gt;
 outlier.csv &amp;lt;- features.csv
     &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;outlier&amp;#39;&lt;/span&gt; &amp;gt; &lt;span class=&quot;nv&quot;&gt;$OUTPUT&lt;/span&gt;
-    &amp;lt; &lt;span class=&quot;nv&quot;&gt;$INPUT&lt;/span&gt; sos -p 50 &amp;gt;&amp;gt; &lt;span class=&quot;nv&quot;&gt;$OUTPUT&lt;/span&gt;
+    &amp;lt; &lt;span class=&quot;nv&quot;&gt;$INPUT&lt;/span&gt; sos -p &lt;span class=&quot;m&quot;&gt;50&lt;/span&gt; &amp;gt;&amp;gt; &lt;span class=&quot;nv&quot;&gt;$OUTPUT&lt;/span&gt;
 
 &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;# Combine labels and outlier probabilities and sort&lt;/span&gt;
 result.csv &amp;lt;- labels.csv, outlier.csv
     paste -d, &lt;span class=&quot;nv&quot;&gt;$INPUT0&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$INPUT1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; csvsort -rc outlier &amp;gt; &lt;span class=&quot;nv&quot;&gt;$OUTPUT&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;drake
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;drake
 head result.csv | csvlook
 
 |-------------+-------+-------+-------------|
@@ -311,7 +311,7 @@ You may notice that the outlier probabilities shown in the screenshot do not mat
 
 &lt;p&gt;If you enjoyed this post then you may want to &lt;a href=&quot;https://twitter.com/jeroenhjanssens/&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
-				<pubDate>Sun, 24 Nov 2013 17:06:19 +0000</pubDate>
+				<pubDate>Sun, 24 Nov 2013 18:06:19 +0100</pubDate>
 				<link>http://www.jeroenjanssens.com/2013/11/24/stochastic-outlier-selection.html</link>
 				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/11/24/stochastic-outlier-selection.html</guid>
 			</item>
@@ -325,7 +325,7 @@ Giving a talk where the slides auto-advance after 15 seconds is a challenging, b
 
 &lt;p&gt;On a related note, I&amp;#39;m writing a book titled &amp;quot;Data Science at the Command-line&amp;quot;, which will be published by O&amp;#39;Reilly somewhere in 2014. If you&amp;#39;re interested in receiving updates regarding the book then you should &lt;a href=&quot;https://twitter.com/jeroenhjanssens/&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
-				<pubDate>Thu, 31 Oct 2013 20:00:00 +0000</pubDate>
+				<pubDate>Thu, 31 Oct 2013 21:00:00 +0100</pubDate>
 				<link>http://www.jeroenjanssens.com/2013/10/31/sudo-make-me-a-visualization.html</link>
 				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/10/31/sudo-make-me-a-visualization.html</guid>
 			</item>
@@ -355,14 +355,14 @@ OSEMN, let&amp;#39;s get started with our first tool: &lt;code&gt;jq&lt;/code&gt
 &lt;p&gt;JSON is becoming an increasingly common data format, especially as APIs are appearing everywhere. I remember cooking up the ugliest &lt;code&gt;grep&lt;/code&gt; and &lt;code&gt;sed&lt;/code&gt; incantations in order to process JSON. Thanks to &lt;code&gt;jq&lt;/code&gt;, those days are now in the past. &lt;/p&gt;
 
 &lt;p&gt;Imagine we&amp;#39;re interested in the candidate totals of the 2008 presidential election. It so happens that the New York Times has a &lt;a href=&quot;http://developer.nytimes.com/docs/campaign_finance_api/&quot;&gt;Campaign Finance API&lt;/a&gt;. (You can &lt;a href=&quot;http://developer.nytimes.com/apps/mykeys&quot;&gt;get your own API keys&lt;/a&gt; if you want to access any of their APIs.) Let&amp;#39;s get some JSON using &lt;code&gt;curl&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;curl -s &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://api.nytimes.com/svc/elections/us/v3/finances/2008/president/totals.json?api-key=super-secret&amp;#39;&lt;/span&gt; &amp;gt; nyt.json
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;curl -s &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://api.nytimes.com/svc/elections/us/v3/finances/2008/president/totals.json?api-key=super-secret&amp;#39;&lt;/span&gt; &amp;gt; nyt.json
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;where &lt;code&gt;-s&lt;/code&gt; puts &lt;code&gt;curl&lt;/code&gt; in silent mode. In its simplest form, i.e., &lt;code&gt;jq &amp;#39;.&amp;#39;&lt;/code&gt;, the tool transforms the incomprehensible API response we got:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;{&amp;quot;status&amp;quot;:&amp;quot;OK&amp;quot;,&amp;quot;base_uri&amp;quot;:&amp;quot;http://api.nytimes.com/svc/elections/us/v3/finances/2008/&amp;quot;,&amp;quot;cycle&amp;quot;:2008,&amp;quot;copyright&amp;quot;:&amp;quot;Copyright (c) 2013 The New York Times Company. All Rights Reserved.&amp;quot;,&amp;quot;results&amp;quot;:[{&amp;quot;candidate_name&amp;quot;:&amp;quot;Obama, Barack&amp;quot;,&amp;quot;name&amp;quot;:&amp;quot;Barack Obama&amp;quot;,&amp;quot;party&amp;quot;:&amp;quot;D&amp;quot;,
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;{&amp;quot;status&amp;quot;:&amp;quot;OK&amp;quot;,&amp;quot;base_uri&amp;quot;:&amp;quot;http://api.nytimes.com/svc/elections/us/v3/finances/2008/&amp;quot;,&amp;quot;cycle&amp;quot;:2008,&amp;quot;copyright&amp;quot;:&amp;quot;Copyright (c) 2013 The New York Times Company. All Rights Reserved.&amp;quot;,&amp;quot;results&amp;quot;:[{&amp;quot;candidate_name&amp;quot;:&amp;quot;Obama, Barack&amp;quot;,&amp;quot;name&amp;quot;:&amp;quot;Barack Obama&amp;quot;,&amp;quot;party&amp;quot;:&amp;quot;D&amp;quot;,
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;into nicely indented and colored output:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; nyt.json jq &lt;span class=&quot;s1&quot;&gt;&amp;#39;.&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; head
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;json language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; nyt.json jq &lt;span class=&quot;s1&quot;&gt;&amp;#39;.&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; head
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;nt&quot;&gt;&amp;quot;results&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
       &lt;span class=&quot;nt&quot;&gt;&amp;quot;candidate_id&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;P80003338&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
@@ -375,8 +375,8 @@ OSEMN, let&amp;#39;s get started with our first tool: &lt;code&gt;jq&lt;/code&gt
 &lt;p&gt;Note that the output isn&amp;#39;t necessarily in the same order as the input.
 Besides pretty printing, &lt;code&gt;jq&lt;/code&gt; can also select, filter, and format JSON data, as illustrated by 
 the following command, which returns the name, cash, and party of each candidate that had at least $1,000,000 in cash:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; nyt.json jq -c &lt;span class=&quot;s1&quot;&gt;&amp;#39;.results[] | {name, party, cash: .cash_on_hand} | select(.cash | tonumber &amp;gt; 1000000)&amp;#39;&lt;/span&gt; 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;json language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;cash&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;29911984.0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;party&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;D&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Barack Obama&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; nyt.json jq -c &lt;span class=&quot;s1&quot;&gt;&amp;#39;.results[] | {name, party, cash: .cash_on_hand} | select(.cash | tonumber &amp;gt; 1000000)&amp;#39;&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;cash&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;29911984.0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;party&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;D&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Barack Obama&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;cash&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;32812513.75&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;party&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;R&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;John McCain&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;cash&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;4428347.5&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;party&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;D&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;John Edwards&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -388,10 +388,10 @@ Now that we have the data we need, it&amp;#39;s time to move on to our second to
 &lt;h3&gt;2. json2csv - convert JSON to CSV&lt;/h3&gt;
 
 &lt;p&gt;While JSON is a great format for interchanging data, it&amp;#39;s rather unsuitable for most command-line tools. Not to worry, we can easily convert JSON into CSV using &lt;a href=&quot;https://github.com/jehiah/json2csv&quot;&gt;json2csv&lt;/a&gt;. Assuming that we stored the data from the last step in &lt;code&gt;million.json&lt;/code&gt;, simply invoking&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; million.json json2csv -k name,party,cash
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; million.json json2csv -k name,party,cash
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;will convert it to some nicely comma-separated values:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;awk language-awk&quot; data-lang=&quot;awk&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Barack&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Obama&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;29911984.0&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-awk&quot; data-lang=&quot;awk&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Barack&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Obama&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;29911984.0&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;John&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;McCain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;32812513.75&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;John&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Edwards&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;4428347.5&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -403,10 +403,10 @@ Since CSV is the king of tabular file formats, according to the authors of
 &lt;h3&gt;3. csvkit - suite of utilities for converting to and working with CSV&lt;/h3&gt;
 
 &lt;p&gt;Rather than being one tool, &lt;a href=&quot;http://csvkit.readthedocs.org/&quot;&gt;csvkit&lt;/a&gt; is a collection of tools that operate on CSV data. Most of these tools expect the CSV data to have a header, so let&amp;#39;s add one. (Since the publication of this post, &lt;code&gt;json2csv&lt;/code&gt; has been updated to print the header with the &lt;code&gt;-p&lt;/code&gt; option.)&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;name,party,cash &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; cat - million.csv &amp;gt; million-header.csv
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;name,party,cash &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; cat - million.csv &amp;gt; million-header.csv
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;We can, for example, sort the candidates by cash with &lt;code&gt;csvsort&lt;/code&gt; and display the data using &lt;code&gt;csvlook&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; million-header.csv csvsort -rc cash &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; csvlook
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; million-header.csv csvsort -rc cash &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; csvlook
 
 &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;---------------+-------+--------------&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;  name         &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; party &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; cash         &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
@@ -417,10 +417,10 @@ Since CSV is the king of tabular file formats, according to the authors of
 &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;---------------+-------+--------------&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Looks like the MySQL console doesn&amp;#39;t it? Speaking of databases, you can insert the CSV data into an sqlite database as follows (many other databases are supported as well):&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;csvsql --db sqlite:///myfirst.db --insert million-header.csv
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;csvsql --db sqlite:///myfirst.db --insert million-header.csv
 sqlite3 myfirst.db
 sqlite&amp;gt; .schema million-header
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sql language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;CREATE&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;TABLE&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;&amp;quot;million-header&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;CREATE&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;TABLE&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;&amp;quot;million-header&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
     &lt;span class=&quot;n&quot;&gt;party&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
     &lt;span class=&quot;n&quot;&gt;cash&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;FLOAT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NULL&lt;/span&gt;
@@ -433,8 +433,8 @@ sqlite&amp;gt; .schema million-header
 
 &lt;p&gt;JSON APIs sure are nice, but they aren&amp;#39;t the only source of data; a lot of it is &lt;a href=&quot;http://www.ted.com/talks/tim_berners_lee_on_the_next_web.html&quot;&gt;unfortunately still&lt;/a&gt; embedded in HTML. &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox&quot;&gt;scrape&lt;/a&gt; is a python script I put together that employs the &lt;code&gt;lxml&lt;/code&gt; and &lt;code&gt;cssselect&lt;/code&gt; packages to select certain HTML elements by means of an XPath query or &lt;a href=&quot;http://net.tutsplus.com/tutorials/html-css-techniques/the-30-css-selectors-you-must-memorize/&quot;&gt;CSS selector&lt;/a&gt;. (I tried &lt;a href=&quot;https://metacpan.org/module/scrape.pl&quot;&gt;scrape.pl&lt;/a&gt;, but I couldn&amp;#39;t get it to work properly. Moreover, rather than processing HTML from stdin, it expects a url and then downloads the HTML itself.)
 Let&amp;#39;s extract the table from &lt;a href=&quot;http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio&quot;&gt;this Wikipedia article that lists the border and area ratio of each country&lt;/a&gt;.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;curl -s &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; scrape -b -e &lt;span class=&quot;s1&quot;&gt;&amp;#39;table.wikitable &amp;gt; tr:not(:first-child)&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; head
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;html language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;curl -s &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; scrape -b -e &lt;span class=&quot;s1&quot;&gt;&amp;#39;table.wikitable &amp;gt; tr:not(:first-child)&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; head
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;tr&amp;gt;&lt;/span&gt;
@@ -450,8 +450,8 @@ Let&amp;#39;s extract the table from &lt;a href=&quot;http://en.wikipedia.org/wi
 &lt;h3&gt;5. xml2json - convert XML to JSON&lt;/h3&gt;
 
 &lt;p&gt;As its name implies, &lt;a href=&quot;https://github.com/parmentf/xml2json&quot;&gt;xml2json&lt;/a&gt; takes XML (and HTML) as input and returns JSON as output. Therefore, &lt;code&gt;xml2json&lt;/code&gt; is a great liaison between &lt;code&gt;scrape&lt;/code&gt; and &lt;code&gt;jq&lt;/code&gt;.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;curl -s &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; scrape -be &lt;span class=&quot;s1&quot;&gt;&amp;#39;table.wikitable &amp;gt; tr:not(:first-child)&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; xml2json &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; jq -c &lt;span class=&quot;s1&quot;&gt;&amp;#39;.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]}&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; head
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;json language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;ratio&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;7.2727273&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;surface&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;0.44&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;border&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;3.2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;country&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Vatican City&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;curl -s &lt;span class=&quot;s1&quot;&gt;&amp;#39;http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; scrape -be &lt;span class=&quot;s1&quot;&gt;&amp;#39;table.wikitable &amp;gt; tr:not(:first-child)&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; xml2json &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; jq -c &lt;span class=&quot;s1&quot;&gt;&amp;#39;.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]}&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; head
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;ratio&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;7.2727273&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;surface&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;0.44&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;border&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;3.2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;country&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Vatican City&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;ratio&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;2.2000000&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;surface&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;border&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;4.4&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;country&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Monaco&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;ratio&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;0.6393443&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;surface&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;61&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;border&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;39&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;country&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;San Marino&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;ratio&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;0.4750000&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;surface&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;160&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;border&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;76&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;country&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Liechtenstein&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
@@ -471,7 +471,7 @@ The tool serves three purposes (which isn&amp;#39;t very Unix-minded, but since 
 
 &lt;p&gt;The first purpose of &lt;code&gt;sample&lt;/code&gt; is to get a subset of the data by outputting only a certain percentage of the input on a line-by-line basis. The second purpose is to add some delay to the output. This comes in handy when the input is a constant stream (e.g., the Twitter firehose), and the data comes in too fast to see what&amp;#39;s going on.
 The third purpose is to run only for a certain time. The following invocation illustrates all three purposes.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;seq 10000 &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; sample -r 20% -d 1000 -s 5 &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; jq &lt;span class=&quot;s1&quot;&gt;&amp;#39;{number: .}&amp;#39;&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;seq &lt;span class=&quot;m&quot;&gt;10000&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; sample -r 20% -d &lt;span class=&quot;m&quot;&gt;1000&lt;/span&gt; -s &lt;span class=&quot;m&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; jq &lt;span class=&quot;s1&quot;&gt;&amp;#39;{number: .}&amp;#39;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This way, every input line has a 20% chance of being forwarded to &lt;code&gt;jq&lt;/code&gt;. Moreover, there is a 1000 millisecond delay between each line and after five seconds &lt;code&gt;sample&lt;/code&gt; will stop entirely. Please note that each argument is optional. 
 In order to prevent unnecessary computation, try to put &lt;code&gt;sample&lt;/code&gt; as early as possible in your pipeline (the same argument holds for &lt;code&gt;head&lt;/code&gt; and &lt;code&gt;tail&lt;/code&gt;). Once you&amp;#39;re done debugging you can simply take it out of the pipeline.&lt;/p&gt;
@@ -490,9 +490,9 @@ Third, the output of the last command is redirected to stdout.
 Allow me to demonstrate three one-liners that use the Iris dataset (don&amp;#39;t mind the url).&lt;/p&gt;
 
 &lt;p&gt;Display the five-number-summary of each field.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;curl -s &lt;span class=&quot;s1&quot;&gt;&amp;#39;https://raw.github.com/pydata/pandas/master/pandas/tests/data/iris.csv&amp;#39;&lt;/span&gt; &amp;gt; iris.csv
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;curl -s &lt;span class=&quot;s1&quot;&gt;&amp;#39;https://raw.github.com/pydata/pandas/master/pandas/tests/data/iris.csv&amp;#39;&lt;/span&gt; &amp;gt; iris.csv
 &amp;lt; iris.csv Rio -e &lt;span class=&quot;s1&quot;&gt;&amp;#39;summary(df)&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;  SepalLength      SepalWidth     PetalLength      PetalWidth   
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;  SepalLength      SepalWidth     PetalLength      PetalWidth   
  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
  Median :5.800   Median :3.000   Median :4.350   Median :1.300  
@@ -506,8 +506,8 @@ Allow me to demonstrate three one-liners that use the Iris dataset (don&amp;#39;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;If you specify the &lt;code&gt;-s&lt;/code&gt; option, the &lt;code&gt;sqldf&lt;/code&gt; package will be imported.
 In case tthe output is a data frame, CSV will be written to stdout. This enables you to further process that data using other tools.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; iris.csv Rio -se &lt;span class=&quot;s1&quot;&gt;&amp;#39;sqldf(&amp;quot;select * from df where df.SepalLength &amp;gt; 7.5&amp;quot;)&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; csvlook
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;|--------------+------------+-------------+------------+-----------------|
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; iris.csv Rio -se &lt;span class=&quot;s1&quot;&gt;&amp;#39;sqldf(&amp;quot;select * from df where df.SepalLength &amp;gt; 7.5&amp;quot;)&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; csvlook
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;|--------------+------------+-------------+------------+-----------------|
 |  SepalLength | SepalWidth | PetalLength | PetalWidth | Name            |
 |--------------+------------+-------------+------------+-----------------|
 |  7.6         | 3          | 6.6         | 2.1        | Iris-virginica  |
@@ -520,7 +520,7 @@ In case tthe output is a data frame, CSV will be written to stdout. This enables
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;If you specify the &lt;code&gt;-g&lt;/code&gt; option, &lt;code&gt;ggplot2&lt;/code&gt; gets imported and a ggplot object called &lt;code&gt;g&lt;/code&gt; with &lt;code&gt;df&lt;/code&gt; as the data is initialized.
 If the final output is a ggplot object, a PNG will be written to stdout.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; iris.csv Rio -ge &lt;span class=&quot;s1&quot;&gt;&amp;#39;g+geom_point(aes(x=SepalLength,y=SepalWidth,colour=Name))&amp;#39;&lt;/span&gt; &amp;gt; iris.png
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt; iris.csv Rio -ge &lt;span class=&quot;s1&quot;&gt;&amp;#39;g+geom_point(aes(x=SepalLength,y=SepalWidth,colour=Name))&amp;#39;&lt;/span&gt; &amp;gt; iris.png
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;img src=&quot;/img/iris.png&quot; alt=&quot;iris.csv&quot;&gt;&lt;/p&gt;
 
@@ -561,7 +561,7 @@ Also, if you&amp;#39;ve made any tools yourself, you&amp;#39;re more than welcom
 
 &lt;p&gt;If you enjoyed this post, then you may be interested in my new book &lt;a href=&quot;http://datascienceatthecommandline.com&quot;&gt;Data Science at the Command Line&lt;/a&gt;.&lt;/p&gt;
 </description>
-				<pubDate>Thu, 19 Sep 2013 12:00:00 +0000</pubDate>
+				<pubDate>Thu, 19 Sep 2013 14:00:00 +0200</pubDate>
 				<link>http://www.jeroenjanssens.com/2013/09/19/seven-command-line-tools-for-data-science.html</link>
 				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/09/19/seven-command-line-tools-for-data-science.html</guid>
 			</item>
@@ -597,7 +597,7 @@ Also, if you&amp;#39;ve made any tools yourself, you&amp;#39;re more than welcom
 &lt;h3&gt;Usage&lt;/h3&gt;
 
 &lt;p&gt;Reporter can be invoked from the command line:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;reporter.py --url URL
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;reporter.py --url URL
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The HTML from URL will be parsed by &lt;a href=&quot;http://www.crummy.com/software/BeautifulSoup/bs4/doc/&quot;&gt;Beautiful Soup&lt;/a&gt; and the main
 text will be printed on stdout. If the &lt;strong&gt;--debug&lt;/strong&gt; flag is added, the text and HTML will be saved to file. The HTML will be styled as follows. Each tag will get a background color based on its score, ranging from red (low score) to green (high score). Moreover, the tag that is selected as news container (see below) will have a blue dashed line.&lt;/p&gt;
@@ -609,7 +609,7 @@ text will be printed on stdout. If the &lt;strong&gt;--debug&lt;/strong&gt; flag
 &lt;p&gt;Please see &lt;strong&gt;./reporter.py --help&lt;/strong&gt; for more options.&lt;/p&gt;
 
 &lt;p&gt;Reporter can also be used from Python:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;my_reporter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Reporter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;my_reporter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Reporter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;my_reporter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;http://example.com&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;my_reporter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;report_news&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -619,7 +619,7 @@ text will be printed on stdout. If the &lt;strong&gt;--debug&lt;/strong&gt; flag
 
 &lt;p&gt;The main part of the scoring algorithm is based on traversing the parsed HTML and works as follows. Reporter traverses the HTML in reverse order, i.e., it starts at the leaves of the DOM tree. Each tag is scored either as a paragraph or as a container. A tag is considered to be a paragraph (in the abstract sense, not in the P sense) when it contains more than 10 characters*, otherwise it is considered to be a container. The exact scoring of a tag is defined in the &lt;strong&gt;Autocue&lt;/strong&gt;. An Autocue is a list of scoring rules that get triggered at various stages. For example, when a tag is to be scored as a paragraph, one rule may count the number of words and return 2 points per word. Once a tag (and its siblings) are scored, its parent is scored. If the parent is also considered to be a paragraph, which happens, for
 instance, with the P tag in: &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;html language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;DIV&amp;gt;&amp;lt;P&amp;gt;&lt;/span&gt;Hello World, this is the &lt;span class=&quot;nt&quot;&gt;&amp;lt;B&amp;gt;&lt;/span&gt;Reporter package&lt;span class=&quot;nt&quot;&gt;&amp;lt;/B&amp;gt;&amp;lt;/P&amp;gt;&amp;lt;/DIV&amp;gt;&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;DIV&amp;gt;&amp;lt;P&amp;gt;&lt;/span&gt;Hello World, this is the &lt;span class=&quot;nt&quot;&gt;&amp;lt;B&amp;gt;&lt;/span&gt;Reporter package&lt;span class=&quot;nt&quot;&gt;&amp;lt;/B&amp;gt;&amp;lt;/P&amp;gt;&amp;lt;/DIV&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;the scores of the B tag are discarded and the complete text is re-scored. The DIV tag is scored as a container because (in this case) it contains no text by itself. In fact, there is
 an important scoring rule which penalises containers. If such a rule would not be included, the HTML tag would always receive the highest score, which would not be very effective. &lt;/p&gt;
@@ -631,10 +631,10 @@ an important scoring rule which penalises containers. If such a rule would not b
 
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;HTML&lt;/strong&gt;, operates on the raw HTML. For example: split a paragraph with two consecutive line breaks into two paragraphs&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;default_autocue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RegExReplacer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;&amp;lt;br */? *&amp;gt;[&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;n]\*&amp;lt;br */? *&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;repl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HTML&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;default_autocue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RegExReplacer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;&amp;lt;br */? *&amp;gt;[&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;n]\*&amp;lt;br */? *&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;repl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HTML&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;PRE_TRAVERSAL&lt;/strong&gt;, scores or prunes (deletes tags) before the DOM is traversed. This is useful for getting rid of specific tags such as footers, or give positive scores to certain tags For example, delete all comments (specific to a certain news property):&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;default&lt;/span&gt;\&lt;span class=&quot;n&quot;&gt;_autocue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CSSSelector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;div#comments&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pruner&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()),&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;default&lt;/span&gt;\&lt;span class=&quot;n&quot;&gt;_autocue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CSSSelector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;div#comments&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pruner&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()),&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;PRE&lt;/span&gt;\&lt;span class=&quot;n&quot;&gt;_TRAVERSAL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -643,10 +643,10 @@ an important scoring rule which penalises containers. If such a rule would not b
 
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;EVAL_PARAGRAPH&lt;/strong&gt;, scores a tag as a paragraph. For example, by counting words.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;default&lt;/span&gt;\&lt;span class=&quot;n&quot;&gt;_autocue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Scorer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RegExMatcher&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;(\w)+([&amp;#39;`]\w)?&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;word&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reset_children&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;EVAL_PARAGRAPH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;default&lt;/span&gt;\&lt;span class=&quot;n&quot;&gt;_autocue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Scorer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RegExMatcher&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;(\w)+([&amp;#39;`]\w)?&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;word&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reset_children&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;EVAL_PARAGRAPH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;EVAL_CONTAINER&lt;/strong&gt;, scores a tag as a container. For example, combining the scores of the children tags with a 70 points penalty, giving a minimal score of 0.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;default_autocue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ScoreAggregator&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start_score&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;70&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vmin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;EVAL_CONTAINER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;default_autocue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ScoreAggregator&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start_score&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;70&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vmin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;EVAL_CONTAINER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -659,16 +659,22 @@ an important scoring rule which penalises containers. If such a rule would not b
 &lt;p&gt;The tag with the highest score is selected as news container.&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;NEWS_CONTAINER&lt;/strong&gt; is like POST_TRAVERSAL but only applies to the tag that is selected as news container.&lt;/p&gt;
+&lt;li&gt;&lt;strong&gt;NEWS_CONTAINER&lt;/strong&gt; is like POST_TRAVERSAL but only applies to the tag that is selected as news container.&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;Example: penalize DIVs inside the news container:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;default_autocue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CSSSelector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;div&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Scorer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FixedValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NEWS_CONTAINER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;```python
+default_autocue.append((CSSSelector(&amp;quot;div&amp;quot;, Scorer(FixedValue(-60))), NEWS_CONTAINER))
+```
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Example: Get rid of any tags that have a score below -50:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;default_autocue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ScoreSelector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;threshold&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;upper&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;actor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Pruner&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NEWS_CONTAINER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;```python
+default_autocue.append((ScoreSelector(threshold=-50, mode=&amp;quot;upper&amp;quot;, actor=Pruner()), NEWS_CONTAINER))
+```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;NEWS_TEXT&lt;/strong&gt;, operates on the text inside the news container. For example, put all text on one line:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;default_autocue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RegExReplacer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;\s+&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;repl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39; &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NEWS_TEXT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;default_autocue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RegExReplacer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;\s+&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;repl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39; &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NEWS_TEXT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -676,7 +682,7 @@ an important scoring rule which penalises containers. If such a rule would not b
 
 &lt;p&gt;If you like what I had to say then you may want to &lt;a href=&quot;https://twitter.com/jeroenhjanssens&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
-				<pubDate>Sat, 31 Aug 2013 12:00:00 +0000</pubDate>
+				<pubDate>Sat, 31 Aug 2013 14:00:00 +0200</pubDate>
 				<link>http://www.jeroenjanssens.com/2013/08/31/extracting-text-from-html-with-reporter.html</link>
 				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/08/31/extracting-text-from-html-with-reporter.html</guid>
 			</item>
@@ -791,7 +797,7 @@ an important scoring rule which penalises containers. If such a rule would not b
 
 &lt;p&gt;If you like what I had to say then you may want to &lt;a href=&quot;https://twitter.com/jeroenhjanssens&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
-				<pubDate>Sun, 18 Aug 2013 10:00:00 +0000</pubDate>
+				<pubDate>Sun, 18 Aug 2013 12:00:00 +0200</pubDate>
 				<link>http://www.jeroenjanssens.com/2013/08/18/bayesian-headline-testing-at-visual-revenue.html</link>
 				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/08/18/bayesian-headline-testing-at-visual-revenue.html</guid>
 			</item>
@@ -816,32 +822,32 @@ I have noticed quite an increase in efficiency with this, and perhaps you will t
 
 &lt;p&gt;Under the hood this manual solution comes down to storing symbolic links in a hidden directory (e.g., &lt;code&gt;~/.marks&lt;/code&gt;).
 There are four shell functions &lt;code&gt;jump&lt;/code&gt;, &lt;code&gt;mark&lt;/code&gt;, &lt;code&gt;unmark&lt;/code&gt;, and &lt;code&gt;marks&lt;/code&gt;, and they look like this:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;MARKPATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/.marks
-&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;jump &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;MARKPATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/.marks
+&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; jump &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
     &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; -P &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH/$1&amp;quot;&lt;/span&gt; 2&amp;gt;/dev/null &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;No such mark: $1&amp;quot;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;mark &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
+&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; mark &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
     mkdir -p &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; ln -s &lt;span class=&quot;s2&quot;&gt;&amp;quot;$(pwd)&amp;quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH/$1&amp;quot;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;unmark &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
+&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; unmark &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
     rm -i &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH/$1&amp;quot;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;marks &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; marks &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
     ls -l &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; sed &lt;span class=&quot;s1&quot;&gt;&amp;#39;s/  / /g&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; cut -d&lt;span class=&quot;s1&quot;&gt;&amp;#39; &amp;#39;&lt;/span&gt; -f9- &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; sed &lt;span class=&quot;s1&quot;&gt;&amp;#39;s/ -/\t-/g&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Put this in your &lt;code&gt;.zshrc&lt;/code&gt; or &lt;code&gt;.bashrc&lt;/code&gt; and you&amp;#39;re ready to jump (Mac OS X users need a slightly different version of the &lt;code&gt;marks&lt;/code&gt; function; see below). I have also turned this into a plugin for &lt;a href=&quot;https://github.com/robbyrussell/oh-my-zsh&quot;&gt;oh-my-zsh&lt;/a&gt; called &lt;code&gt;jump&lt;/code&gt;. To add a new bookmark, &lt;code&gt;cd&lt;/code&gt; into the directory and &lt;code&gt;mark&lt;/code&gt; it with a name to your liking:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/some/very/deep/often-used/directory
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/some/very/deep/often-used/directory
 &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mark deep
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This adds a symbolic link named &lt;code&gt;deep&lt;/code&gt; to the directory &lt;code&gt;~/.marks&lt;/code&gt;. To &lt;code&gt;jump&lt;/code&gt; to this directory, type the following from any place in the filesystem:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;jump deep
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;jump deep
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;To remove the bookmark (i.e., the symbolic link), type:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;unmark deep
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;unmark deep
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;You can view all marks by typing:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;marks
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;marks
 
 deep    -&amp;gt; /home/johndoe/some/very/deep/often-used/directory
 foo     -&amp;gt; /usr/bin/foo/bar
@@ -851,7 +857,7 @@ foo     -&amp;gt; /usr/bin/foo/bar
 &lt;h3&gt;Adding tab completion&lt;/h3&gt;
 
 &lt;p&gt;In order to add tab completion for the &lt;code&gt;jump&lt;/code&gt; and &lt;code&gt;unmark&lt;/code&gt; functions, add the following code to your .zshrc (thanks to &lt;a href=&quot;https://news.ycombinator.com/item?id=6229468&quot;&gt;tiziano88&lt;/a&gt;):&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;_completemarks &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; _completemarks &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;nv&quot;&gt;reply&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;ls &lt;span class=&quot;nv&quot;&gt;$MARKPATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
@@ -859,11 +865,11 @@ compctl -K _completemarks jump
 compctl -K _completemarks unmark
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;or the following to your .bashrc (thanks to &lt;a href=&quot;https://news.ycombinator.com/item?id=6229768&quot;&gt;microcolonel&lt;/a&gt;):&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;_completemarks&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;_completemarks&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;nb&quot;&gt;local &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;curw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;COMP_WORDS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[COMP_CWORD]&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
   &lt;span class=&quot;nb&quot;&gt;local &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;wordlist&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;find &lt;span class=&quot;nv&quot;&gt;$MARKPATH&lt;/span&gt; -type l -printf &lt;span class=&quot;s2&quot;&gt;&amp;quot;%f\n&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
   &lt;span class=&quot;nv&quot;&gt;COMPREPLY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;compgen&lt;/span&gt; -W &lt;span class=&quot;s1&quot;&gt;&amp;#39;${wordlist[@]}&amp;#39;&lt;/span&gt; -- &lt;span class=&quot;s2&quot;&gt;&amp;quot;$curw&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;0
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; 0
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
 &lt;span class=&quot;nb&quot;&gt;complete&lt;/span&gt; -F _completemarks jump unmark
@@ -873,13 +879,13 @@ compctl -K _completemarks unmark
 &lt;h3&gt;Note for Mac OS X users&lt;/h3&gt;
 
 &lt;p&gt;As pointed out by &lt;a href=&quot;https://news.ycombinator.com/item?id=6229428&quot;&gt;guygurari&lt;/a&gt;, Mac OS X users need a slightly different version of the &lt;code&gt;marks&lt;/code&gt; function:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;marks &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; marks &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;se&quot;&gt;\l&lt;/span&gt;s -l &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; tail -n +2 &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; sed &lt;span class=&quot;s1&quot;&gt;&amp;#39;s/  / /g&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; cut -d&lt;span class=&quot;s1&quot;&gt;&amp;#39; &amp;#39;&lt;/span&gt; -f9- &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; awk -F &lt;span class=&quot;s1&quot;&gt;&amp;#39; -&amp;gt; &amp;#39;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;{printf &amp;quot;%-10s -&amp;gt; %s\n&amp;quot;, $1, $2}&amp;#39;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;If you like what I had to say then you may want to &lt;a href=&quot;https://twitter.com/jeroenhjanssens/&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
-				<pubDate>Fri, 16 Aug 2013 19:06:19 +0000</pubDate>
+				<pubDate>Fri, 16 Aug 2013 21:06:19 +0200</pubDate>
 				<link>http://www.jeroenjanssens.com/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html</link>
 				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html</guid>
 			</item>
