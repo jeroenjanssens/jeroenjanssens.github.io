@@ -104,6 +104,8 @@ Cheers,
 
 Jeroen
 
+**Thanks to Rob Doherty and Adam Johnson for reading drafts of this.**
+
 
 [display]: http://www.imagemagick.org/script/display.php
 [otherbooks]: https://github.com/ipython/ipython/wiki/A-gallery-of-interesting-IPython-Notebooks#entire-books-or-other-large-collections-of-notebooks-on-a-topic
