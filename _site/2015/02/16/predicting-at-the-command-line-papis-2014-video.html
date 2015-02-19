@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="icon" href="/favicon.png" type="image/png" />
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>Predicting at the command line @ PAPIs.io '14 [video]</title>
+		<meta name="viewport" content="width=device-width">
+		<meta name="description" content="Dutch Data Scientist, Toolmaker, Unix Philosopher">
+		<link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+		<link rel="alternate" type="application/rss+xml" title="Jeroen Janssens" href="http://www.jeroenjanssens.com/feed.xml">
+
+		
+      <meta name="twitter:card" content="summary">
+		
+		<meta name="twitter:site" content="@jeroenhjanssens">
+		<meta name="twitter:domain" content="jeroenjanssens.com">
+		<meta name="twitter:creator" content="@jeroenhjanssens">
+		
+		  <meta name="twitter:title" content="Predicting at the command line @ PAPIs.io '14 [video]">
+		
+		
+		<meta name="twitter:url" content="http://www.jeroenjanssens.com/2015/02/16/predicting-at-the-command-line-papis-2014-video.html">
+		
+		
+		  <meta name="twitter:description" content="">
+		
+		
+		  <meta name="twitter:image:src" content="http://www.jeroenjanssens.com/img/predicting-at-the-command-line.png">
+		
+		<meta name="bitly-verification" content="f2828a63ca29"/>
+	</head>
+	<body>
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-43246574-1', 'jeroenjanssens.com');
+		  ga('send', 'pageview');
+		</script>
+		<div id="site">
+			<div id="header">
+				<h1><a href="/">Jeroen Janssens</a></h1>
+				<div id="description">Dutch Data Scientist, Toolmaker, Unix Philosopher</div>
+				<div id="social">
+					<ul>
+						<li><a href="http://datascienceatthecommandline.com">My Book</a></li>
+						<li><a href="http://twitter.com/jeroenhjanssens/">Twitter</a></li>
+						<li><a href="http://github.com/jeroenjanssens/">Github</a></li>
+						<li><a href="http://www.linkedin.com/in/jeroenjanssens">LinkedIn</a></li>
+						<li><a href="http://www.jeroenjanssens.com/feed.xml">RSS</a></li>
+					<ul>
+				</div>
+			</div>
+			<div id="content">
+									<h2>Predicting at the command line @ PAPIs.io '14 [video]</h2>
+					<div class="date">Published on 16 February 2015</div>
+					<a href="https://twitter.com/share" class="twitter-share-button" data-via="jeroenhjanssens">Tweet</a>
+					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+					<div class="post">
+						<script src="http://www.youtube.com/player_api"></script>
+
+<script type="text/javascript">
+var player = 0;
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player');
+}
+
+function skipTo(time) {
+    timeParts = time.innerHTML.split(":");
+    minutes = parseInt(timeParts[0]);
+    seconds = parseInt(timeParts[1]);
+    player.seekTo((minutes * 60) + seconds);
+}   
+</script>
+
+<p>On November 17 of last year, I gave a tutorial at the first International Conference on Predictive APIs and Apps, also known as <a href="http://www.papis.io/2014/">PAPi&#39;s.io &#39;14</a>. The recording is now available for your viewing pleasure:</p>
+
+<p><a name="video"></a>
+<iframe id="player" type="text/html" width="640" height="360" src="http://www.youtube.com/embed/3TieT2eOM1Y?enablejsapi=1&autoplay=0" frameborder="0"></iframe></p>
+
+<p>After a <a href="http://lanyrd.com/2014/papis2014/schedule/">myriad of API presentations</a>, including those by <a href="https://yhathq.com/">Yhat</a>, <a href="https://bigml.com/">BigML</a>, and <a href="https://dato.com/index.html">GraphLab</a>, 
+I thought it would be nice to switch gears by demonstrating how such APIs can be employed from the command line (hence the title &quot;Predicting at the Command Line&quot;). </p>
+
+<p>Don&#39;t worry about <a href="http://lanyrd.com/2014/papis2014/sdfywx/">the slides</a>, they&#39;re quite boring. More interesting is the live demo, in which I demonstrate how to use the command line to:</p>
+
+<ul>
+<li>connect to the <a href="https://www.bicing.cat/">Barcelona bicing</a> API using <code>curl</code> (<a href="#video" onclick="skipTo(this); return false;">12:30</a>),</li>
+<li>convert the returned XML data to CSV using <code>xml2json</code>, <code>jq</code>, and <code>json2csv</code> (<a href="#video" onclick="skipTo(this); return false;">17:59</a>),</li>
+<li>plot the locations of bike stations using <code>Rio</code> and the <a href="http://cran.r-project.org/web/packages/ggmap/index.html">ggmap</a> package (<a href="#video" onclick="skipTo(this); return false;">27:18</a>),</li>
+<li>assign anomaly scores using <a href="">BigML</a>&#39;s predictive API (<a href="#video" onclick="skipTo(this); return false;">30:59</a>), and as an additional impromptu demonstration, </li>
+<li>apply <a href="http://www.indico.io">indico</a>&#39;s language detection API to tweets using <code>t</code> and <code>parallel</code> (<a href="#video" onclick="skipTo(this); return false;">38:21</a>).</li>
+</ul>
+
+<p>In case you&#39;d like to try this out for yourself, you should check out my book <a href="http://datascienceatthecommandline.com/">Data Science at the Command Line</a> and the associated <a href="http://datascienceatthecommandline.com/#dst">Data Science Toolbox</a>, which has all these command-line tools pre-installed.</p>
+
+<p>Cheers,</p>
+
+<p>Jeroen</p>
+
+					</div>
+
+			</div>
+		</div>
+	</body>
+</html>

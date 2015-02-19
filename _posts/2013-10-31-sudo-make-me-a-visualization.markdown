@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "sudo make me a visualization!"
+title:  "sudo make me a visualization! [video]"
 date:   2013-10-31 20:00:00
 ---
 

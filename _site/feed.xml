@@ -7,12 +7,152 @@
 		<atom:link href="http://www.jeroenjanssens.com/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>IBash Notebook&#8253;</title>
+				<description>&lt;p&gt;Did you know that there&amp;#39;s a Bash kernel for IPython Notebook?
+It even displays inline images.
+To give you a glimpse, the code cell below makes an API call to &lt;a href=&quot;http://memegenerator.net&quot;&gt;memegenerator.net&lt;/a&gt;, which generates images on demand. From the response, the URL of the generated image is extracted  using &lt;code&gt;jq&lt;/code&gt; and subsequently downloaded using &lt;code&gt;curl&lt;/code&gt;. The output is then displayed as an inline image by piping it to a function called &lt;code&gt;display&lt;/code&gt;. Perhaps a bit contrived, but if not with a meme, how else am I supposed to grab your attention these days?&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/ibash-notebook.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;In this post, I first give some background on notebooks and the IPython Notebook/Jupyter project. Then, I explore the idea whether this &amp;quot;IBash Notebook&amp;quot; has the potential to become a convenient environment for doing data science. Subsequently, I explain how I added support for displaying inline images. As an aside, I wonder whether it would be feasible and worthwhile to publish my book &lt;a href=&quot;http://datascienceatthecommandline.com&quot;&gt;Data Science at the Command Line&lt;/a&gt; as a collection of notebooks. Finally, I discuss which issues remain to be improved and how you can try out IBash Notebook for yourself. I&amp;#39;m curious to hear what you think.&lt;/p&gt;
+
+&lt;h3&gt;You get a notebook. And you get a notebook. Everybody gets a notebook!&lt;/h3&gt;
+
+&lt;p&gt;Let&amp;#39;s take a step back for a moment. Doing research is hard. Recalling which steps you&amp;#39;ve taken, and why, is even harder. To be an effective researcher, you may want to &lt;a href=&quot;http://colinpurrington.com/tips/academic/labnotebooks&quot;&gt;keep a laboratory notebook&lt;/a&gt;. Besides having a record of your steps and results, this also allows you to improve reproducibility, share your research with others, and, yes, think more clearly. So, why wouldn&amp;#39;t you keep a notebook?&lt;/p&gt;
+
+&lt;p&gt;Well, if you perform your research or analysis on a computer, where most steps boil down to running code, invoking commands, and clicking buttons, keeping an analogue notebook is rather cumbersome. Fortunately, since recently, digital counterparts are quickly gaining popularity. For the R community, for example, there&amp;#39;s &lt;a href=&quot;http://rmarkdown.rstudio.com&quot;&gt;R Markdown&lt;/a&gt;. And for those who use the Python scientific stack, there&amp;#39;s &lt;a href=&quot;http://ipython.org/notebook.html&quot;&gt;IPython Notebook&lt;/a&gt;. Both solutions are free and allow you to combine code, text, equations, and visualizations into a single document.&lt;/p&gt;
+
+&lt;p&gt;The people behind the IPython project saw the potential of having a language-agnostic architecture. By creating a flexible messaging protocol, writing &lt;a href=&quot;http://ipython.org/ipython-doc/dev/development/kernels.html&quot;&gt;good documentation&lt;/a&gt; for it, and rebranding the project as the &lt;a href=&quot;http://jupyter.org/&quot;&gt;Jupyter project&lt;/a&gt;, they opened the door to other languages. And now, languages like Julia, Ruby, and Haskell have their own kernel. &lt;a href=&quot;http://beakernotebook.com/&quot;&gt;Beaker&lt;/a&gt;, a completely different project, even supports multiple languages in the same notebook.&lt;/p&gt;
+
+&lt;h3&gt;What about poor old Bash?&lt;/h3&gt;
+
+&lt;p&gt;To demonstrate how easy it is to create a new kernel for IPython Notebook, &lt;a href=&quot;https://twitter.com/takluyver/&quot;&gt;Thomas Kluyver&lt;/a&gt; created a Python package called &lt;a href=&quot;https://github.com/takluyver/bash_kernel&quot;&gt;bash_kernel&lt;/a&gt;. This Bash kernel basically works by using &lt;a href=&quot;https://pexpect.readthedocs.org/en/latest/&quot;&gt;pexpect&lt;/a&gt; to wrap around a Bash command line. When I stumbled upon this package I immediately got excited. This could be much more than just a demonstration. Call me crazy, but I believe that with some additional effort, we might have an IBash Notebook that would have some important advantages over a terminal (which is the standard environment to interact with the command line; see image below).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/terminal.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;First, and perhaps most importantly, the command line is ad-hoc in nature, which makes it difficult to reproduce your steps or share them with your peers. To improve reproducibility, you could put those steps in a shell script, &lt;a href=&quot;http://www.gnu.org/software/make/&quot;&gt;Makefile&lt;/a&gt;, or &lt;a href=&quot;https://github.com/Factual/drake&quot;&gt;Drakefile&lt;/a&gt;, but when you&amp;#39;re working in a notebook, they would be stored automatically.&lt;/p&gt;
+
+&lt;p&gt;Second, if you&amp;#39;re running a server or virtual machine, there would be no need to &lt;code&gt;ssh&lt;/code&gt; into it. As a result, Microsoft Windows users wouldn&amp;#39;t need to resort to a third-party tool like &lt;a href=&quot;http://www.chiark.greenend.org.uk/%7Esgtatham/putty/&quot;&gt;PuTTY&lt;/a&gt; anymore. I&amp;#39;m particularly interested in this advantage, together with the next two, because ever since I started writing &lt;a href=&quot;http://datascienceatthecommandline.com&quot;&gt;Data Science at the Command Line&lt;/a&gt;, I&amp;#39;ve been looking for ways to make the command line more accessible to newcomers.&lt;/p&gt;
+
+&lt;p&gt;Third, for users who are new to the command line, a notebook with code cells could be less intimidating than a terminal with a prompt. Because the browser (and perhaps also IPython Notebook) is a familiar environment, the threshold to try out the command line will be lower.&lt;/p&gt;
+
+&lt;p&gt;Fourth, in order to view an image located on a server or virtual machine, you normally have to go trough an extra hoop. Approaches that I know of are either: (1) copy this image to the host OS, (2) forward X11, or (3) serve it using, say, &lt;code&gt;python -m SimpleHTTPServer&lt;/code&gt; and then open it in a browser. With a notebook, images can be shown inline. Which brings us to...&lt;/p&gt;
+
+&lt;h3&gt;Adding support for displaying inline images&lt;/h3&gt;
+
+&lt;p&gt;For the Bash kernel to be a convenient environment for doing data science, it could use a few additional features besides running commands. Thanks to the architecture of IPython Notebook, inline Markdown and LaTeX equations work out of the box. Having seen &lt;a href=&quot;http://liftoffsoftware.com/Products/GateOne&quot;&gt;Gate One&lt;/a&gt; (a browser-based terminal that I had running on 200 EC2 instances for &lt;a href=&quot;http://strataconf.com/stratany2014/public/schedule/detail/36204&quot;&gt;my workshop at Strata NYC&lt;/a&gt;) and &lt;a href=&quot;https://pigshell.com&quot;&gt;pigshell&lt;/a&gt; (a shell-like website that lets you interact with various APIs as Unix files), which are both able to display inline images, I knew that&amp;#39;s what the Bash kernel needed next.&lt;/p&gt;
+
+&lt;p&gt;I initially thought this would be as easy as detecting the MIME type of the output of a command. That way, when you would run &lt;code&gt;cat file.png&lt;/code&gt;, an image would be shown automatically. Unfortunately this approach didn&amp;#39;t work because, as I later learned, &lt;code&gt;pexpect&lt;/code&gt; isn&amp;#39;t meant to transfer binary data. With some suggestions from &lt;a href=&quot;https://twitter.com/takluyver/&quot;&gt;Thomas Kluyver&lt;/a&gt;, I implemented the following solution instead. (You may decide whether it&amp;#39;s a hack or not.) &lt;/p&gt;
+
+&lt;p&gt;The solution includes a Bash function called &lt;code&gt;display&lt;/code&gt; that is registered when the kernel starts. That way, images can now be displayed by running something as simple as:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;display &amp;lt; file.png
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;or something as involved as:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;cat iris.csv &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;                        &lt;span class=&quot;c&quot;&gt;# Read our beloved Iris data set&lt;/span&gt;
+cols -C species body tapkee -m pca &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# Apply PCA using tapkee&lt;/span&gt;
+header -r x,y,species &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;               &lt;span class=&quot;c&quot;&gt;# Replace header of CSV&lt;/span&gt;
+Rio-scatter x y species &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; display     &lt;span class=&quot;c&quot;&gt;# Create scatter plot using ggplot2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;which produces:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/iris-pca.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;In case you&amp;#39;re interested, &lt;code&gt;cols&lt;/code&gt; and &lt;code&gt;body&lt;/code&gt; are used to only pass numerical columns and no header to &lt;a href=&quot;http://tapkee.lisitsyn.me/&quot;&gt;tapkee&lt;/a&gt;, which is a fantastic library for dimensionality reduction by &lt;a href=&quot;https://twitter.com/qdrgsm/&quot;&gt;Sergey Lisitsyn&lt;/a&gt;. These two Bash scripts, together with &lt;code&gt;header&lt;/code&gt; and &lt;code&gt;Rio-scatter&lt;/code&gt;, can be found in &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-at-the-command-line/tree/master/tools&quot;&gt;this repository&lt;/a&gt;. Speaking of command-line tools for plotting, &lt;a href=&quot;http://bokeh.pydata.org/&quot;&gt;Bokeh&lt;/a&gt;, which is a Python visualization library built on top of matplotlib, will soon have its own command-line tool as well.&lt;/p&gt;
+
+&lt;p&gt;To see what the &lt;code&gt;display&lt;/code&gt; function looks like, we can run &lt;code&gt;type display&lt;/code&gt; in a notebook:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;display is a &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt;
+display &lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;TMPFILE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;mktemp &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;TMPDIR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-/tmp&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;/bash_kernel.XXXXXXXXXX&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    cat &amp;gt; &lt;span class=&quot;nv&quot;&gt;$TMPFILE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;bash_kernel: saved image data to: $TMPFILE&amp;quot;&lt;/span&gt; 1&amp;gt;&lt;span class=&quot;p&quot;&gt;&amp;amp;&lt;/span&gt;2
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In words, &lt;code&gt;display&lt;/code&gt; saves the standard input to a temporary file and prints the filename to standard error. After a code cell has been evaluated, the Bash kernel simply extracts the filename from the output, detects its MIME type using the &lt;a href=&quot;https://docs.python.org/3.4/library/imghdr.html&quot;&gt;imghdr&lt;/a&gt; library, and sends the image data (encoded with base64) to the front end. Easy peasy.&lt;/p&gt;
+
+&lt;p&gt;I chose the name &amp;quot;display&amp;quot; because there&amp;#39;s also a &lt;a href=&quot;http://www.imagemagick.org/script/display.php&quot;&gt;command-line tool in ImageMagick&lt;/a&gt; called &amp;quot;display&amp;quot; that accepts image data from standard input and shows it in a new window. Because that tool works only when X is running, I figured that a function called &amp;quot;display&amp;quot; could serve as a drop-in replacement when using IPython Notebook.&lt;/p&gt;
+
+&lt;h3&gt;Aside: Publishing a book as a collection of notebooks&lt;/h3&gt;
+
+&lt;p&gt;IPython Notebook can also be used to write entire books. &lt;a href=&quot;https://github.com/ptwobrussell/Mining-the-Social-Web-2nd-Edition&quot;&gt;Mining the Social Web&lt;/a&gt;, &lt;a href=&quot;https://github.com/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers&quot;&gt;Probabilistic Programming and Bayesian Methods for Hackers&lt;/a&gt;, and &lt;a href=&quot;http://nbviewer.ipython.org/github/unpingco/Python-for-Signal-Processing/tree/master/&quot;&gt;Python for Signal Processing&lt;/a&gt; are but a few examples of books that have been published as a collection of notebooks (usually one notebook per chapter). The main advantage of a notebook as opposed to a book is that you can immediately run the code yourself. Instead of passively reading about a certain package or tool, you can actively try it out.&lt;/p&gt;
+
+&lt;p&gt;I wonder if I could (and should) do the same with my book &lt;a href=&quot;http://datascienceatthecommandline.com&quot;&gt;Data Science at the Command Line&lt;/a&gt;. As an initial test, I manually converted part of the first chapter to a notebook, which you can &lt;a href=&quot;http://nbviewer.ipython.org/github/jeroenjanssens/jeroenjanssens.github.io/blob/master/Data%20Science%20at%20the%20Command%20Line%20-%20When%20is%20Fashion%20Week%20in%20New%20York%3F.ipynb&quot;&gt;view on nbviewer&lt;/a&gt;. Converting the book&amp;#39;s source code wouldn&amp;#39;t be too difficult, especially if we to convert it to Markdown and use &lt;a href=&quot;https://github.com/rossant/ipymd&quot;&gt;ipymd&lt;/a&gt;. What would be more challenging are packaging and distribution. &lt;/p&gt;
+
+&lt;p&gt;The book introduces over 80 command-line tools, and installing them manually would take the better part of a day. I do offer a virtual machine based on Vagrant and VirtualBox that has everything installed, but I suspect there&amp;#39;s a better way to package this with IBash Notebook. For example, recently, &lt;a href=&quot;https://twitter.com/twiecki&quot;&gt;Thomas Wiecki&lt;/a&gt; created a Docker container that launches an IPython notebook server with the &lt;a href=&quot;https://registry.hub.docker.com/u/twiecki/pydata-docker-jupyterhub/&quot;&gt;PyData stack&lt;/a&gt; installed. And the &lt;a href=&quot;https://github.com/jupyter/tmpnb&quot;&gt;tmpnb&lt;/a&gt; project seems very promising as well. I must admit that I haven&amp;#39;t had time to look into Docker and these two projects at all. &lt;/p&gt;
+
+&lt;p&gt;Distribution is then something I would need to figure out with my publisher O&amp;#39;Reilly Media. Considering the recent efforts for the book &lt;a href=&quot;https://github.com/ceteri/jem-docker&quot;&gt;Just Enough Math&lt;/a&gt; by &lt;a href=&quot;https://twitter.com/odewahn&quot;&gt;Andew Odewahn&lt;/a&gt;, O&amp;#39;Reilly&amp;#39;s CTO, and their forward thinking regarding publishing in general, I foresee many opportunities.&lt;/p&gt;
+
+&lt;h3&gt;What&amp;#39;s next?&lt;/h3&gt;
+
+&lt;p&gt;Having inline Markdown, equations, and images sure is nice. However, in my opinion, the Bash kernel currently has two issues that hamper usability. First, the output is only printed when the command is finished; there are no real-time updates. This is especially inconvenient if you want to keep an eye on some long-running process using, say, &lt;code&gt;tail -f&lt;/code&gt; or &lt;code&gt;htop&lt;/code&gt;. Second, there&amp;#39;s no interactivity with the process possible. This means that you cannot drop into some other REPL like &lt;code&gt;julia&lt;/code&gt; or &lt;code&gt;psql&lt;/code&gt;. If there&amp;#39;s sufficient interest in IBash Notebook, then I suspect that these issues can be solved. Regardless, I believe that despite these two issues, IBash Notebook could very well serve as a means to introduce people to the command line.&lt;/p&gt;
+
+&lt;p&gt;If you want to try out the Bash kernel for yourself, you should install &lt;a href=&quot;https://github.com/ipython/ipython&quot;&gt;IPython 3&lt;/a&gt; (which is currently in development). Then, you can clone the &lt;a href=&quot;https://github.com/takluyver/bash_kernel&quot;&gt;Bash kernel GitHub repository&lt;/a&gt; and install the package. (Best to do this all inside a virtual environment.) Next time you start a new notebook, you should be able to select the Bash kernel in the top-right corner.&lt;/p&gt;
+
+&lt;p&gt;So, what do you think? Do you agree that IBash Notebook has potential? Am I crazy thinking that the command line can ever live outside the terminal? Would you like to see my book published as a collection of IBash notebooks? So many questions. Let me know on &lt;a href=&quot;https://twitter.com/jeroenhjanssens/&quot;&gt;Twitter&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Cheers,&lt;/p&gt;
+
+&lt;p&gt;Jeroen&lt;/p&gt;
+</description>
+				<pubDate>Thu, 19 Feb 2015 11:00:00 +0100</pubDate>
+				<link>http://www.jeroenjanssens.com/2015/02/19/ibash-notebook.html</link>
+				<guid isPermaLink="true">http://www.jeroenjanssens.com/2015/02/19/ibash-notebook.html</guid>
+			</item>
+		
+			<item>
+				<title>Predicting at the command line @ PAPIs.io '14 [video]</title>
+				<description>&lt;script src=&quot;http://www.youtube.com/player_api&quot;&gt;&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+var player = 0;
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player(&#39;player&#39;);
+}
+
+function skipTo(time) {
+    timeParts = time.innerHTML.split(&quot;:&quot;);
+    minutes = parseInt(timeParts[0]);
+    seconds = parseInt(timeParts[1]);
+    player.seekTo((minutes * 60) + seconds);
+}   
+&lt;/script&gt;
+
+&lt;p&gt;On November 17 of last year, I gave a tutorial at the first International Conference on Predictive APIs and Apps, also known as &lt;a href=&quot;http://www.papis.io/2014/&quot;&gt;PAPi&amp;#39;s.io &amp;#39;14&lt;/a&gt;. The recording is now available for your viewing pleasure:&lt;/p&gt;
+
+&lt;p&gt;&lt;a name=&quot;video&quot;&gt;&lt;/a&gt;
+&lt;iframe id=&quot;player&quot; type=&quot;text/html&quot; width=&quot;640&quot; height=&quot;360&quot; src=&quot;http://www.youtube.com/embed/3TieT2eOM1Y?enablejsapi=1&amp;autoplay=0&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;&lt;/p&gt;
+
+&lt;p&gt;After a &lt;a href=&quot;http://lanyrd.com/2014/papis2014/schedule/&quot;&gt;myriad of API presentations&lt;/a&gt;, including those by &lt;a href=&quot;https://yhathq.com/&quot;&gt;Yhat&lt;/a&gt;, &lt;a href=&quot;https://bigml.com/&quot;&gt;BigML&lt;/a&gt;, and &lt;a href=&quot;https://dato.com/index.html&quot;&gt;GraphLab&lt;/a&gt;, 
+I thought it would be nice to switch gears by demonstrating how such APIs can be employed from the command line (hence the title &amp;quot;Predicting at the Command Line&amp;quot;). &lt;/p&gt;
+
+&lt;p&gt;Don&amp;#39;t worry about &lt;a href=&quot;http://lanyrd.com/2014/papis2014/sdfywx/&quot;&gt;the slides&lt;/a&gt;, they&amp;#39;re quite boring. More interesting is the live demo, in which I demonstrate how to use the command line to:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;connect to the &lt;a href=&quot;https://www.bicing.cat/&quot;&gt;Barcelona bicing&lt;/a&gt; API using &lt;code&gt;curl&lt;/code&gt; (&lt;a href=&quot;#video&quot; onclick=&quot;skipTo(this); return false;&quot;&gt;12:30&lt;/a&gt;),&lt;/li&gt;
+&lt;li&gt;convert the returned XML data to CSV using &lt;code&gt;xml2json&lt;/code&gt;, &lt;code&gt;jq&lt;/code&gt;, and &lt;code&gt;json2csv&lt;/code&gt; (&lt;a href=&quot;#video&quot; onclick=&quot;skipTo(this); return false;&quot;&gt;17:59&lt;/a&gt;),&lt;/li&gt;
+&lt;li&gt;plot the locations of bike stations using &lt;code&gt;Rio&lt;/code&gt; and the &lt;a href=&quot;http://cran.r-project.org/web/packages/ggmap/index.html&quot;&gt;ggmap&lt;/a&gt; package (&lt;a href=&quot;#video&quot; onclick=&quot;skipTo(this); return false;&quot;&gt;27:18&lt;/a&gt;),&lt;/li&gt;
+&lt;li&gt;assign anomaly scores using &lt;a href=&quot;&quot;&gt;BigML&lt;/a&gt;&amp;#39;s predictive API (&lt;a href=&quot;#video&quot; onclick=&quot;skipTo(this); return false;&quot;&gt;30:59&lt;/a&gt;), and as an additional impromptu demonstration, &lt;/li&gt;
+&lt;li&gt;apply &lt;a href=&quot;http://www.indico.io&quot;&gt;indico&lt;/a&gt;&amp;#39;s language detection API to tweets using &lt;code&gt;t&lt;/code&gt; and &lt;code&gt;parallel&lt;/code&gt; (&lt;a href=&quot;#video&quot; onclick=&quot;skipTo(this); return false;&quot;&gt;38:21&lt;/a&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In case you&amp;#39;d like to try this out for yourself, you should check out my book &lt;a href=&quot;http://datascienceatthecommandline.com/&quot;&gt;Data Science at the Command Line&lt;/a&gt; and the associated &lt;a href=&quot;http://datascienceatthecommandline.com/#dst&quot;&gt;Data Science Toolbox&lt;/a&gt;, which has all these command-line tools pre-installed.&lt;/p&gt;
+
+&lt;p&gt;Cheers,&lt;/p&gt;
+
+&lt;p&gt;Jeroen&lt;/p&gt;
+</description>
+				<pubDate>Mon, 16 Feb 2015 13:00:00 +0100</pubDate>
+				<link>http://www.jeroenjanssens.com/2015/02/16/predicting-at-the-command-line-papis-2014-video.html</link>
+				<guid isPermaLink="true">http://www.jeroenjanssens.com/2015/02/16/predicting-at-the-command-line-papis-2014-video.html</guid>
+			</item>
+		
+			<item>
 				<title>Data Science at the Command Line just got real!</title>
 				<description>&lt;p&gt;I&amp;#39;m happy to tell you that my book Data Science at the Command Line just came out.&lt;/p&gt;
 
 &lt;blockquote class=&quot;twitter-tweet&quot; lang=&quot;en&quot;&gt;&lt;p&gt;Data Science at the Command Line just got real! &lt;a href=&quot;http://t.co/fgncBiJd9i&quot;&gt;http://t.co/fgncBiJd9i&lt;/a&gt; &lt;a href=&quot;http://t.co/1JjiDKIOc4&quot;&gt;pic.twitter.com/1JjiDKIOc4&lt;/a&gt;&lt;/p&gt;&amp;mdash; Jeroen Janssens (@jeroenhjanssens) &lt;a href=&quot;https://twitter.com/jeroenhjanssens/status/520239869336248320&quot;&gt;October 9, 2014&lt;/a&gt;&lt;/blockquote&gt;
 
-&lt;p&gt;&lt;script async src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;script async src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
 
 &lt;p&gt;Its &lt;a href=&quot;http://datascienceatthecommandline.com&quot;&gt;companion website&lt;/a&gt; contains information about where to get it, past and upcoming related events, all the command-line tools it discusses, and the associated virtual machine. Now that the book is finished, I&amp;#39;m looking forward to write some more blog posts again.&lt;/p&gt;
 
@@ -317,7 +457,7 @@ You may notice that the outlier probabilities shown in the screenshot do not mat
 			</item>
 		
 			<item>
-				<title>sudo make me a visualization!</title>
+				<title>sudo make me a visualization! [video]</title>
 				<description>&lt;p&gt;Last Monday I gave an Ignite talk at &lt;a href=&quot;http://strataconf.com/stratany2013/public/schedule/detail/32182&quot;&gt;Strata NYC&lt;/a&gt; about using command-line tools for data science.
 Giving a talk where the slides auto-advance after 15 seconds is a challenging, but ultimately very rewarding experience! Even though the preview image below suggests otherwise, there&amp;#39;s no beatboxing in this video.&lt;/p&gt;
 
