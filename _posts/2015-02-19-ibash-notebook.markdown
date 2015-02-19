@@ -104,7 +104,7 @@ Cheers,
 
 Jeroen
 
-**Thanks to Rob Doherty and Adam Johnson for reading drafts of this.**
+*Thanks to Rob Doherty and Adam Johnson for reading drafts of this.*
 
 
 [display]: http://www.imagemagick.org/script/display.php
