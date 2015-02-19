@@ -4,6 +4,7 @@ title: "IBash Notebook&#8253;"
 date: 2015-02-19 10:00:00
 description: "Did you know that there's a Bash kernel for IPython Notebook? It even displays inline images. Could it ever be a convenient environment for doing data science? Would it be worthwhile to publish my book Data Science at the Command Line as a collection of notebooks?"
 image: /img/twitter-ibash-notebook.png
+twitter_card: summary_large_image
 ---
 
 Did you know that there's a Bash kernel for IPython Notebook?
