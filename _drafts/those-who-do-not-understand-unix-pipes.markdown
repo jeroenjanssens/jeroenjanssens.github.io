@@ -1,11 +1,21 @@
 ---
 layout: post
-title: "Those who don't understand Unix pipes&hellip;"
-date: 2014-12-20 10:00:00
+title: "Those who do not understand Unix pipes&hellip;"
+date: 2015-03-01 10:00:00
 description: ""
-image: /img/twitter-ibash_notebook.png
-twitter_card: summary_large_image
 ---
+
+*"Those who do not understand Unix are condemned to reinvent it, poorly."*
+
+*&mdash; [Henry Spencer (1987)](https://groups.google.com/forum/#!msg/sci.space.shuttle/L8-Upf8gZoY/NN6ngTI0K0QJ)*
+
+
+This post is about one particular piece of Unix, namely the pipe operator.
+
+// example of how the pipe operator works
+
+If you really want to understand them: http://blog.petersobot.com/pipes-and-filters
+
 
 
 // what's a Unix pipe?
@@ -17,10 +27,7 @@ Infix operator | to chain commands.
 It's what makes the Unix command line so flexible. 
 
 
-Example: Unix: "|": 
 
-
-If you really want to understand them: http://blog.petersobot.com/pipes-and-filters
 
 I have been noticing a trend in reinventing
 Reminds me of a quote
@@ -33,6 +40,7 @@ Now you understand why I picked this title. Please know that I only chose the ti
 It's great!
 
 It's interesting how users of the language are completely blown away by it, not knowing it's been around for a very long time.
+It makes me smile.
 
 Here are a few programming languages 
 either library or native.
@@ -40,10 +48,15 @@ either library or native.
 # Languages:
 
 F#: |> http://theburningmonk.com/2011/09/fsharp-pipe-forward-and-pipe-backward/
+
 Haskell: ">->": https://github.com/Gabriel439/Haskell-Pipes-Library
+
 R: ">%>" https://github.com/smbache/magrittr
+
 Python: |: https://github.com/JulienPalard/Pipe
+
 Julia: |> https://github.com/JuliaLang/julia/pull/5236
+
 Ruby: |: sanitize_pipe: 
 
 

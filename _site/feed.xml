@@ -7,6 +7,164 @@
 		<atom:link href="http://www.jeroenjanssens.com/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>Anomalies, Concerts & Data Science at the Command Line [interview]</title>
+				<description>&lt;p&gt;&lt;em&gt;This interview first appeared on &lt;a href=&quot;http://www.datascienceweekly.org/data-scientist-interviews/data-science-at-the-command-line-jeroen-janssens-interview&quot;&gt;Data Science Weekly&lt;/a&gt;&lt;/em&gt; in October 2014.&lt;/p&gt;
+
+&lt;p&gt;
+We recently caught up with Jeroen Janssens, author of &lt;a href=&quot;http://datascienceatthecommandline.com/&quot;&gt;Data Science at the Command Line&lt;/a&gt;. We were keen to learn more about his background, his recent work at YPlan and his work creating both the book and the (related) &lt;a href=&quot;http://datasciencetoolbox.org&quot;&gt;Data Science Toolbox&lt;/a&gt; project…
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;strong&gt;Hi Jeroen, firstly thank you for the interview. Let&#39;s start with your background and how you became interested in working with data...&lt;/strong&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;strong&gt;Q&lt;/strong&gt; - What is your 30 second bio?
+&lt;br /&gt;
+&lt;strong&gt;A&lt;/strong&gt; - Howdy! My name is &lt;a href=&quot;https://twitter.com/jeroenhjanssens&quot;&gt;Jeroen&lt;/a&gt; and I&#39;m a data scientist. At least I like to think that I am. As a Brooklynite who tries to turn dirty data into pretty plots and meaningful models using a MacBook, I do believe I match at least one of the many definitions of data scientist. Jokes aside, the first time I was given the title of data scientist was in January 2012, when I joined Visual Revenue in New York City. At the time, I was still finishing my Ph.D. in Machine Learning at Tilburg University in the Netherlands. In March 2013, Visual Revenue got acquired by Outbrain, where I stayed for eight months. The third and final startup in New York City where I was allowed to call myself data scientist was YPlan. And now, after a year of developing a recommendation engine for last-minute concerts, sporting events, and wine tastings, I&#39;m excited to tell you that I&#39;ll soon be moving back to the Netherlands.
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;strong&gt;Q&lt;/strong&gt; - How did you get interested in working with data? 
+&lt;br /&gt;
+&lt;strong&gt;A&lt;/strong&gt; - During my undergraduate at University College Maastricht, which is a liberal arts college in the Netherlands, I took a course in Machine Learning. The idea of teaching computers by feeding it data fascinated me. Once I graduated, I wanted to learn more about this excited field, so I continued with an M.Sc. in Artificial Intelligence at Maastricht University, which has a strong focus on Machine Learning.
+&lt;br /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;strong&gt;Q&lt;/strong&gt; - So, what was the first data set you remember working with? What did you do with it?
+&lt;br /&gt;
+&lt;strong&gt;A&lt;/strong&gt; - The very first data set was actually one that I created myself, albeit in quite a naughty way. In high school--I must have been fifteen--I managed to create a program in Visual Basic that imitated the lab computers&#39; login screen. When a student tried to log in, an error message would pop up and the username and password would be saved to a file. So, by the end of the day, I had a &quot;data set&quot; of dozens of username/password combinations. Don&#39;t worry, I didn&#39;t use that data at all; this whole thing was really about the challenge of fooling fellow students. Of course I couldn&#39;t keep my mouth shut about this feat, which quickly led to the punishment I deserved: vacuum cleaning all the classrooms for a month. Yes, I&#39;ll never forget that data set.
+&lt;br /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;strong&gt;Q&lt;/strong&gt; - I can imagine! Maybe it was that moment, though was there a specific &quot;aha&quot; moment when you realized the power of data?
+&lt;br /&gt;
+&lt;strong&gt;A&lt;/strong&gt; - Towards the end of my Ph.D., which focused on anomaly detection, I was looking into meta learning for one-class classifiers. In other words, I wanted to know whether it was possible to predict which one-class classifier would perform best on a new, unseen data set. Besides that, I also wanted to know which characteristics of that data set would be most important. 
+&lt;br /&gt;
+&lt;br /&gt;
+To achieve this, I constructed a so-called meta data set, where its 36 features were characteristics of 255 &quot;regular&quot; data sets (for example, number of data points, dimensionality). I evaluated 19 different one-class classifiers on those 255 data sets. The challenge was then to train a meta classifier on that meta data set, with 19 AUC performance values as the labels.
+&lt;br /&gt;
+&lt;br /&gt;
+Long story short, because I tried to do too many things at once, I ended up with way too much data to examine. For weeks, I was getting lost in my own data. Eventually I managed to succeed. The lesson I learned was that there&#39;s also a thing as too much data; not in the sense of space, but in density, if that makes sense. And more importantly, I also learned to think harder before simply starting a huge computational experiment!
+&lt;br /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;br /&gt;
+&lt;strong&gt;Makes sense! Thanks for sharing all that background. Let&#39;s switch gears and talk about this past year, where you&#39;ve been the Senior Data Scientist at YPlan...&lt;/strong&gt; 
+&lt;br /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;strong&gt;Q&lt;/strong&gt; - Firstly, what is YPlan? How would you describe it to someone not familiar with it?
+&lt;br /&gt;
+&lt;strong&gt;A&lt;/strong&gt; - Here&#39;s the pitch I&#39;ve been using for the past year. YPlan is for people who want to go out either tonight or tomorrow, but don&#39;t yet know what to do. It&#39;s an app for your iPhone or Android phone that shows you a curated list of last-minute events: anything ranging from Broadway shows to bottomless brunches in Brooklyn. If you see something you like you can book it in two taps. You don&#39;t no need to go to a different website, fill out a form, and print out the tickets. Instead, you just show your phone at the door and have a great time! 
+&lt;br /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;strong&gt;Q&lt;/strong&gt; - That&#39;s great! What do you find most exciting about working at the intersection of Data Science and entertainment?
+&lt;br /&gt;
+&lt;strong&gt;A&lt;/strong&gt; - YPlan is essentially a market place between people and events. It&#39;s interesting to tinker with our data because a lot of it comes from people (which events do they look at and which one do they eventually book?). Plus, it&#39;s motivating trying to solve a (luxury) problem you have yourself, and then to get feedback from your customers. Another reason why YPlan was so great to work at, was that everybody has the same goal: making sure that our customers would find the perfect event and have a great time. You can improve on your recommendation system as much as you want (which I tried to do), but without great content and great customer support, you won&#39;t achieve this goal. I guess what I&#39;m trying to say is that the best thing about YPlan were my colleagues, and that&#39;s what made it exciting.
+&lt;br /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;strong&gt;Q&lt;/strong&gt; - So what have you been working on this year? What has been the most surprising insight you&#39;ve found?
+&lt;br /&gt;
+&lt;strong&gt;A&lt;/strong&gt; - At YPlan I&#39;ve mostly been working on a content-based recommendation system, where the goal is essentially to predict the probability a customer would book a certain event. The reason the recommendation system is a content-based one rather than a collaborative one, is that our events have a very short shelf life, which is very different from say, the movies available on Netflix.
+&lt;br /&gt;
+&lt;br /&gt;
+We&#39;ve also created a backtesting system, which allows us to quickly evaluate the performance of the recommendation system to historical data whenever we make a change. Of course, such an evaluation does not give a definitive answer, so we always A/B test a new version with the current version. Still, being able to quickly make changes and evaluate has proved to be very useful. 
+&lt;br /&gt;
+&lt;br /&gt;
+The most surprising insight is, I think, how wrong our instincts and assumptions can be. A recommendation system, or any machine learning algorithm in production for that matter, is not just the math you would find in textbooks. As soon as you apply it to the real world, a lot of (hidden) assumptions will be made. For example, the initial feature weighting I came up with, has recently been greatly improved using an Evolutionary Algorithm on top of the backtesting system. 
+&lt;br /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;br /&gt;
+&lt;strong&gt;Thanks for sharing all that detail - very interesting! Let&#39;s switch gears and talk about the book you&#39;ve been working on that came out recently...&lt;/strong&gt; 
+&lt;br /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;strong&gt;Q&lt;/strong&gt; - You just finished writing a book titled &lt;a href=&quot;http://datascienceatthecommand.com&quot;&gt;Data Science at the Command Line&lt;/a&gt;. What does the book cover?
+&lt;br /&gt;
+&lt;strong&gt;A&lt;/strong&gt; - Well, the main goal of the book is to teach why, how, and when the command line could be employed for data science. The book starts with explaining what the command line is and why it&#39;s such a powerful approach for working with data. At the end of the first chapter, we demonstrate the flexibility of the command line through an amusing example where we use The New York Times&#39; API to infer when New York Fashion Week is happening. Then, after an introduction to the most important Unix concepts and tools, we demonstrate how to obtain data from sources such as relational databases, APIs, and Excel. Obtaining data is actually the first step of the OSEMN model, which is a very practical definition of data science by Hilary Mason and Chris Wiggins that forms the backbone of the book. The steps scrubbing, exploring, and modeling data are also covered in separate chapters. For the final step, interpreting data, a computer is of little use, let alone the command line. Besides those step chapters we also cover more general topics such as parallelizing pipelines and managing data workflows.
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;strong&gt;Q&lt;/strong&gt; - Who is the book best suited for? 
+
+&lt;br /&gt;
+&lt;strong&gt;A&lt;/strong&gt; - I&#39;d say everybody who has an affinity with data! The command line can be intimidating at first, it was for me at least, so I made sure the book makes very little assumptions. I created a virtual machine that contains all the necessary software and data, so it doesn&#39;t matter whether readers are on Windows, OS X, or Linux. Some programming experience helps, because in Chapter 4 we look at how to create reusable command-line tools from existing Python and R code.
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;strong&gt;Q&lt;/strong&gt; - What can readers hope to learn?
+&lt;br /&gt;
+&lt;strong&gt;A&lt;/strong&gt; - The goal of the book is make the reader a more efficient and productive data scientist. It may surprise people that quite a few data science tasks, especially those related to obtaining and scrubbing, can be done much quicker on the command line than in a programming language. Of course, the command line has its limits, which means that you&#39;d need to resort to a different approach. I don&#39;t use the command line for everything myself. It all depends on the task at hand whether I use the command line, IPython notebook, R, Go, D3 &amp; CoffeeScript, or simply pen &amp; paper. Knowing when to use which approach is important, and I&#39;m convinced that there&#39;s a place for the command line.
+&lt;br /&gt;
+&lt;br /&gt;
+One advantage of the command line is that it can easily be integrated with your existing data science workflow. On the one hand, you can often employ the command line from your own environment. IPython and R, for instance, allow you to run command-line tools and capture their output. On the other hand, you can turn your existing code into a reusable command-line tool. I&#39;m convinced that being able to build up your own set of tools can make you a more efficient and productive data scientist.
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;strong&gt;Q&lt;/strong&gt; - What has been your favorite part of writing the book?
+&lt;br /&gt;
+&lt;strong&gt;A&lt;/strong&gt; - Because the book discusses more than 80 command-line tools, many of which have very particular installation instructions, it would take the reader the better part of the day to get all set up. To prevent that, I wanted to create a virtual machine that would contain all the tools and data pre-installed, much like Matthew Russell had done for his book &lt;a href=&quot;http://miningthesocialweb.com&quot;&gt;Mining the Social Web&lt;/a&gt;. I figured that many authors would want to do something like that for their readers. The same holds for teachers and workshop instructors. They want their students up and running as quickly as possible. So, while I was writing my book, I started a project called the Data Science Toolbox, which was, and continues to be, a very interesting and educational experience.
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;strong&gt;Q&lt;/strong&gt; - Got it! Let&#39;s talk more about the &lt;a href=&quot;http://datasciencetoolbox.org&quot;&gt;Data Science Toolbox&lt;/a&gt;. What is your objective for this project?
+&lt;br /&gt;
+&lt;strong&gt;A&lt;/strong&gt; - On the one hand the goal of the Data Science Toolbox is to enable everybody to get started doing data science quickly. The base version contains both R and the Python scientific stack, currently the two most popular environments to do data science. (I still find it amazing that you can download a complete operating system with this software and have it up and running in a matter of minutes.) On the other hand, authors and teachers should be able to easily create custom software and data bundles for their readers and students. It&#39;s a shame to waste time on getting all the required software and date installed. When everybody&#39;s running the Data Science Toolbox, you know that you all have exactly the same environment and you can get straight to the good stuff: doing data science.
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;strong&gt;Q&lt;/strong&gt; - What have you developed so far? And what is coming soon?
+&lt;br /&gt;
+&lt;strong&gt;A&lt;/strong&gt; - Because the Data Science Toolbox stands on the shoulders of many giants: Ubuntu, Vagrant, VirtualBox, Ansible, Packer, and Amazon Web Services, not too much needed to be developed, honestly. Most work went into combining these technologies, creating a command-line tool for installing bundles, and making sure the Vagrant box and AWS AMIs stay up-to-date.
+The success of the Data Science Toolbox is going to depend much more on the quantity and quality of bundles. In that sense it&#39;s really a community effort. Currently, there are a handful of bundles available. The most recent bundle is by Rob Doherty for his &lt;a href=&quot;https://generalassemb.ly/education/data-science&quot;&gt;Introduction to Data Science class at General Assembly&lt;/a&gt; in New York. There are a few interesting collaborations going on at the moment, which should result in more bundles soon. 
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;br /&gt;
+&lt;strong&gt;Thanks for sharing all the projects you&#39;ve been working on - super interesting! Good luck with all your ongoing endeavors! Finally, let&#39;s talk a bit about the future and share some advice...&lt;/strong&gt; 
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;strong&gt;Q&lt;/strong&gt; - What does the future of Data Science look like?
+&lt;br /&gt;
+&lt;strong&gt;A&lt;/strong&gt; - For me, and I hope for many others, data science will have a dark background and bright fixed-width characters. Seriously, the command line has been around for four decades and isn&#39;t going anywhere soon. Two concepts that make the command line so powerful are: working with streams of data and chaining computational blocks. Because the amount of data, and the demand to quickly extract value from it, will only increase, so will the importance of these two concepts. For example, only recently does R, thanks to magrittr and dplyr, support the piping of functions. Also streamtools, a very promising project from the New York Times R&amp;D lab, embeds these two concepts.
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;strong&gt;Q&lt;/strong&gt; - One last question, you said you&#39;re going back to the Netherlands? What are your plans?
+&lt;br /&gt;
+&lt;strong&gt;A&lt;/strong&gt; - That&#39;s right, back to the land of tulips, windmills, bikes, hagelslag, and hopefully, some data science! About three years ago, when I was convincing my wife to come with me to New York City, the role of data scientist practically didn&#39;t exist in the Netherlands. While it still doesn&#39;t come close to say, London, San Francisco, or New York City, it&#39;s good to see that it&#39;s catching up. More and more startups are looking for data scientists. Also, as far as I&#39;m aware, three data science research centers have been formed: one in Amsterdam, one in Leiden, and one in Eindhoven. These developments open up many possibilities. Joining a startup, forming a startup, teaching a class, consulting, training, research; I&#39;m currently considering many things. Exciting times ahead!
+&lt;br /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;br /&gt;
+&lt;strong&gt;Jeroen&lt;/strong&gt; - Thank you ever so much for your time! Really enjoyed learning more about your background, your work at YPlan and both &lt;a href=&quot;http://datascienceatthecommandline.com&quot;&gt;your book&lt;/a&gt; and toolbox projects. Good luck with the move home! 
+&lt;br /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+Readers, thanks for joining us! If you want to read more from Jeroen he can be found on twitter &lt;a href=&quot;https://twitter.com/jeroenhjanssens&quot;&gt;@jeroenhjanssens&lt;/a&gt;.
+&lt;/p&gt;
+</description>
+				<pubDate>Mon, 18 May 2015 14:00:00 +0200</pubDate>
+				<link>http://www.jeroenjanssens.com/2015/05/18/interview-data-science-weekly.html</link>
+				<guid isPermaLink="true">http://www.jeroenjanssens.com/2015/05/18/interview-data-science-weekly.html</guid>
+			</item>
+		
+			<item>
 				<title>IBash Notebook&#8253;</title>
 				<description>&lt;p&gt;Did you know that there&amp;#39;s a Bash kernel for IPython Notebook?
 It even displays inline images.
@@ -942,94 +1100,6 @@ default_autocue.append((ScoreSelector(threshold=-50, mode=&amp;quot;upper&amp;qu
 				<pubDate>Sun, 18 Aug 2013 12:00:00 +0200</pubDate>
 				<link>http://www.jeroenjanssens.com/2013/08/18/bayesian-headline-testing-at-visual-revenue.html</link>
 				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/08/18/bayesian-headline-testing-at-visual-revenue.html</guid>
-			</item>
-		
-			<item>
-				<title>Quickly navigate your filesystem from the command-line</title>
-				<description>&lt;p&gt;&lt;em&gt;Update (6-9-2013) This code is now also available as the &amp;quot;jump&amp;quot; plugin in &lt;a href=&quot;https://github.com/robbyrussell/oh-my-zsh&quot;&gt;oh-my-zsh&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Update (18-8-2013): Thanks to the many useful suggestions in &lt;a href=&quot;https://news.ycombinator.com/item?id=6229001&quot;&gt;the discussion on Hacker News&lt;/a&gt;, I have added (1) quotes to the code, (2) a section about tab completion, and (3) a note for Mac OS X users.&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Like many others, I spend most of my day behind a computer.
-In order make the most of it (and to keep my body from complaining too much), I try to maintain an optimized setup.
-For example, I code in &lt;a href=&quot;http://en.wikipedia.org/wiki/Vim_(text_editor)&quot;&gt;Vim&lt;/a&gt;, browse with &lt;a href=&quot;http://www.vimperator.org/vimperator&quot;&gt;Vimperator&lt;/a&gt;, and move windows around in &lt;a href=&quot;http://i3wm.org&quot;&gt;i3&lt;/a&gt;.
-Another common task is filesystem navigation. 
-I prefer to use the command-line for this, but typing &lt;code&gt;cd ~/some/very/deep/often-used/directory&lt;/code&gt; over and over again does become cumbersome.&lt;/p&gt;
-
-&lt;p&gt;Automated tools like &lt;a href=&quot;https://github.com/joelthelion/autojump&quot;&gt;autojump&lt;/a&gt;, &lt;a href=&quot;https://github.com/rupa/z&quot;&gt;z&lt;/a&gt;, and &lt;a href=&quot;https://github.com/clvv/fasd&quot;&gt;fasd&lt;/a&gt; address this problem by offering shortcuts to the directories you often go to.
-Personally, I prefer a more manual solution, which I would like to share with you.
-I have noticed quite an increase in efficiency with this, and perhaps you will too.&lt;/p&gt;
-
-&lt;h3&gt;Jumping with symbolic links&lt;/h3&gt;
-
-&lt;p&gt;Under the hood this manual solution comes down to storing symbolic links in a hidden directory (e.g., &lt;code&gt;~/.marks&lt;/code&gt;).
-There are four shell functions &lt;code&gt;jump&lt;/code&gt;, &lt;code&gt;mark&lt;/code&gt;, &lt;code&gt;unmark&lt;/code&gt;, and &lt;code&gt;marks&lt;/code&gt;, and they look like this:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;MARKPATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/.marks
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; jump &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
-    &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; -P &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH/$1&amp;quot;&lt;/span&gt; 2&amp;gt;/dev/null &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;No such mark: $1&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; mark &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
-    mkdir -p &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; ln -s &lt;span class=&quot;s2&quot;&gt;&amp;quot;$(pwd)&amp;quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH/$1&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; unmark &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
-    rm -i &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH/$1&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; marks &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    ls -l &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; sed &lt;span class=&quot;s1&quot;&gt;&amp;#39;s/  / /g&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; cut -d&lt;span class=&quot;s1&quot;&gt;&amp;#39; &amp;#39;&lt;/span&gt; -f9- &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; sed &lt;span class=&quot;s1&quot;&gt;&amp;#39;s/ -/\t-/g&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Put this in your &lt;code&gt;.zshrc&lt;/code&gt; or &lt;code&gt;.bashrc&lt;/code&gt; and you&amp;#39;re ready to jump (Mac OS X users need a slightly different version of the &lt;code&gt;marks&lt;/code&gt; function; see below). I have also turned this into a plugin for &lt;a href=&quot;https://github.com/robbyrussell/oh-my-zsh&quot;&gt;oh-my-zsh&lt;/a&gt; called &lt;code&gt;jump&lt;/code&gt;. To add a new bookmark, &lt;code&gt;cd&lt;/code&gt; into the directory and &lt;code&gt;mark&lt;/code&gt; it with a name to your liking:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/some/very/deep/often-used/directory
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mark deep
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;This adds a symbolic link named &lt;code&gt;deep&lt;/code&gt; to the directory &lt;code&gt;~/.marks&lt;/code&gt;. To &lt;code&gt;jump&lt;/code&gt; to this directory, type the following from any place in the filesystem:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;jump deep
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;To remove the bookmark (i.e., the symbolic link), type:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;unmark deep
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;You can view all marks by typing:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;marks
-
-deep    -&amp;gt; /home/johndoe/some/very/deep/often-used/directory
-foo     -&amp;gt; /usr/bin/foo/bar
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;That&amp;#39;s all there is to it! &lt;/p&gt;
-
-&lt;h3&gt;Adding tab completion&lt;/h3&gt;
-
-&lt;p&gt;In order to add tab completion for the &lt;code&gt;jump&lt;/code&gt; and &lt;code&gt;unmark&lt;/code&gt; functions, add the following code to your .zshrc (thanks to &lt;a href=&quot;https://news.ycombinator.com/item?id=6229468&quot;&gt;tiziano88&lt;/a&gt;):&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; _completemarks &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;nv&quot;&gt;reply&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;ls &lt;span class=&quot;nv&quot;&gt;$MARKPATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-compctl -K _completemarks jump
-compctl -K _completemarks unmark
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;or the following to your .bashrc (thanks to &lt;a href=&quot;https://news.ycombinator.com/item?id=6229768&quot;&gt;microcolonel&lt;/a&gt;):&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;_completemarks&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;local &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;curw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;COMP_WORDS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[COMP_CWORD]&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;local &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;wordlist&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;find &lt;span class=&quot;nv&quot;&gt;$MARKPATH&lt;/span&gt; -type l -printf &lt;span class=&quot;s2&quot;&gt;&amp;quot;%f\n&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;nv&quot;&gt;COMPREPLY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;compgen&lt;/span&gt; -W &lt;span class=&quot;s1&quot;&gt;&amp;#39;${wordlist[@]}&amp;#39;&lt;/span&gt; -- &lt;span class=&quot;s2&quot;&gt;&amp;quot;$curw&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; 0
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;nb&quot;&gt;complete&lt;/span&gt; -F _completemarks jump unmark
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;If you now type &lt;code&gt;jump&lt;/code&gt; or &lt;code&gt;unmark&lt;/code&gt; and then press TAB, you see a list of available marks. Neat!&lt;/p&gt;
-
-&lt;h3&gt;Note for Mac OS X users&lt;/h3&gt;
-
-&lt;p&gt;As pointed out by &lt;a href=&quot;https://news.ycombinator.com/item?id=6229428&quot;&gt;guygurari&lt;/a&gt;, Mac OS X users need a slightly different version of the &lt;code&gt;marks&lt;/code&gt; function:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; marks &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;se&quot;&gt;\l&lt;/span&gt;s -l &lt;span class=&quot;s2&quot;&gt;&amp;quot;$MARKPATH&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; tail -n +2 &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; sed &lt;span class=&quot;s1&quot;&gt;&amp;#39;s/  / /g&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; cut -d&lt;span class=&quot;s1&quot;&gt;&amp;#39; &amp;#39;&lt;/span&gt; -f9- &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; awk -F &lt;span class=&quot;s1&quot;&gt;&amp;#39; -&amp;gt; &amp;#39;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;{printf &amp;quot;%-10s -&amp;gt; %s\n&amp;quot;, $1, $2}&amp;#39;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;If you like what I had to say then you may want to &lt;a href=&quot;https://twitter.com/jeroenhjanssens/&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
-</description>
-				<pubDate>Fri, 16 Aug 2013 21:06:19 +0200</pubDate>
-				<link>http://www.jeroenjanssens.com/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html</link>
-				<guid isPermaLink="true">http://www.jeroenjanssens.com/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html</guid>
 			</item>
 		
 	</channel>

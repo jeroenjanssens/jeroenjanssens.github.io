@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Anomalies, Concerts & Data Science at the Command Line [interview]</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="Dutch Data Scientist, Toolmaker, Unix Philosopher">
+    <link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+    <link rel="alternate" type="application/rss+xml" title="Jeroen Janssens" href="http://www.jeroenjanssens.com/feed.xml">
+
+    
+      <meta name="twitter:card" content="summary">
+    
+    <meta name="twitter:site" content="@jeroenhjanssens">
+    <meta name="twitter:domain" content="jeroenjanssens.com">
+    <meta name="twitter:creator" content="@jeroenhjanssens">
+    
+      <meta name="twitter:title" content="Anomalies, Concerts & Data Science at the Command Line [interview]">
+    
+    
+    <meta name="twitter:url" content="http://www.jeroenjanssens.com/2015/05/18/interview-data-science-weekly.html">
+    
+    
+      <meta name="twitter:description" content="We recently caught up with Jeroen Janssens, author of Data Science at the Command Line. We were keen to learn more about his background, his recent work at YPlan and his work creating both the book and the (related) Data Science Toolbox project…">
+    
+    
+      <meta name="twitter:image:src" content="http://www.jeroenjanssens.com/img/jeroenjanssens.jpg">
+    
+    <meta name="bitly-verification" content="f2828a63ca29"/>
+  </head>
+  <body>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-43246574-1', 'jeroenjanssens.com');
+      ga('send', 'pageview');
+    </script>
+    <div id="site">
+      <div id="header">
+        <h1><a href="/">Jeroen Janssens</a></h1>
+        <div id="description">Dutch Data Scientist, Toolmaker, Unix Philosopher</div>
+        <div id="social">
+          <ul>
+            <li><a href="http://datascienceatthecommandline.com">My Book</a></li>
+            <li><a href="/consulting-and-training">Consulting &amp; Training</a></li>
+            <li><a href="http://twitter.com/jeroenhjanssens/"><img class="icon" title="Twitter" alt="Twitter" src="/img/icon-twitter.png" /></a></li>
+            <li><a href="http://www.linkedin.com/in/jeroenjanssens"><img class="icon" title="LinkedIn" alt="LinkedIn" src="/img/icon-linkedin.png" /></a></li>
+            <li><a href="http://github.com/jeroenjanssens/"><img class="icon" title="Github" alt="Github" src="/img/icon-github.png" /></a></li>
+            <li><a href="http://www.jeroenjanssens.com/feed.xml"><img class="icon" title="RSS" alt="RSS" src="/img/icon-rss.png" /></a></li>
+
+          <ul>
+        </div>
+      </div>
+      <div id="content">
+        					<h2>Anomalies, Concerts & Data Science at the Command Line [interview]</h2>
+					<div class="date">Published on 18 May 2015</div>
+					<a href="https://twitter.com/share" class="twitter-share-button" data-via="jeroenhjanssens">Tweet</a>
+					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+					<div class="post">
+						<p><em>This interview first appeared on <a href="http://www.datascienceweekly.org/data-scientist-interviews/data-science-at-the-command-line-jeroen-janssens-interview">Data Science Weekly</a></em> in October 2014.</p>
+
+<p>
+We recently caught up with Jeroen Janssens, author of <a href="http://datascienceatthecommandline.com/">Data Science at the Command Line</a>. We were keen to learn more about his background, his recent work at YPlan and his work creating both the book and the (related) <a href="http://datasciencetoolbox.org">Data Science Toolbox</a> project…
+</p>
+
+<p>
+<strong>Hi Jeroen, firstly thank you for the interview. Let's start with your background and how you became interested in working with data...</strong>
+</p>
+
+<p>
+<strong>Q</strong> - What is your 30 second bio?
+<br />
+<strong>A</strong> - Howdy! My name is <a href="https://twitter.com/jeroenhjanssens">Jeroen</a> and I'm a data scientist. At least I like to think that I am. As a Brooklynite who tries to turn dirty data into pretty plots and meaningful models using a MacBook, I do believe I match at least one of the many definitions of data scientist. Jokes aside, the first time I was given the title of data scientist was in January 2012, when I joined Visual Revenue in New York City. At the time, I was still finishing my Ph.D. in Machine Learning at Tilburg University in the Netherlands. In March 2013, Visual Revenue got acquired by Outbrain, where I stayed for eight months. The third and final startup in New York City where I was allowed to call myself data scientist was YPlan. And now, after a year of developing a recommendation engine for last-minute concerts, sporting events, and wine tastings, I'm excited to tell you that I'll soon be moving back to the Netherlands.
+</p>
+
+<p>
+<strong>Q</strong> - How did you get interested in working with data? 
+<br />
+<strong>A</strong> - During my undergraduate at University College Maastricht, which is a liberal arts college in the Netherlands, I took a course in Machine Learning. The idea of teaching computers by feeding it data fascinated me. Once I graduated, I wanted to learn more about this excited field, so I continued with an M.Sc. in Artificial Intelligence at Maastricht University, which has a strong focus on Machine Learning.
+<br />
+</p>
+
+<p>
+<strong>Q</strong> - So, what was the first data set you remember working with? What did you do with it?
+<br />
+<strong>A</strong> - The very first data set was actually one that I created myself, albeit in quite a naughty way. In high school--I must have been fifteen--I managed to create a program in Visual Basic that imitated the lab computers' login screen. When a student tried to log in, an error message would pop up and the username and password would be saved to a file. So, by the end of the day, I had a "data set" of dozens of username/password combinations. Don't worry, I didn't use that data at all; this whole thing was really about the challenge of fooling fellow students. Of course I couldn't keep my mouth shut about this feat, which quickly led to the punishment I deserved: vacuum cleaning all the classrooms for a month. Yes, I'll never forget that data set.
+<br />
+</p>
+
+<p>
+<strong>Q</strong> - I can imagine! Maybe it was that moment, though was there a specific "aha" moment when you realized the power of data?
+<br />
+<strong>A</strong> - Towards the end of my Ph.D., which focused on anomaly detection, I was looking into meta learning for one-class classifiers. In other words, I wanted to know whether it was possible to predict which one-class classifier would perform best on a new, unseen data set. Besides that, I also wanted to know which characteristics of that data set would be most important. 
+<br />
+<br />
+To achieve this, I constructed a so-called meta data set, where its 36 features were characteristics of 255 "regular" data sets (for example, number of data points, dimensionality). I evaluated 19 different one-class classifiers on those 255 data sets. The challenge was then to train a meta classifier on that meta data set, with 19 AUC performance values as the labels.
+<br />
+<br />
+Long story short, because I tried to do too many things at once, I ended up with way too much data to examine. For weeks, I was getting lost in my own data. Eventually I managed to succeed. The lesson I learned was that there's also a thing as too much data; not in the sense of space, but in density, if that makes sense. And more importantly, I also learned to think harder before simply starting a huge computational experiment!
+<br />
+</p>
+
+<p>
+<br />
+<strong>Makes sense! Thanks for sharing all that background. Let's switch gears and talk about this past year, where you've been the Senior Data Scientist at YPlan...</strong> 
+<br />
+</p>
+
+<p>
+<strong>Q</strong> - Firstly, what is YPlan? How would you describe it to someone not familiar with it?
+<br />
+<strong>A</strong> - Here's the pitch I've been using for the past year. YPlan is for people who want to go out either tonight or tomorrow, but don't yet know what to do. It's an app for your iPhone or Android phone that shows you a curated list of last-minute events: anything ranging from Broadway shows to bottomless brunches in Brooklyn. If you see something you like you can book it in two taps. You don't no need to go to a different website, fill out a form, and print out the tickets. Instead, you just show your phone at the door and have a great time! 
+<br />
+</p>
+
+<p>
+<strong>Q</strong> - That's great! What do you find most exciting about working at the intersection of Data Science and entertainment?
+<br />
+<strong>A</strong> - YPlan is essentially a market place between people and events. It's interesting to tinker with our data because a lot of it comes from people (which events do they look at and which one do they eventually book?). Plus, it's motivating trying to solve a (luxury) problem you have yourself, and then to get feedback from your customers. Another reason why YPlan was so great to work at, was that everybody has the same goal: making sure that our customers would find the perfect event and have a great time. You can improve on your recommendation system as much as you want (which I tried to do), but without great content and great customer support, you won't achieve this goal. I guess what I'm trying to say is that the best thing about YPlan were my colleagues, and that's what made it exciting.
+<br />
+</p>
+
+<p>
+<strong>Q</strong> - So what have you been working on this year? What has been the most surprising insight you've found?
+<br />
+<strong>A</strong> - At YPlan I've mostly been working on a content-based recommendation system, where the goal is essentially to predict the probability a customer would book a certain event. The reason the recommendation system is a content-based one rather than a collaborative one, is that our events have a very short shelf life, which is very different from say, the movies available on Netflix.
+<br />
+<br />
+We've also created a backtesting system, which allows us to quickly evaluate the performance of the recommendation system to historical data whenever we make a change. Of course, such an evaluation does not give a definitive answer, so we always A/B test a new version with the current version. Still, being able to quickly make changes and evaluate has proved to be very useful. 
+<br />
+<br />
+The most surprising insight is, I think, how wrong our instincts and assumptions can be. A recommendation system, or any machine learning algorithm in production for that matter, is not just the math you would find in textbooks. As soon as you apply it to the real world, a lot of (hidden) assumptions will be made. For example, the initial feature weighting I came up with, has recently been greatly improved using an Evolutionary Algorithm on top of the backtesting system. 
+<br />
+</p>
+
+<p>
+<br />
+<strong>Thanks for sharing all that detail - very interesting! Let's switch gears and talk about the book you've been working on that came out recently...</strong> 
+<br />
+</p>
+
+<p>
+<strong>Q</strong> - You just finished writing a book titled <a href="http://datascienceatthecommand.com">Data Science at the Command Line</a>. What does the book cover?
+<br />
+<strong>A</strong> - Well, the main goal of the book is to teach why, how, and when the command line could be employed for data science. The book starts with explaining what the command line is and why it's such a powerful approach for working with data. At the end of the first chapter, we demonstrate the flexibility of the command line through an amusing example where we use The New York Times' API to infer when New York Fashion Week is happening. Then, after an introduction to the most important Unix concepts and tools, we demonstrate how to obtain data from sources such as relational databases, APIs, and Excel. Obtaining data is actually the first step of the OSEMN model, which is a very practical definition of data science by Hilary Mason and Chris Wiggins that forms the backbone of the book. The steps scrubbing, exploring, and modeling data are also covered in separate chapters. For the final step, interpreting data, a computer is of little use, let alone the command line. Besides those step chapters we also cover more general topics such as parallelizing pipelines and managing data workflows.
+</p>
+
+<p>
+<strong>Q</strong> - Who is the book best suited for? 
+
+<br />
+<strong>A</strong> - I'd say everybody who has an affinity with data! The command line can be intimidating at first, it was for me at least, so I made sure the book makes very little assumptions. I created a virtual machine that contains all the necessary software and data, so it doesn't matter whether readers are on Windows, OS X, or Linux. Some programming experience helps, because in Chapter 4 we look at how to create reusable command-line tools from existing Python and R code.
+</p>
+
+<p>
+<strong>Q</strong> - What can readers hope to learn?
+<br />
+<strong>A</strong> - The goal of the book is make the reader a more efficient and productive data scientist. It may surprise people that quite a few data science tasks, especially those related to obtaining and scrubbing, can be done much quicker on the command line than in a programming language. Of course, the command line has its limits, which means that you'd need to resort to a different approach. I don't use the command line for everything myself. It all depends on the task at hand whether I use the command line, IPython notebook, R, Go, D3 & CoffeeScript, or simply pen & paper. Knowing when to use which approach is important, and I'm convinced that there's a place for the command line.
+<br />
+<br />
+One advantage of the command line is that it can easily be integrated with your existing data science workflow. On the one hand, you can often employ the command line from your own environment. IPython and R, for instance, allow you to run command-line tools and capture their output. On the other hand, you can turn your existing code into a reusable command-line tool. I'm convinced that being able to build up your own set of tools can make you a more efficient and productive data scientist.
+</p>
+
+<p>
+<strong>Q</strong> - What has been your favorite part of writing the book?
+<br />
+<strong>A</strong> - Because the book discusses more than 80 command-line tools, many of which have very particular installation instructions, it would take the reader the better part of the day to get all set up. To prevent that, I wanted to create a virtual machine that would contain all the tools and data pre-installed, much like Matthew Russell had done for his book <a href="http://miningthesocialweb.com">Mining the Social Web</a>. I figured that many authors would want to do something like that for their readers. The same holds for teachers and workshop instructors. They want their students up and running as quickly as possible. So, while I was writing my book, I started a project called the Data Science Toolbox, which was, and continues to be, a very interesting and educational experience.
+</p>
+
+<p>
+<strong>Q</strong> - Got it! Let's talk more about the <a href="http://datasciencetoolbox.org">Data Science Toolbox</a>. What is your objective for this project?
+<br />
+<strong>A</strong> - On the one hand the goal of the Data Science Toolbox is to enable everybody to get started doing data science quickly. The base version contains both R and the Python scientific stack, currently the two most popular environments to do data science. (I still find it amazing that you can download a complete operating system with this software and have it up and running in a matter of minutes.) On the other hand, authors and teachers should be able to easily create custom software and data bundles for their readers and students. It's a shame to waste time on getting all the required software and date installed. When everybody's running the Data Science Toolbox, you know that you all have exactly the same environment and you can get straight to the good stuff: doing data science.
+</p>
+
+<p>
+<strong>Q</strong> - What have you developed so far? And what is coming soon?
+<br />
+<strong>A</strong> - Because the Data Science Toolbox stands on the shoulders of many giants: Ubuntu, Vagrant, VirtualBox, Ansible, Packer, and Amazon Web Services, not too much needed to be developed, honestly. Most work went into combining these technologies, creating a command-line tool for installing bundles, and making sure the Vagrant box and AWS AMIs stay up-to-date.
+The success of the Data Science Toolbox is going to depend much more on the quantity and quality of bundles. In that sense it's really a community effort. Currently, there are a handful of bundles available. The most recent bundle is by Rob Doherty for his <a href="https://generalassemb.ly/education/data-science">Introduction to Data Science class at General Assembly</a> in New York. There are a few interesting collaborations going on at the moment, which should result in more bundles soon. 
+</p>
+
+<p>
+<br />
+<strong>Thanks for sharing all the projects you've been working on - super interesting! Good luck with all your ongoing endeavors! Finally, let's talk a bit about the future and share some advice...</strong> 
+</p>
+
+<p>
+<strong>Q</strong> - What does the future of Data Science look like?
+<br />
+<strong>A</strong> - For me, and I hope for many others, data science will have a dark background and bright fixed-width characters. Seriously, the command line has been around for four decades and isn't going anywhere soon. Two concepts that make the command line so powerful are: working with streams of data and chaining computational blocks. Because the amount of data, and the demand to quickly extract value from it, will only increase, so will the importance of these two concepts. For example, only recently does R, thanks to magrittr and dplyr, support the piping of functions. Also streamtools, a very promising project from the New York Times R&D lab, embeds these two concepts.
+</p>
+
+<p>
+<strong>Q</strong> - One last question, you said you're going back to the Netherlands? What are your plans?
+<br />
+<strong>A</strong> - That's right, back to the land of tulips, windmills, bikes, hagelslag, and hopefully, some data science! About three years ago, when I was convincing my wife to come with me to New York City, the role of data scientist practically didn't exist in the Netherlands. While it still doesn't come close to say, London, San Francisco, or New York City, it's good to see that it's catching up. More and more startups are looking for data scientists. Also, as far as I'm aware, three data science research centers have been formed: one in Amsterdam, one in Leiden, and one in Eindhoven. These developments open up many possibilities. Joining a startup, forming a startup, teaching a class, consulting, training, research; I'm currently considering many things. Exciting times ahead!
+<br />
+</p>
+
+<p>
+<br />
+<strong>Jeroen</strong> - Thank you ever so much for your time! Really enjoyed learning more about your background, your work at YPlan and both <a href="http://datascienceatthecommandline.com">your book</a> and toolbox projects. Good luck with the move home! 
+<br />
+</p>
+
+<p>
+Readers, thanks for joining us! If you want to read more from Jeroen he can be found on twitter <a href="https://twitter.com/jeroenhjanssens">@jeroenhjanssens</a>.
+</p>
+
+					</div>
+
+      </div>
+    </div>
+  </body>
+</html>
