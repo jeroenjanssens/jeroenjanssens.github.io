@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Anomalies, Concerts & Data Science at the Command Line [interview]"
+title:  "Anomalies, concerts & data science at the command line [interview]"
 date:   2015-05-18 12:00:00
 description: "We recently caught up with Jeroen Janssens, author of Data Science at the Command Line. We were keen to learn more about his background, his recent work at YPlan and his work creating both the book and the (related) Data Science Toolbox project…"
 ---
