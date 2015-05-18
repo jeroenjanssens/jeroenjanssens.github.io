@@ -43,6 +43,8 @@ table
       text-align: left
   //+alternating-rows($table-color, adjust-hue($table-color, -120deg), #222)
 
+img.icon
+  height: 16px
 
 img#face
   float: right
@@ -82,7 +84,7 @@ body
   text-align: center
   color: #111
 
-h1, h2, h3 
+h1, h2, h3
   font-family: $sans
   font-weight: 600
 
@@ -94,6 +96,10 @@ h2
 
 h3
   +adjust-font-size-to(22px)
+
+//h4
+  //+adjust-font-size-to(19px)
+  //padding-top: 0.5em
 
 p
   margin: 1em 0
@@ -290,3 +296,44 @@ div.highlight
     color: #ffffc7
   .il
     color: #8cd0d3
+
+blockquote
+  +adjust-font-size-to(14px)
+  color: #333333
+  font-style: italic
+  width: 400px
+  margin: 0.2em 0
+  padding: 0.2em 40px
+  line-height: 1.45
+  position: relative
+
+
+blockquote > p:before
+  color: #cccccc
+  display: block
+  content: "\201C"
+  font-size: 80px
+  position: absolute
+  left: -15px
+  top: -20px
+  color: #7a7a7a
+
+blockquote > p
+  margin: 1em 0 0.5em 0
+
+.left > blockquote
+  margin-left: 0
+  margin-right: auto
+
+.right > blockquote
+  margin-left: auto
+  margin-right: 0
+
+
+blockquote cite
+  color: #999999
+  display: block
+  margin-top: 0px
+ 
+blockquote cite:before
+  content: "\2014 \2009"
