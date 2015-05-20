@@ -83,8 +83,8 @@ As mentioned, a scoring rule is triggered at a certain stage as the Reporter is 
 - **PRE\_TRAVERSAL**, scores or prunes (deletes tags) before the DOM is traversed. This is useful for getting rid of specific tags such as footers, or give positive scores to certain tags For example, delete all comments (specific to a certain news property):
 
 	```python
-	default\_autocue.append((CSSSelector("div#comments", Pruner()),
-	PRE\_TRAVERSAL))
+	default_autocue.append((CSSSelector("div#comments", Pruner()),
+	  PRE_TRAVERSAL))
 	```
 
 Now, the HTML will be traversed as explained above.
@@ -92,13 +92,17 @@ Now, the HTML will be traversed as explained above.
 - **EVAL\_PARAGRAPH**, scores a tag as a paragraph. For example, by counting words.
 
 	```python
-	default\_autocue.append((Scorer(RegExMatcher("(\w)+(['`]\w)?", factor=2, name="word"), reset_children=True), EVAL_PARAGRAPH))
+	default_autocue.append(
+	  (Scorer(RegExMatcher("(\w)+(['`]\w)?", factor=2, name="word"),
+	  reset_children=True), EVAL_PARAGRAPH))
 	```
 
 - **EVAL\_CONTAINER**, scores a tag as a container. For example, combining the scores of the children tags with a 70 points penalty, giving a minimal score of 0.
 
 	```python
-	default_autocue.append((ScoreAggregator(start_score=-70, vmin=0), EVAL_CONTAINER))
+	default_autocue.append(
+	  (ScoreAggregator(start_score=-70, vmin=0),
+	  EVAL_CONTAINER))
 	```
 
 This concludes the traversing of the HTML.
@@ -109,16 +113,18 @@ The tag with the highest score is selected as news container.
 
 - **NEWS\_CONTAINER** is like POST\_TRAVERSAL but only applies to the tag that is selected as news container.
 
-  Example: penalize DIVs inside the news container:
-
+	Example: penalize DIVs inside the news container:
+	
 	```python
-	default_autocue.append((CSSSelector("div", Scorer(FixedValue(-60))), NEWS_CONTAINER))
+	default_autocue.append(
+	  (CSSSelector("div", Scorer(FixedValue(-60))),
+	  NEWS_CONTAINER))
 	```
-
-  Example: Get rid of any tags that have a score below -50:
+	Example: Get rid of any tags that have a score below -50:
 
 	```python
-	default_autocue.append((ScoreSelector(threshold=-50, mode="upper", actor=Pruner()), NEWS_CONTAINER))
+	default_autocue.append((ScoreSelector(threshold=-50, 
+	  mode="upper", actor=Pruner()), NEWS_CONTAINER))
 	```
 
 - **NEWS\_TEXT**, operates on the text inside the news container. For example, put all text on one line:

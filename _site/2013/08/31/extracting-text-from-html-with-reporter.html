@@ -129,8 +129,8 @@ an important scoring rule which penalises containers. If such a rule would not b
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">default_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">RegExReplacer</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&#39;&lt;br */? *&gt;[</span><span class="se">\\</span><span class="s">r</span><span class="se">\\</span><span class="s">n]\*&lt;br */? *&gt;&#39;</span><span class="p">,</span> <span class="n">repl</span><span class="o">=</span><span class="s">&#39;&lt;/p&gt;&lt;p&gt;&#39;</span><span class="p">),</span> <span class="n">HTML</span><span class="p">))</span>
 </code></pre></div></li>
 <li><p><strong>PRE_TRAVERSAL</strong>, scores or prunes (deletes tags) before the DOM is traversed. This is useful for getting rid of specific tags such as footers, or give positive scores to certain tags For example, delete all comments (specific to a certain news property):</p>
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">default</span>\<span class="n">_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">CSSSelector</span><span class="p">(</span><span class="s">&quot;div#comments&quot;</span><span class="p">,</span> <span class="n">Pruner</span><span class="p">()),</span>
-<span class="n">PRE</span>\<span class="n">_TRAVERSAL</span><span class="p">))</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">default_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">CSSSelector</span><span class="p">(</span><span class="s">&quot;div#comments&quot;</span><span class="p">,</span> <span class="n">Pruner</span><span class="p">()),</span>
+  <span class="n">PRE_TRAVERSAL</span><span class="p">))</span>
 </code></pre></div></li>
 </ul>
 
@@ -138,10 +138,14 @@ an important scoring rule which penalises containers. If such a rule would not b
 
 <ul>
 <li><p><strong>EVAL_PARAGRAPH</strong>, scores a tag as a paragraph. For example, by counting words.</p>
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">default</span>\<span class="n">_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">Scorer</span><span class="p">(</span><span class="n">RegExMatcher</span><span class="p">(</span><span class="s">&quot;(\w)+([&#39;`]\w)?&quot;</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;word&quot;</span><span class="p">),</span> <span class="n">reset_children</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span> <span class="n">EVAL_PARAGRAPH</span><span class="p">))</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">default_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+  <span class="p">(</span><span class="n">Scorer</span><span class="p">(</span><span class="n">RegExMatcher</span><span class="p">(</span><span class="s">&quot;(\w)+([&#39;`]\w)?&quot;</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;word&quot;</span><span class="p">),</span>
+  <span class="n">reset_children</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span> <span class="n">EVAL_PARAGRAPH</span><span class="p">))</span>
 </code></pre></div></li>
 <li><p><strong>EVAL_CONTAINER</strong>, scores a tag as a container. For example, combining the scores of the children tags with a 70 points penalty, giving a minimal score of 0.</p>
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">default_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">ScoreAggregator</span><span class="p">(</span><span class="n">start_score</span><span class="o">=-</span><span class="mi">70</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">EVAL_CONTAINER</span><span class="p">))</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">default_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+  <span class="p">(</span><span class="n">ScoreAggregator</span><span class="p">(</span><span class="n">start_score</span><span class="o">=-</span><span class="mi">70</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+  <span class="n">EVAL_CONTAINER</span><span class="p">))</span>
 </code></pre></div></li>
 </ul>
 
@@ -154,20 +158,17 @@ an important scoring rule which penalises containers. If such a rule would not b
 <p>The tag with the highest score is selected as news container.</p>
 
 <ul>
-<li><strong>NEWS_CONTAINER</strong> is like POST_TRAVERSAL but only applies to the tag that is selected as news container.</li>
-</ul>
+<li><p><strong>NEWS_CONTAINER</strong> is like POST_TRAVERSAL but only applies to the tag that is selected as news container.</p>
 
 <p>Example: penalize DIVs inside the news container:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">```python
-default_autocue.append((CSSSelector(&quot;div&quot;, Scorer(FixedValue(-60))), NEWS_CONTAINER))
-```
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">default_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+  <span class="p">(</span><span class="n">CSSSelector</span><span class="p">(</span><span class="s">&quot;div&quot;</span><span class="p">,</span> <span class="n">Scorer</span><span class="p">(</span><span class="n">FixedValue</span><span class="p">(</span><span class="o">-</span><span class="mi">60</span><span class="p">))),</span>
+  <span class="n">NEWS_CONTAINER</span><span class="p">))</span>
 </code></pre></div>
 <p>Example: Get rid of any tags that have a score below -50:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">```python
-default_autocue.append((ScoreSelector(threshold=-50, mode=&quot;upper&quot;, actor=Pruner()), NEWS_CONTAINER))
-```
-</code></pre></div>
-<ul>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">default_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">ScoreSelector</span><span class="p">(</span><span class="n">threshold</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> 
+  <span class="n">mode</span><span class="o">=</span><span class="s">&quot;upper&quot;</span><span class="p">,</span> <span class="n">actor</span><span class="o">=</span><span class="n">Pruner</span><span class="p">()),</span> <span class="n">NEWS_CONTAINER</span><span class="p">))</span>
+</code></pre></div></li>
 <li><p><strong>NEWS_TEXT</strong>, operates on the text inside the news container. For example, put all text on one line:</p>
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">default_autocue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">RegExReplacer</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&#39;\s+&#39;</span><span class="p">,</span> <span class="n">repl</span><span class="o">=</span><span class="s">&#39; &#39;</span><span class="p">),</span> <span class="n">NEWS_TEXT</span><span class="p">))</span>
 </code></pre></div></li>
