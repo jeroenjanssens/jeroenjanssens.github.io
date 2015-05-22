@@ -613,8 +613,8 @@ div.highlight .il {
 
 /* line 300, ../_sass/screen.sass */
 blockquote {
-  font-size: 0.875em;
-  line-height: 1.71429em;
+  font-size: 1em;
+  line-height: 1.5em;
   color: #333333;
   font-style: italic;
   width: 400px;
