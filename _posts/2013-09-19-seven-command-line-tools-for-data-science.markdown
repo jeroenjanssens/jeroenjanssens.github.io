@@ -6,7 +6,9 @@ description: "In this post I would like to share seven command-line tools that I
 image:  /img/iris.png
 ---
 
-*Update (7-17-2014) Check out my new book [Data Science at the Command Line](http://datascienceatthecommandline.com), which contains over 70 command-line tools for doing data science!*
+*Update (23-5-2015) I'm now also doing [consulting and training](http://jeroenjanssens.com/consulting-and-training) on this exciting topic.* 
+
+*Update (7-17-2014) Check out my new book [Data Science at the Command Line](http://datascienceatthecommandline.com), which contains over 70 command-line tools for doing data science.*
 
 Data science is [OSEMN](http://www.dataists.com/2010/09/a-taxonomy-of-data-science/) (pronounced as awesome).
 That is, it involves Obtaining, Scrubbing, Exploring, Modeling, and iNterpreting data.
