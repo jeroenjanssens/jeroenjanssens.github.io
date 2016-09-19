@@ -6,6 +6,10 @@ description: "In this post I would like to share seven command-line tools that I
 image:  /img/iris.png
 ---
 
+*Newsflash! On October 5, I'm giving a one-day, hands-on [workshop](http://datascienceatthecommandline.com/#workshop) in Budapest.* 
+
+<a href="http://datascienceatthecommandline.com/#workshop"><img src="/img/workshop-crunching-data-at-the-command-line.png" style="height:314px; width:600px;"alt="Workshop Crunching Data at the Command Line" /></a>
+
 *Update (23-5-2015) I'm now also doing [consulting and training](http://jeroenjanssens.com/consulting-and-training) on this exciting topic.* 
 
 *Update (7-17-2014) Check out my new book [Data Science at the Command Line](http://datascienceatthecommandline.com), which contains over 70 command-line tools for doing data science.*
