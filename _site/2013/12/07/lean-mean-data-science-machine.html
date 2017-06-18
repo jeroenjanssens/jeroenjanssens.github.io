@@ -98,29 +98,32 @@ To automate this process, I have created a script (a <a href="http://www.dexy.it
 <p>The environment is created and configured using <a href="http://www.vagrantup.com/">Vagrant</a>, which is basically a wrapper around VirtualBox and other virtualization software such AWS EC2. With a few commands, a fresh virtual machine is spun up and configured according to a simple script. It was <a href="http://miningthesocialweb.com/2013/11/23/confessions-of-a-prolific-moonlighter-with-a-chronic-writing-disorder">Matthew Russell’s Ignite talk</a> that inspired me to use Vagrant; he provides one for his book <a href="http://miningthesocialweb.com">Mining the Social Web</a> that is focused more on Python.
 If my Vagrant environment would be provided with Data Science at the Command Line, then the reader would be able to follow along with the commands and source code. But since my mission is to enable everybody to do data science at the command-line as soon as possible, I have decided to make it available right now.</p>
 
-<p>Currently, the environment includes the <a href="http://jeroenjanssens.com/2013/09/19/seven-command-line-tools-for-data-science.html">seven command-line tools I discussed</a> a while ago and <a href="http://www.gnu.org/software/parallel/">GNU parallel</a>, which will be discussed in Chapter 8. Just like the book itself, the environment is a work in progress. In order to be able to run <a href="https://github.com/jeroenjanssens/data-science-toolbox/blob/master/tools/Rio">Rio</a> (one of the seven tools), I had to include the latest version of <code>R</code>, together with the packages <code>ggplot2</code>, <code>sqldf</code>, and <code>plyr</code>. <del>I am aware that many of you would prefer the Python scientific stack to be included as well.</del> The Python scientific stack (<code>ipython</code>, <code>numpy</code>, <code>scipy</code>, <code>matplotlib</code>, <code>pandas</code>, and <code>scikit-learn</code>) is also included. However, because of disk-space and provision-time constraints, I doubt whether it is desirable (or even possible) to create an environment that includes everything. Perhaps that we can devise a solution where you select which tools, packages, and languages you would like to have installed. As mentioned, it is a work in progress and my main goal is to get you up and running on the command-line.</p>
+<p>Currently, the environment includes the <a href="http://jeroenjanssens.com/2013/09/19/seven-command-line-tools-for-data-science.html">seven command-line tools I discussed</a> a while ago and <a href="http://www.gnu.org/software/parallel/">GNU parallel</a>, which will be discussed in Chapter 8. Just like the book itself, the environment is a work in progress. In order to be able to run <a href="https://github.com/jeroenjanssens/data-science-toolbox/blob/master/tools/Rio">Rio</a> (one of the seven tools), I had to include the latest version of <code class="highlighter-rouge">R</code>, together with the packages <code class="highlighter-rouge">ggplot2</code>, <code class="highlighter-rouge">sqldf</code>, and <code class="highlighter-rouge">plyr</code>. <del>I am aware that many of you would prefer the Python scientific stack to be included as well.</del> The Python scientific stack (<code class="highlighter-rouge">ipython</code>, <code class="highlighter-rouge">numpy</code>, <code class="highlighter-rouge">scipy</code>, <code class="highlighter-rouge">matplotlib</code>, <code class="highlighter-rouge">pandas</code>, and <code class="highlighter-rouge">scikit-learn</code>) is also included. However, because of disk-space and provision-time constraints, I doubt whether it is desirable (or even possible) to create an environment that includes everything. Perhaps that we can devise a solution where you select which tools, packages, and languages you would like to have installed. As mentioned, it is a work in progress and my main goal is to get you up and running on the command-line.</p>
 
 <h3 id="installing-the-data-science-toolbox-environment">Installing the Data Science Toolbox environment</h3>
 
 <p>The environment is currently configured to run on top of <a href="https://www.virtualbox.org">VirtualBox</a>. (I am looking into the option to deploy it on an AWS EC2 instance.)
 So, first you will need to install <a href="https://www.virtualbox.org">VirtualBox</a>. 
 Second you need to install <a href="http://www.vagrantup.com/">Vagrant</a>. 
-Third, you need to download the environment by cloning the data science toolbox. (If you do not want to use <code>git</code> you can also <a href="https://github.com/jeroenjanssens/data-science-toolbox/archive/master.zip">download the zip file</a>.)</p>
+Third, you need to download the environment by cloning the data science toolbox. (If you do not want to use <code class="highlighter-rouge">git</code> you can also <a href="https://github.com/jeroenjanssens/data-science-toolbox/archive/master.zip">download the zip file</a>.)</p>
 
-<pre><code class="language-bash">git clone https://github.com/jeroenjanssens/data-science-toolbox.git
-cd data-science-toolbox/box
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>git clone https://github.com/jeroenjanssens/data-science-toolbox.git
+<span class="nb">cd </span>data-science-toolbox/box
 </code></pre>
+</div>
 
-<p>Running <code>vagrant up</code> in the <code>box</code> directory will download the base box (Ubuntu 12.04 LTS 64-bit), spin up a virtual machine, and provision it. (Now would be the perfect time to think about any command-line scripts you may have lying around and donate them to the <a href="http://datasciencetoolbox.org">data science toolbox</a>.) Once the provisioning is complete, you will be able to log into your own lean, mean data science machine:</p>
+<p>Running <code class="highlighter-rouge">vagrant up</code> in the <code class="highlighter-rouge">box</code> directory will download the base box (Ubuntu 12.04 LTS 64-bit), spin up a virtual machine, and provision it. (Now would be the perfect time to think about any command-line scripts you may have lying around and donate them to the <a href="http://datasciencetoolbox.org">data science toolbox</a>.) Once the provisioning is complete, you will be able to log into your own lean, mean data science machine:</p>
 
-<pre><code>vagrant ssh
+<div class="highlighter-rouge"><pre class="highlight"><code>vagrant ssh
 </code></pre>
+</div>
 
 <p>Run the following command to test whether everything has been installed correctly:</p>
 
-<pre><code class="language-bash">curl -s 'http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio' | scrape -be 'table.wikitable &gt; tr:not(:first-child)' | xml2json | jq -c '.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]}' | json2csv -p -k=country,ratio | Rio -se'sqldf("select * from df where ratio &gt; 0.3 order by ratio desc")' | csvlook
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>curl -s <span class="s1">'http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio'</span> | scrape -be <span class="s1">'table.wikitable &gt; tr:not(:first-child)'</span> | xml2json | jq -c <span class="s1">'.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]}'</span> | json2csv -p -k<span class="o">=</span>country,ratio | Rio -se<span class="s1">'sqldf("select * from df where ratio &gt; 0.3 order by ratio desc")'</span> | csvlook
 </code></pre>
-<pre><code>|----------------+------------|
+</div>
+<div class="highlighter-rouge"><pre class="highlight"><code>|----------------+------------|
 |  country       | ratio      |
 |----------------+------------|
 |  Vatican City  | 7.2727273  |
@@ -129,8 +132,9 @@ cd data-science-toolbox/box
 |  Liechtenstein | 0.475      |
 |----------------+------------|
 </code></pre>
+</div>
 
-<p>The virtual machine is not entirely isolated. Files that you put in the <code>box</code> directory will be accessible from the <code>/vagrant</code> directory in the virtual machine. This allows you to use both the tools you already have installed and the command-line tools provided by the environment. If you want to install any of these tools on your own machine, then you can run the relevant commands from the <a href="https://github.com/jeroenjanssens/data-science-toolbox/blob/master/box/bootstrap.sh">provisioning script</a>.</p>
+<p>The virtual machine is not entirely isolated. Files that you put in the <code class="highlighter-rouge">box</code> directory will be accessible from the <code class="highlighter-rouge">/vagrant</code> directory in the virtual machine. This allows you to use both the tools you already have installed and the command-line tools provided by the environment. If you want to install any of these tools on your own machine, then you can run the relevant commands from the <a href="https://github.com/jeroenjanssens/data-science-toolbox/blob/master/box/bootstrap.sh">provisioning script</a>.</p>
 
 <h3 id="comparison-of-virtual-environments-for-data-science"><a name="comparison-of-virtual-environments-for-data-science"></a>Comparison of virtual environments for data science</h3>
 
@@ -228,7 +232,7 @@ It installs R, Shiny, IPython Notebook, and the Python scientific stack.</p>
 
 <p>In short, I think that they all have some strong aspects. Some of these may be improved over time (I am currently looking into using Chef as the provisioner), new environments may arise; that is the way open source works. In the end, it is up to you to decide which one works best for you. And if you want to make some tweaks, you can always fork the appropriate Github repository.</p>
 
-<p>It is in general just amazing to be able to spin up a new virtual machine with your own or somebody else’s environment, whether by running <code>vagrant up</code> or by clicking a few buttons on AWS.</p>
+<p>It is in general just amazing to be able to spin up a new virtual machine with your own or somebody else’s environment, whether by running <code class="highlighter-rouge">vagrant up</code> or by clicking a few buttons on AWS.</p>
 
 <p>I realize that three out of four names look really alike, which can be confusing, but it could also indicate that there is a need for having an automated (and isolated) setup to start doing data science without any additional hassle.</p>
 

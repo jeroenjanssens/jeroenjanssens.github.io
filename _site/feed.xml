@@ -153,7 +153,7 @@ Readers, thanks for joining us! If you want to read more from Jeroen he can be f
 				<title>IBash Notebook&#8253;</title>
 				<description>&lt;p&gt;Did you know that there’s a Bash kernel for IPython Notebook?
 It even displays inline images.
-To give you a glimpse, the code cell below makes an API call to &lt;a href=&quot;http://memegenerator.net&quot;&gt;memegenerator.net&lt;/a&gt;, which generates images on demand. From the response, the URL of the generated image is extracted  using &lt;code&gt;jq&lt;/code&gt; and subsequently downloaded using &lt;code&gt;curl&lt;/code&gt;. The output is then displayed as an inline image by piping it to a function called &lt;code&gt;display&lt;/code&gt;. Perhaps a bit contrived, but if not with a meme, how else am I supposed to grab your attention these days?&lt;/p&gt;
+To give you a glimpse, the code cell below makes an API call to &lt;a href=&quot;http://memegenerator.net&quot;&gt;memegenerator.net&lt;/a&gt;, which generates images on demand. From the response, the URL of the generated image is extracted  using &lt;code class=&quot;highlighter-rouge&quot;&gt;jq&lt;/code&gt; and subsequently downloaded using &lt;code class=&quot;highlighter-rouge&quot;&gt;curl&lt;/code&gt;. The output is then displayed as an inline image by piping it to a function called &lt;code class=&quot;highlighter-rouge&quot;&gt;display&lt;/code&gt;. Perhaps a bit contrived, but if not with a meme, how else am I supposed to grab your attention these days?&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/ibash-notebook.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -175,7 +175,7 @@ To give you a glimpse, the code cell below makes an API call to &lt;a href=&quot
 
 &lt;p&gt;First, and perhaps most importantly, the command line is ad-hoc in nature, which makes it difficult to reproduce your steps or share them with your peers. To improve reproducibility, you could put those steps in a shell script, &lt;a href=&quot;http://www.gnu.org/software/make/&quot;&gt;Makefile&lt;/a&gt;, or &lt;a href=&quot;https://github.com/Factual/drake&quot;&gt;Drakefile&lt;/a&gt;, but when you’re working in a notebook, they would be stored automatically.&lt;/p&gt;
 
-&lt;p&gt;Second, if you’re running a server or virtual machine, there would be no need to &lt;code&gt;ssh&lt;/code&gt; into it. As a result, Microsoft Windows users wouldn’t need to resort to a third-party tool like &lt;a href=&quot;http://www.chiark.greenend.org.uk/~sgtatham/putty/&quot;&gt;PuTTY&lt;/a&gt; anymore. I’m particularly interested in this advantage, together with the next two, because ever since I started writing &lt;a href=&quot;http://datascienceatthecommandline.com&quot;&gt;Data Science at the Command Line&lt;/a&gt;, I’ve been looking for ways to make the command line more accessible to newcomers.&lt;/p&gt;
+&lt;p&gt;Second, if you’re running a server or virtual machine, there would be no need to &lt;code class=&quot;highlighter-rouge&quot;&gt;ssh&lt;/code&gt; into it. As a result, Microsoft Windows users wouldn’t need to resort to a third-party tool like &lt;a href=&quot;http://www.chiark.greenend.org.uk/~sgtatham/putty/&quot;&gt;PuTTY&lt;/a&gt; anymore. I’m particularly interested in this advantage, together with the next two, because ever since I started writing &lt;a href=&quot;http://datascienceatthecommandline.com&quot;&gt;Data Science at the Command Line&lt;/a&gt;, I’ve been looking for ways to make the command line more accessible to newcomers.&lt;/p&gt;
 
 &lt;p&gt;Third, for users who are new to the command line, a notebook with code cells could be less intimidating than a terminal with a prompt. Because the browser (and perhaps also IPython Notebook) is a familiar environment, the threshold to try out the command line will be lower.&lt;/p&gt;
 
@@ -185,39 +185,42 @@ To give you a glimpse, the code cell below makes an API call to &lt;a href=&quot
 
 &lt;p&gt;For the Bash kernel to be a convenient environment for doing data science, it could use a few additional features besides running commands. Thanks to the architecture of IPython Notebook, inline Markdown and LaTeX equations work out of the box. Having seen &lt;a href=&quot;http://liftoffsoftware.com/Products/GateOne&quot;&gt;Gate One&lt;/a&gt; (a browser-based terminal that I had running on 200 EC2 instances for &lt;a href=&quot;http://strataconf.com/stratany2014/public/schedule/detail/36204&quot;&gt;my workshop at Strata NYC&lt;/a&gt;) and &lt;a href=&quot;https://pigshell.com&quot;&gt;pigshell&lt;/a&gt; (a shell-like website that lets you interact with various APIs as Unix files), which are both able to display inline images, I knew that’s what the Bash kernel needed next.&lt;/p&gt;
 
-&lt;p&gt;I initially thought this would be as easy as detecting the MIME type of the output of a command. That way, when you would run &lt;code&gt;cat file.png&lt;/code&gt;, an image would be shown automatically. Unfortunately this approach didn’t work because, as I later learned, &lt;code&gt;pexpect&lt;/code&gt; isn’t meant to transfer binary data. With some suggestions from &lt;a href=&quot;https://twitter.com/takluyver/&quot;&gt;Thomas Kluyver&lt;/a&gt;, I implemented the following solution instead. (You may decide whether it’s a hack or not.)&lt;/p&gt;
+&lt;p&gt;I initially thought this would be as easy as detecting the MIME type of the output of a command. That way, when you would run &lt;code class=&quot;highlighter-rouge&quot;&gt;cat file.png&lt;/code&gt;, an image would be shown automatically. Unfortunately this approach didn’t work because, as I later learned, &lt;code class=&quot;highlighter-rouge&quot;&gt;pexpect&lt;/code&gt; isn’t meant to transfer binary data. With some suggestions from &lt;a href=&quot;https://twitter.com/takluyver/&quot;&gt;Thomas Kluyver&lt;/a&gt;, I implemented the following solution instead. (You may decide whether it’s a hack or not.)&lt;/p&gt;
 
-&lt;p&gt;The solution includes a Bash function called &lt;code&gt;display&lt;/code&gt; that is registered when the kernel starts. That way, images can now be displayed by running something as simple as:&lt;/p&gt;
+&lt;p&gt;The solution includes a Bash function called &lt;code class=&quot;highlighter-rouge&quot;&gt;display&lt;/code&gt; that is registered when the kernel starts. That way, images can now be displayed by running something as simple as:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;display &amp;lt; file.png
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;display &amp;lt; file.png
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;or something as involved as:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;cat iris.csv |                        # Read our beloved Iris data set
-cols -C species body tapkee -m pca |  # Apply PCA using tapkee
-header -r x,y,species |               # Replace header of CSV
-Rio-scatter x y species | display     # Create scatter plot using ggplot2
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cat iris.csv |                        &lt;span class=&quot;c&quot;&gt;# Read our beloved Iris data set&lt;/span&gt;
+cols -C species body tapkee -m pca |  &lt;span class=&quot;c&quot;&gt;# Apply PCA using tapkee&lt;/span&gt;
+header -r x,y,species |               &lt;span class=&quot;c&quot;&gt;# Replace header of CSV&lt;/span&gt;
+Rio-scatter x y species | display     &lt;span class=&quot;c&quot;&gt;# Create scatter plot using ggplot2&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;which produces:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/iris-pca.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;In case you’re interested, &lt;code&gt;cols&lt;/code&gt; and &lt;code&gt;body&lt;/code&gt; are used to only pass numerical columns and no header to &lt;a href=&quot;http://tapkee.lisitsyn.me/&quot;&gt;tapkee&lt;/a&gt;, which is a fantastic library for dimensionality reduction by &lt;a href=&quot;https://twitter.com/qdrgsm/&quot;&gt;Sergey Lisitsyn&lt;/a&gt;. These two Bash scripts, together with &lt;code&gt;header&lt;/code&gt; and &lt;code&gt;Rio-scatter&lt;/code&gt;, can be found in &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-at-the-command-line/tree/master/tools&quot;&gt;this repository&lt;/a&gt;. Speaking of command-line tools for plotting, &lt;a href=&quot;http://bokeh.pydata.org/&quot;&gt;Bokeh&lt;/a&gt;, which is a Python visualization library built on top of matplotlib, will soon have its own command-line tool as well.&lt;/p&gt;
+&lt;p&gt;In case you’re interested, &lt;code class=&quot;highlighter-rouge&quot;&gt;cols&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;body&lt;/code&gt; are used to only pass numerical columns and no header to &lt;a href=&quot;http://tapkee.lisitsyn.me/&quot;&gt;tapkee&lt;/a&gt;, which is a fantastic library for dimensionality reduction by &lt;a href=&quot;https://twitter.com/qdrgsm/&quot;&gt;Sergey Lisitsyn&lt;/a&gt;. These two Bash scripts, together with &lt;code class=&quot;highlighter-rouge&quot;&gt;header&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;Rio-scatter&lt;/code&gt;, can be found in &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-at-the-command-line/tree/master/tools&quot;&gt;this repository&lt;/a&gt;. Speaking of command-line tools for plotting, &lt;a href=&quot;http://bokeh.pydata.org/&quot;&gt;Bokeh&lt;/a&gt;, which is a Python visualization library built on top of matplotlib, will soon have its own command-line tool as well.&lt;/p&gt;
 
-&lt;p&gt;To see what the &lt;code&gt;display&lt;/code&gt; function looks like, we can run &lt;code&gt;type display&lt;/code&gt; in a notebook:&lt;/p&gt;
+&lt;p&gt;To see what the &lt;code class=&quot;highlighter-rouge&quot;&gt;display&lt;/code&gt; function looks like, we can run &lt;code class=&quot;highlighter-rouge&quot;&gt;type display&lt;/code&gt; in a notebook:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;display is a function
-display ()
-{
-    TMPFILE=$(mktemp ${TMPDIR-/tmp}/bash_kernel.XXXXXXXXXX);
-    cat &amp;gt; $TMPFILE;
-    echo &quot;bash_kernel: saved image data to: $TMPFILE&quot; 1&amp;gt;&amp;amp;2
-}
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;display is a &lt;span class=&quot;k&quot;&gt;function
+&lt;/span&gt;display &lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;TMPFILE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;mktemp &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;TMPDIR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-/tmp&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;/bash_kernel.XXXXXXXXXX&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;;
+    cat &amp;gt; &lt;span class=&quot;nv&quot;&gt;$TMPFILE&lt;/span&gt;;
+    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;bash_kernel: saved image data to: &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$TMPFILE&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; 1&amp;gt;&amp;amp;2
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;In words, &lt;code&gt;display&lt;/code&gt; saves the standard input to a temporary file and prints the filename to standard error. After a code cell has been evaluated, the Bash kernel simply extracts the filename from the output, detects its MIME type using the &lt;a href=&quot;https://docs.python.org/3.4/library/imghdr.html&quot;&gt;imghdr&lt;/a&gt; library, and sends the image data (encoded with base64) to the front end. Easy peasy.&lt;/p&gt;
+&lt;p&gt;In words, &lt;code class=&quot;highlighter-rouge&quot;&gt;display&lt;/code&gt; saves the standard input to a temporary file and prints the filename to standard error. After a code cell has been evaluated, the Bash kernel simply extracts the filename from the output, detects its MIME type using the &lt;a href=&quot;https://docs.python.org/3.4/library/imghdr.html&quot;&gt;imghdr&lt;/a&gt; library, and sends the image data (encoded with base64) to the front end. Easy peasy.&lt;/p&gt;
 
 &lt;p&gt;I chose the name “display” because there’s also a &lt;a href=&quot;http://www.imagemagick.org/script/display.php&quot;&gt;command-line tool in ImageMagick&lt;/a&gt; called “display” that accepts image data from standard input and shows it in a new window. Because that tool works only when X is running, I figured that a function called “display” could serve as a drop-in replacement when using IPython Notebook.&lt;/p&gt;
 
@@ -233,7 +236,7 @@ display ()
 
 &lt;h3 id=&quot;whats-next&quot;&gt;What’s next?&lt;/h3&gt;
 
-&lt;p&gt;Having inline Markdown, equations, and images sure is nice. However, in my opinion, the Bash kernel currently has two issues that hamper usability. First, the output is only printed when the command is finished; there are no real-time updates. This is especially inconvenient if you want to keep an eye on some long-running process using, say, &lt;code&gt;tail -f&lt;/code&gt; or &lt;code&gt;htop&lt;/code&gt;. Second, there’s no interactivity with the process possible. This means that you cannot drop into some other REPL like &lt;code&gt;julia&lt;/code&gt; or &lt;code&gt;psql&lt;/code&gt;. If there’s sufficient interest in IBash Notebook, then I suspect that these issues can be solved. Regardless, I believe that despite these two issues, IBash Notebook could very well serve as a means to introduce people to the command line.&lt;/p&gt;
+&lt;p&gt;Having inline Markdown, equations, and images sure is nice. However, in my opinion, the Bash kernel currently has two issues that hamper usability. First, the output is only printed when the command is finished; there are no real-time updates. This is especially inconvenient if you want to keep an eye on some long-running process using, say, &lt;code class=&quot;highlighter-rouge&quot;&gt;tail -f&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;htop&lt;/code&gt;. Second, there’s no interactivity with the process possible. This means that you cannot drop into some other REPL like &lt;code class=&quot;highlighter-rouge&quot;&gt;julia&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;psql&lt;/code&gt;. If there’s sufficient interest in IBash Notebook, then I suspect that these issues can be solved. Regardless, I believe that despite these two issues, IBash Notebook could very well serve as a means to introduce people to the command line.&lt;/p&gt;
 
 &lt;p&gt;If you want to try out the Bash kernel for yourself, you should install &lt;a href=&quot;https://github.com/ipython/ipython&quot;&gt;IPython 3&lt;/a&gt; (which is currently in development). Then, you can clone the &lt;a href=&quot;https://github.com/takluyver/bash_kernel&quot;&gt;Bash kernel GitHub repository&lt;/a&gt; and install the package. (Best to do this all inside a virtual environment.) Next time you start a new notebook, you should be able to select the Bash kernel in the top-right corner.&lt;/p&gt;
 
@@ -280,11 +283,11 @@ I thought it would be nice to switch gears by demonstrating how such APIs can be
 &lt;p&gt;Don’t worry about &lt;a href=&quot;http://lanyrd.com/2014/papis2014/sdfywx/&quot;&gt;the slides&lt;/a&gt;, they’re quite boring. More interesting is the live demo, in which I demonstrate how to use the command line to:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;connect to the &lt;a href=&quot;https://www.bicing.cat/&quot;&gt;Barcelona bicing&lt;/a&gt; API using &lt;code&gt;curl&lt;/code&gt; (&lt;a href=&quot;#video&quot; onclick=&quot;skipTo(this); return false;&quot;&gt;12:30&lt;/a&gt;),&lt;/li&gt;
-  &lt;li&gt;convert the returned XML data to CSV using &lt;code&gt;xml2json&lt;/code&gt;, &lt;code&gt;jq&lt;/code&gt;, and &lt;code&gt;json2csv&lt;/code&gt; (&lt;a href=&quot;#video&quot; onclick=&quot;skipTo(this); return false;&quot;&gt;17:59&lt;/a&gt;),&lt;/li&gt;
-  &lt;li&gt;plot the locations of bike stations using &lt;code&gt;Rio&lt;/code&gt; and the &lt;a href=&quot;http://cran.r-project.org/web/packages/ggmap/index.html&quot;&gt;ggmap&lt;/a&gt; package (&lt;a href=&quot;#video&quot; onclick=&quot;skipTo(this); return false;&quot;&gt;27:18&lt;/a&gt;),&lt;/li&gt;
+  &lt;li&gt;connect to the &lt;a href=&quot;https://www.bicing.cat/&quot;&gt;Barcelona bicing&lt;/a&gt; API using &lt;code class=&quot;highlighter-rouge&quot;&gt;curl&lt;/code&gt; (&lt;a href=&quot;#video&quot; onclick=&quot;skipTo(this); return false;&quot;&gt;12:30&lt;/a&gt;),&lt;/li&gt;
+  &lt;li&gt;convert the returned XML data to CSV using &lt;code class=&quot;highlighter-rouge&quot;&gt;xml2json&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;jq&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;json2csv&lt;/code&gt; (&lt;a href=&quot;#video&quot; onclick=&quot;skipTo(this); return false;&quot;&gt;17:59&lt;/a&gt;),&lt;/li&gt;
+  &lt;li&gt;plot the locations of bike stations using &lt;code class=&quot;highlighter-rouge&quot;&gt;Rio&lt;/code&gt; and the &lt;a href=&quot;http://cran.r-project.org/web/packages/ggmap/index.html&quot;&gt;ggmap&lt;/a&gt; package (&lt;a href=&quot;#video&quot; onclick=&quot;skipTo(this); return false;&quot;&gt;27:18&lt;/a&gt;),&lt;/li&gt;
   &lt;li&gt;assign anomaly scores using &lt;a href=&quot;&quot;&gt;BigML&lt;/a&gt;’s predictive API (&lt;a href=&quot;#video&quot; onclick=&quot;skipTo(this); return false;&quot;&gt;30:59&lt;/a&gt;), and as an additional impromptu demonstration,&lt;/li&gt;
-  &lt;li&gt;apply &lt;a href=&quot;http://www.indico.io&quot;&gt;indico&lt;/a&gt;’s language detection API to tweets using &lt;code&gt;t&lt;/code&gt; and &lt;code&gt;parallel&lt;/code&gt; (&lt;a href=&quot;#video&quot; onclick=&quot;skipTo(this); return false;&quot;&gt;38:21&lt;/a&gt;).&lt;/li&gt;
+  &lt;li&gt;apply &lt;a href=&quot;http://www.indico.io&quot;&gt;indico&lt;/a&gt;’s language detection API to tweets using &lt;code class=&quot;highlighter-rouge&quot;&gt;t&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;parallel&lt;/code&gt; (&lt;a href=&quot;#video&quot; onclick=&quot;skipTo(this); return false;&quot;&gt;38:21&lt;/a&gt;).&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;In case you’d like to try this out for yourself, you should check out my book &lt;a href=&quot;http://datascienceatthecommandline.com/&quot;&gt;Data Science at the Command Line&lt;/a&gt; and the associated &lt;a href=&quot;http://datascienceatthecommandline.com/#dst&quot;&gt;Data Science Toolbox&lt;/a&gt;, which has all these command-line tools pre-installed.&lt;/p&gt;
@@ -355,29 +358,32 @@ To automate this process, I have created a script (a &lt;a href=&quot;http://www
 &lt;p&gt;The environment is created and configured using &lt;a href=&quot;http://www.vagrantup.com/&quot;&gt;Vagrant&lt;/a&gt;, which is basically a wrapper around VirtualBox and other virtualization software such AWS EC2. With a few commands, a fresh virtual machine is spun up and configured according to a simple script. It was &lt;a href=&quot;http://miningthesocialweb.com/2013/11/23/confessions-of-a-prolific-moonlighter-with-a-chronic-writing-disorder&quot;&gt;Matthew Russell’s Ignite talk&lt;/a&gt; that inspired me to use Vagrant; he provides one for his book &lt;a href=&quot;http://miningthesocialweb.com&quot;&gt;Mining the Social Web&lt;/a&gt; that is focused more on Python.
 If my Vagrant environment would be provided with Data Science at the Command Line, then the reader would be able to follow along with the commands and source code. But since my mission is to enable everybody to do data science at the command-line as soon as possible, I have decided to make it available right now.&lt;/p&gt;
 
-&lt;p&gt;Currently, the environment includes the &lt;a href=&quot;http://jeroenjanssens.com/2013/09/19/seven-command-line-tools-for-data-science.html&quot;&gt;seven command-line tools I discussed&lt;/a&gt; a while ago and &lt;a href=&quot;http://www.gnu.org/software/parallel/&quot;&gt;GNU parallel&lt;/a&gt;, which will be discussed in Chapter 8. Just like the book itself, the environment is a work in progress. In order to be able to run &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox/blob/master/tools/Rio&quot;&gt;Rio&lt;/a&gt; (one of the seven tools), I had to include the latest version of &lt;code&gt;R&lt;/code&gt;, together with the packages &lt;code&gt;ggplot2&lt;/code&gt;, &lt;code&gt;sqldf&lt;/code&gt;, and &lt;code&gt;plyr&lt;/code&gt;. &lt;del&gt;I am aware that many of you would prefer the Python scientific stack to be included as well.&lt;/del&gt; The Python scientific stack (&lt;code&gt;ipython&lt;/code&gt;, &lt;code&gt;numpy&lt;/code&gt;, &lt;code&gt;scipy&lt;/code&gt;, &lt;code&gt;matplotlib&lt;/code&gt;, &lt;code&gt;pandas&lt;/code&gt;, and &lt;code&gt;scikit-learn&lt;/code&gt;) is also included. However, because of disk-space and provision-time constraints, I doubt whether it is desirable (or even possible) to create an environment that includes everything. Perhaps that we can devise a solution where you select which tools, packages, and languages you would like to have installed. As mentioned, it is a work in progress and my main goal is to get you up and running on the command-line.&lt;/p&gt;
+&lt;p&gt;Currently, the environment includes the &lt;a href=&quot;http://jeroenjanssens.com/2013/09/19/seven-command-line-tools-for-data-science.html&quot;&gt;seven command-line tools I discussed&lt;/a&gt; a while ago and &lt;a href=&quot;http://www.gnu.org/software/parallel/&quot;&gt;GNU parallel&lt;/a&gt;, which will be discussed in Chapter 8. Just like the book itself, the environment is a work in progress. In order to be able to run &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox/blob/master/tools/Rio&quot;&gt;Rio&lt;/a&gt; (one of the seven tools), I had to include the latest version of &lt;code class=&quot;highlighter-rouge&quot;&gt;R&lt;/code&gt;, together with the packages &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;sqldf&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;plyr&lt;/code&gt;. &lt;del&gt;I am aware that many of you would prefer the Python scientific stack to be included as well.&lt;/del&gt; The Python scientific stack (&lt;code class=&quot;highlighter-rouge&quot;&gt;ipython&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;numpy&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;scipy&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;matplotlib&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;pandas&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;scikit-learn&lt;/code&gt;) is also included. However, because of disk-space and provision-time constraints, I doubt whether it is desirable (or even possible) to create an environment that includes everything. Perhaps that we can devise a solution where you select which tools, packages, and languages you would like to have installed. As mentioned, it is a work in progress and my main goal is to get you up and running on the command-line.&lt;/p&gt;
 
 &lt;h3 id=&quot;installing-the-data-science-toolbox-environment&quot;&gt;Installing the Data Science Toolbox environment&lt;/h3&gt;
 
 &lt;p&gt;The environment is currently configured to run on top of &lt;a href=&quot;https://www.virtualbox.org&quot;&gt;VirtualBox&lt;/a&gt;. (I am looking into the option to deploy it on an AWS EC2 instance.)
 So, first you will need to install &lt;a href=&quot;https://www.virtualbox.org&quot;&gt;VirtualBox&lt;/a&gt;. 
 Second you need to install &lt;a href=&quot;http://www.vagrantup.com/&quot;&gt;Vagrant&lt;/a&gt;. 
-Third, you need to download the environment by cloning the data science toolbox. (If you do not want to use &lt;code&gt;git&lt;/code&gt; you can also &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox/archive/master.zip&quot;&gt;download the zip file&lt;/a&gt;.)&lt;/p&gt;
+Third, you need to download the environment by cloning the data science toolbox. (If you do not want to use &lt;code class=&quot;highlighter-rouge&quot;&gt;git&lt;/code&gt; you can also &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox/archive/master.zip&quot;&gt;download the zip file&lt;/a&gt;.)&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;git clone https://github.com/jeroenjanssens/data-science-toolbox.git
-cd data-science-toolbox/box
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/jeroenjanssens/data-science-toolbox.git
+&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;data-science-toolbox/box
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;Running &lt;code&gt;vagrant up&lt;/code&gt; in the &lt;code&gt;box&lt;/code&gt; directory will download the base box (Ubuntu 12.04 LTS 64-bit), spin up a virtual machine, and provision it. (Now would be the perfect time to think about any command-line scripts you may have lying around and donate them to the &lt;a href=&quot;http://datasciencetoolbox.org&quot;&gt;data science toolbox&lt;/a&gt;.) Once the provisioning is complete, you will be able to log into your own lean, mean data science machine:&lt;/p&gt;
+&lt;p&gt;Running &lt;code class=&quot;highlighter-rouge&quot;&gt;vagrant up&lt;/code&gt; in the &lt;code class=&quot;highlighter-rouge&quot;&gt;box&lt;/code&gt; directory will download the base box (Ubuntu 12.04 LTS 64-bit), spin up a virtual machine, and provision it. (Now would be the perfect time to think about any command-line scripts you may have lying around and donate them to the &lt;a href=&quot;http://datasciencetoolbox.org&quot;&gt;data science toolbox&lt;/a&gt;.) Once the provisioning is complete, you will be able to log into your own lean, mean data science machine:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;vagrant ssh
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vagrant ssh
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;Run the following command to test whether everything has been installed correctly:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;curl -s 'http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio' | scrape -be 'table.wikitable &amp;gt; tr:not(:first-child)' | xml2json | jq -c '.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]}' | json2csv -p -k=country,ratio | Rio -se'sqldf(&quot;select * from df where ratio &amp;gt; 0.3 order by ratio desc&quot;)' | csvlook
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -s &lt;span class=&quot;s1&quot;&gt;'http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio'&lt;/span&gt; | scrape -be &lt;span class=&quot;s1&quot;&gt;'table.wikitable &amp;gt; tr:not(:first-child)'&lt;/span&gt; | xml2json | jq -c &lt;span class=&quot;s1&quot;&gt;'.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]}'&lt;/span&gt; | json2csv -p -k&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;country,ratio | Rio -se&lt;span class=&quot;s1&quot;&gt;'sqldf(&quot;select * from df where ratio &amp;gt; 0.3 order by ratio desc&quot;)'&lt;/span&gt; | csvlook
 &lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;|----------------+------------|
+&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;|----------------+------------|
 |  country       | ratio      |
 |----------------+------------|
 |  Vatican City  | 7.2727273  |
@@ -386,8 +392,9 @@ cd data-science-toolbox/box
 |  Liechtenstein | 0.475      |
 |----------------+------------|
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;The virtual machine is not entirely isolated. Files that you put in the &lt;code&gt;box&lt;/code&gt; directory will be accessible from the &lt;code&gt;/vagrant&lt;/code&gt; directory in the virtual machine. This allows you to use both the tools you already have installed and the command-line tools provided by the environment. If you want to install any of these tools on your own machine, then you can run the relevant commands from the &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox/blob/master/box/bootstrap.sh&quot;&gt;provisioning script&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The virtual machine is not entirely isolated. Files that you put in the &lt;code class=&quot;highlighter-rouge&quot;&gt;box&lt;/code&gt; directory will be accessible from the &lt;code class=&quot;highlighter-rouge&quot;&gt;/vagrant&lt;/code&gt; directory in the virtual machine. This allows you to use both the tools you already have installed and the command-line tools provided by the environment. If you want to install any of these tools on your own machine, then you can run the relevant commands from the &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox/blob/master/box/bootstrap.sh&quot;&gt;provisioning script&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h3 id=&quot;comparison-of-virtual-environments-for-data-science&quot;&gt;&lt;a name=&quot;comparison-of-virtual-environments-for-data-science&quot;&gt;&lt;/a&gt;Comparison of virtual environments for data science&lt;/h3&gt;
 
@@ -485,7 +492,7 @@ It installs R, Shiny, IPython Notebook, and the Python scientific stack.&lt;/p&g
 
 &lt;p&gt;In short, I think that they all have some strong aspects. Some of these may be improved over time (I am currently looking into using Chef as the provisioner), new environments may arise; that is the way open source works. In the end, it is up to you to decide which one works best for you. And if you want to make some tweaks, you can always fork the appropriate Github repository.&lt;/p&gt;
 
-&lt;p&gt;It is in general just amazing to be able to spin up a new virtual machine with your own or somebody else’s environment, whether by running &lt;code&gt;vagrant up&lt;/code&gt; or by clicking a few buttons on AWS.&lt;/p&gt;
+&lt;p&gt;It is in general just amazing to be able to spin up a new virtual machine with your own or somebody else’s environment, whether by running &lt;code class=&quot;highlighter-rouge&quot;&gt;vagrant up&lt;/code&gt; or by clicking a few buttons on AWS.&lt;/p&gt;
 
 &lt;p&gt;I realize that three out of four names look really alike, which can be confusing, but it could also indicate that there is a need for having an automated (and isolated) setup to start doing data science without any additional hassle.&lt;/p&gt;
 
@@ -566,32 +573,33 @@ The demo illustrates how the approximated outlier probability of each senator ev
 
 &lt;p&gt;&lt;a href=&quot;http://bl.ocks.org/jeroenjanssens/7608890&quot;&gt;&lt;img src=&quot;/img/sos-senators.png&quot; alt=&quot;Detecting anomalous senators&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;Let’s see how the approximated outlier probabilities compare to the outlier probabilities computed on the command-line. Recently, I started using &lt;a href=&quot;https://github.com/Factual/drake#drake&quot;&gt;drake&lt;/a&gt; to organize my data workflow. (If you care about reproducibility, then I recommend you try it out.) The following &lt;code&gt;Drakefile&lt;/code&gt; shows how to fetch the roll call voting data, extract its features and labels, and apply the &lt;a href=&quot;https://github.com/jeroenjanssens/sos/blob/master/bin/sos&quot;&gt;Python implementation of SOS&lt;/a&gt; with a perplexity of 50 to it.&lt;/p&gt;
+&lt;p&gt;Let’s see how the approximated outlier probabilities compare to the outlier probabilities computed on the command-line. Recently, I started using &lt;a href=&quot;https://github.com/Factual/drake#drake&quot;&gt;drake&lt;/a&gt; to organize my data workflow. (If you care about reproducibility, then I recommend you try it out.) The following &lt;code class=&quot;highlighter-rouge&quot;&gt;Drakefile&lt;/code&gt; shows how to fetch the roll call voting data, extract its features and labels, and apply the &lt;a href=&quot;https://github.com/jeroenjanssens/sos/blob/master/bin/sos&quot;&gt;Python implementation of SOS&lt;/a&gt; with a perplexity of 50 to it.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;cat Drakefile
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cat Drakefile
 
-;# Get dataset
-dataset.csv &amp;lt;- [-timecheck]
-	curl -s https://raw.github.com/VikParuchuri/political-positions/master/113_frame.csv &amp;gt; $OUTPUT
+&lt;span class=&quot;gp&quot;&gt;;# &lt;/span&gt;Get dataset
+dataset.csv &amp;lt;- &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;-timecheck]
+	curl -s https://raw.github.com/VikParuchuri/political-positions/master/113_frame.csv &amp;gt; &lt;span class=&quot;nv&quot;&gt;$OUTPUT&lt;/span&gt;
 
-;# Extract features
+&lt;span class=&quot;gp&quot;&gt;;# &lt;/span&gt;Extract features
 features.csv &amp;lt;- dataset.csv
-	csvcut $INPUT -C 1,name,party,state | sed '1d;s/NA/4/g' &amp;gt; $OUTPUT
+	csvcut &lt;span class=&quot;nv&quot;&gt;$INPUT&lt;/span&gt; -C 1,name,party,state | sed &lt;span class=&quot;s1&quot;&gt;'1d;s/NA/4/g'&lt;/span&gt; &amp;gt; &lt;span class=&quot;nv&quot;&gt;$OUTPUT&lt;/span&gt;
 
-;# Extract labels
+&lt;span class=&quot;gp&quot;&gt;;# &lt;/span&gt;Extract labels
 labels.csv &amp;lt;- dataset.csv
-	csvcut $INPUT -c name,party,state &amp;gt; $OUTPUT
+	csvcut &lt;span class=&quot;nv&quot;&gt;$INPUT&lt;/span&gt; -c name,party,state &amp;gt; &lt;span class=&quot;nv&quot;&gt;$OUTPUT&lt;/span&gt;
 
-;# Compute outlier probabilities using SOS
+&lt;span class=&quot;gp&quot;&gt;;# &lt;/span&gt;Compute outlier probabilities using SOS
 outlier.csv &amp;lt;- features.csv
-	echo 'outlier' &amp;gt; $OUTPUT
-	&amp;lt; $INPUT sos -p 50 &amp;gt;&amp;gt; $OUTPUT
+	&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'outlier'&lt;/span&gt; &amp;gt; &lt;span class=&quot;nv&quot;&gt;$OUTPUT&lt;/span&gt;
+	&amp;lt; &lt;span class=&quot;nv&quot;&gt;$INPUT&lt;/span&gt; sos -p 50 &amp;gt;&amp;gt; &lt;span class=&quot;nv&quot;&gt;$OUTPUT&lt;/span&gt;
 
-;# Combine labels and outlier probabilities and sort
+&lt;span class=&quot;gp&quot;&gt;;# &lt;/span&gt;Combine labels and outlier probabilities and sort
 result.csv &amp;lt;- labels.csv, outlier.csv
-	paste -d, $INPUT0 $INPUT1 | csvsort -rc outlier &amp;gt; $OUTPUT
+	paste -d, &lt;span class=&quot;nv&quot;&gt;$INPUT0&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$INPUT1&lt;/span&gt; | csvsort -rc outlier &amp;gt; &lt;span class=&quot;nv&quot;&gt;$OUTPUT&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;drake
+&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;drake
 head result.csv | csvlook
 
 |-------------+-------+-------+-------------|
@@ -608,9 +616,10 @@ head result.csv | csvlook
 |  Vitter     | R     | LA    | 0.59739462  |
 |-------------+-------+-------+-------------|
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;The tools &lt;code&gt;csvcut&lt;/code&gt;, &lt;code&gt;csvsort&lt;/code&gt;, and &lt;code&gt;csvlook&lt;/code&gt; are part of &lt;a href=&quot;http://csvkit.readthedocs.org/&quot;&gt;csvkit&lt;/a&gt;. 
-You may notice that the outlier probabilities shown in the screenshot do not match the exact ones computed with &lt;code&gt;sos&lt;/code&gt;. That’s because (1) the screenshot was taken not long after the demo started and (2) the demo was running in Chrome, which apparently has a different implementation of &lt;code&gt;Math.random&lt;/code&gt;. In Firefox, the approximated outlier probabilities will match the exact ones, eventually.&lt;/p&gt;
+&lt;p&gt;The tools &lt;code class=&quot;highlighter-rouge&quot;&gt;csvcut&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;csvsort&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;csvlook&lt;/code&gt; are part of &lt;a href=&quot;http://csvkit.readthedocs.org/&quot;&gt;csvkit&lt;/a&gt;. 
+You may notice that the outlier probabilities shown in the screenshot do not match the exact ones computed with &lt;code class=&quot;highlighter-rouge&quot;&gt;sos&lt;/code&gt;. That’s because (1) the screenshot was taken not long after the demo started and (2) the demo was running in Chrome, which apparently has a different implementation of &lt;code class=&quot;highlighter-rouge&quot;&gt;Math.random&lt;/code&gt;. In Firefox, the approximated outlier probabilities will match the exact ones, eventually.&lt;/p&gt;
 
 &lt;p&gt;If you enjoyed this post then you may want to &lt;a href=&quot;https://twitter.com/jeroenhjanssens/&quot;&gt;follow me on Twitter&lt;/a&gt;.&lt;/p&gt;
 
@@ -653,61 +662,68 @@ The tools are:
 &lt;a href=&quot;https://github.com/onyxfish/csvkit&quot;&gt;csvkit&lt;/a&gt;,
 scrape,
 &lt;a href=&quot;https://github.com/parmentf/xml2json&quot;&gt;xml2json&lt;/a&gt;,
-sample, and Rio. (The home-made tools &lt;code&gt;scrape&lt;/code&gt;, &lt;code&gt;sample&lt;/code&gt;, and &lt;code&gt;Rio&lt;/code&gt; can be found in this &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox&quot;&gt;data science toolbox&lt;/a&gt;.) Any suggestions, questions, comments, and even pull requests are more than welcome.
+sample, and Rio. (The home-made tools &lt;code class=&quot;highlighter-rouge&quot;&gt;scrape&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;sample&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;Rio&lt;/code&gt; can be found in this &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox&quot;&gt;data science toolbox&lt;/a&gt;.) Any suggestions, questions, comments, and even pull requests are more than welcome.
 (Tools suggested by others can be found towards the bottom of the post.)
-OSEMN, let’s get started with our first tool: &lt;code&gt;jq&lt;/code&gt;.&lt;/p&gt;
+OSEMN, let’s get started with our first tool: &lt;code class=&quot;highlighter-rouge&quot;&gt;jq&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h3 id=&quot;1-jq---sed-for-json&quot;&gt;1. jq - sed for JSON&lt;/h3&gt;
 
-&lt;p&gt;JSON is becoming an increasingly common data format, especially as APIs are appearing everywhere. I remember cooking up the ugliest &lt;code&gt;grep&lt;/code&gt; and &lt;code&gt;sed&lt;/code&gt; incantations in order to process JSON. Thanks to &lt;code&gt;jq&lt;/code&gt;, those days are now in the past.&lt;/p&gt;
+&lt;p&gt;JSON is becoming an increasingly common data format, especially as APIs are appearing everywhere. I remember cooking up the ugliest &lt;code class=&quot;highlighter-rouge&quot;&gt;grep&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;sed&lt;/code&gt; incantations in order to process JSON. Thanks to &lt;code class=&quot;highlighter-rouge&quot;&gt;jq&lt;/code&gt;, those days are now in the past.&lt;/p&gt;
 
-&lt;p&gt;Imagine we’re interested in the candidate totals of the 2008 presidential election. It so happens that the New York Times has a &lt;a href=&quot;http://developer.nytimes.com/docs/campaign_finance_api/&quot;&gt;Campaign Finance API&lt;/a&gt;. (You can &lt;a href=&quot;http://developer.nytimes.com/apps/mykeys&quot;&gt;get your own API keys&lt;/a&gt; if you want to access any of their APIs.) Let’s get some JSON using &lt;code&gt;curl&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;Imagine we’re interested in the candidate totals of the 2008 presidential election. It so happens that the New York Times has a &lt;a href=&quot;http://developer.nytimes.com/docs/campaign_finance_api/&quot;&gt;Campaign Finance API&lt;/a&gt;. (You can &lt;a href=&quot;http://developer.nytimes.com/apps/mykeys&quot;&gt;get your own API keys&lt;/a&gt; if you want to access any of their APIs.) Let’s get some JSON using &lt;code class=&quot;highlighter-rouge&quot;&gt;curl&lt;/code&gt;:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;curl -s 'http://api.nytimes.com/svc/elections/us/v3/finances/2008/president/totals.json?api-key=super-secret' &amp;gt; nyt.json
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -s &lt;span class=&quot;s1&quot;&gt;'http://api.nytimes.com/svc/elections/us/v3/finances/2008/president/totals.json?api-key=super-secret'&lt;/span&gt; &amp;gt; nyt.json
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;where &lt;code&gt;-s&lt;/code&gt; puts &lt;code&gt;curl&lt;/code&gt; in silent mode. In its simplest form, i.e., &lt;code&gt;jq '.'&lt;/code&gt;, the tool transforms the incomprehensible API response we got:&lt;/p&gt;
+&lt;p&gt;where &lt;code class=&quot;highlighter-rouge&quot;&gt;-s&lt;/code&gt; puts &lt;code class=&quot;highlighter-rouge&quot;&gt;curl&lt;/code&gt; in silent mode. In its simplest form, i.e., &lt;code class=&quot;highlighter-rouge&quot;&gt;jq '.'&lt;/code&gt;, the tool transforms the incomprehensible API response we got:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;{&quot;status&quot;:&quot;OK&quot;,&quot;base_uri&quot;:&quot;http://api.nytimes.com/svc/elections/us/v3/finances/2008/&quot;,&quot;cycle&quot;:2008,&quot;copyright&quot;:&quot;Copyright (c) 2013 The New York Times Company. All Rights Reserved.&quot;,&quot;results&quot;:[{&quot;candidate_name&quot;:&quot;Obama, Barack&quot;,&quot;name&quot;:&quot;Barack Obama&quot;,&quot;party&quot;:&quot;D&quot;,
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;status&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;OK&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;base_uri&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;http://api.nytimes.com/svc/elections/us/v3/finances/2008/&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;cycle&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2008&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;copyright&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Copyright (c) 2013 The New York Times Company. All Rights Reserved.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;results&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;candidate_name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Obama, Barack&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Barack Obama&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;party&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;D&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;into nicely indented and colored output:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;&amp;lt; nyt.json jq '.' | head
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt; nyt.json jq &lt;span class=&quot;s1&quot;&gt;'.'&lt;/span&gt; | head
 &lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;{
-  &quot;results&quot;: [
-    {
-      &quot;candidate_id&quot;: &quot;P80003338&quot;,
-      &quot;date_coverage_from&quot;: &quot;2007-01-01&quot;,
-      &quot;date_coverage_to&quot;: &quot;2008-11-24&quot;,
-      &quot;candidate_name&quot;: &quot;Obama, Barack&quot;,
-      &quot;name&quot;: &quot;Barack Obama&quot;,
-      &quot;party&quot;: &quot;D&quot;, 
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;results&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;candidate_id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;P80003338&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;date_coverage_from&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2007-01-01&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;date_coverage_to&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2008-11-24&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;candidate_name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Obama, Barack&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Barack Obama&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;party&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;D&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; 
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;Note that the output isn’t necessarily in the same order as the input.
-Besides pretty printing, &lt;code&gt;jq&lt;/code&gt; can also select, filter, and format JSON data, as illustrated by 
+Besides pretty printing, &lt;code class=&quot;highlighter-rouge&quot;&gt;jq&lt;/code&gt; can also select, filter, and format JSON data, as illustrated by 
 the following command, which returns the name, cash, and party of each candidate that had at least $1,000,000 in cash:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;&amp;lt; nyt.json jq -c '.results[] | {name, party, cash: .cash_on_hand} | select(.cash | tonumber &amp;gt; 1000000)' 
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt; nyt.json jq -c &lt;span class=&quot;s1&quot;&gt;'.results[] | {name, party, cash: .cash_on_hand} | select(.cash | tonumber &amp;gt; 1000000)'&lt;/span&gt; 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;{&quot;cash&quot;:&quot;29911984.0&quot;,&quot;party&quot;:&quot;D&quot;,&quot;name&quot;:&quot;Barack Obama&quot;}
-{&quot;cash&quot;:&quot;32812513.75&quot;,&quot;party&quot;:&quot;R&quot;,&quot;name&quot;:&quot;John McCain&quot;}
-{&quot;cash&quot;:&quot;4428347.5&quot;,&quot;party&quot;:&quot;D&quot;,&quot;name&quot;:&quot;John Edwards&quot;}
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;cash&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;29911984.0&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;party&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;D&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Barack Obama&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;cash&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;32812513.75&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;party&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;R&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;John McCain&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;cash&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;4428347.5&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;party&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;D&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;John Edwards&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;Please refer to the &lt;a href=&quot;http://stedolan.github.io/jq/manual/&quot;&gt;jq manual&lt;/a&gt; to read about the many other things it can do, but don’t expect it to solve all your data munging problems. 
 Remember, the Unix philosophy favors small programs that do one thing and do it well. 
-And &lt;code&gt;jq&lt;/code&gt;’s functionality is more than sufficient I would say! 
-Now that we have the data we need, it’s time to move on to our second tool: &lt;code&gt;json2csv&lt;/code&gt;.&lt;/p&gt;
+And &lt;code class=&quot;highlighter-rouge&quot;&gt;jq&lt;/code&gt;’s functionality is more than sufficient I would say! 
+Now that we have the data we need, it’s time to move on to our second tool: &lt;code class=&quot;highlighter-rouge&quot;&gt;json2csv&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h3 id=&quot;2-json2csv---convert-json-to-csv&quot;&gt;2. json2csv - convert JSON to CSV&lt;/h3&gt;
 
-&lt;p&gt;While JSON is a great format for interchanging data, it’s rather unsuitable for most command-line tools. Not to worry, we can easily convert JSON into CSV using &lt;a href=&quot;https://github.com/jehiah/json2csv&quot;&gt;json2csv&lt;/a&gt;. Assuming that we stored the data from the last step in &lt;code&gt;million.json&lt;/code&gt;, simply invoking&lt;/p&gt;
+&lt;p&gt;While JSON is a great format for interchanging data, it’s rather unsuitable for most command-line tools. Not to worry, we can easily convert JSON into CSV using &lt;a href=&quot;https://github.com/jehiah/json2csv&quot;&gt;json2csv&lt;/a&gt;. Assuming that we stored the data from the last step in &lt;code class=&quot;highlighter-rouge&quot;&gt;million.json&lt;/code&gt;, simply invoking&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;&amp;lt; million.json json2csv -k name,party,cash
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt; million.json json2csv -k name,party,cash
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;will convert it to some nicely comma-separated values:&lt;/p&gt;
 
@@ -716,21 +732,22 @@ John McCain,R,32812513.75
 John Edwards,D,4428347.5
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Having the data in CSV format allows us to use the classic tools such as &lt;code&gt;cut -d,&lt;/code&gt; and &lt;code&gt;awk -F,&lt;/code&gt;. 
-Others like &lt;code&gt;grep&lt;/code&gt; and &lt;code&gt;sed&lt;/code&gt; don’t really have a notion of fields. 
+&lt;p&gt;Having the data in CSV format allows us to use the classic tools such as &lt;code class=&quot;highlighter-rouge&quot;&gt;cut -d,&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;awk -F,&lt;/code&gt;. 
+Others like &lt;code class=&quot;highlighter-rouge&quot;&gt;grep&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;sed&lt;/code&gt; don’t really have a notion of fields. 
 Since CSV is the king of tabular file formats, according to the authors of 
-&lt;a href=&quot;http://csvkit.readthedocs.org/&quot;&gt;csvkit&lt;/a&gt;, they created, well, &lt;code&gt;csvkit&lt;/code&gt;.&lt;/p&gt;
+&lt;a href=&quot;http://csvkit.readthedocs.org/&quot;&gt;csvkit&lt;/a&gt;, they created, well, &lt;code class=&quot;highlighter-rouge&quot;&gt;csvkit&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h3 id=&quot;3-csvkit---suite-of-utilities-for-converting-to-and-working-with-csv&quot;&gt;3. csvkit - suite of utilities for converting to and working with CSV&lt;/h3&gt;
 
-&lt;p&gt;Rather than being one tool, &lt;a href=&quot;http://csvkit.readthedocs.org/&quot;&gt;csvkit&lt;/a&gt; is a collection of tools that operate on CSV data. Most of these tools expect the CSV data to have a header, so let’s add one. (Since the publication of this post, &lt;code&gt;json2csv&lt;/code&gt; has been updated to print the header with the &lt;code&gt;-p&lt;/code&gt; option.)&lt;/p&gt;
+&lt;p&gt;Rather than being one tool, &lt;a href=&quot;http://csvkit.readthedocs.org/&quot;&gt;csvkit&lt;/a&gt; is a collection of tools that operate on CSV data. Most of these tools expect the CSV data to have a header, so let’s add one. (Since the publication of this post, &lt;code class=&quot;highlighter-rouge&quot;&gt;json2csv&lt;/code&gt; has been updated to print the header with the &lt;code class=&quot;highlighter-rouge&quot;&gt;-p&lt;/code&gt; option.)&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;echo name,party,cash | cat - million.csv &amp;gt; million-header.csv
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;name,party,cash | cat - million.csv &amp;gt; million-header.csv
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;We can, for example, sort the candidates by cash with &lt;code&gt;csvsort&lt;/code&gt; and display the data using &lt;code&gt;csvlook&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;We can, for example, sort the candidates by cash with &lt;code class=&quot;highlighter-rouge&quot;&gt;csvsort&lt;/code&gt; and display the data using &lt;code class=&quot;highlighter-rouge&quot;&gt;csvlook&lt;/code&gt;:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;&amp;lt; million-header.csv csvsort -rc cash | csvlook
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt; million-header.csv csvsort -rc cash | csvlook
 
 |---------------+-------+--------------|
 |  name         | party | cash         |
@@ -740,77 +757,85 @@ Since CSV is the king of tabular file formats, according to the authors of
 |  John Edwards | D     | 4428347.5    |
 |---------------+-------+--------------|
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;Looks like the MySQL console doesn’t it? Speaking of databases, you can insert the CSV data into an sqlite database as follows (many other databases are supported as well):&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;csvsql --db sqlite:///myfirst.db --insert million-header.csv
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;csvsql --db sqlite:///myfirst.db --insert million-header.csv
 sqlite3 myfirst.db
-sqlite&amp;gt; .schema million-header
+&lt;span class=&quot;gp&quot;&gt;sqlite&amp;gt; &lt;/span&gt;.schema million-header
 &lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class=&quot;language-sql&quot;&gt;CREATE TABLE &quot;million-header&quot; (
-	name VARCHAR(12) NOT NULL, 
-	party VARCHAR(1) NOT NULL, 
-	cash FLOAT NOT NULL
-);
+&lt;/div&gt;
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;CREATE&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;TABLE&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;million-header&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+	&lt;span class=&quot;n&quot;&gt;party&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+	&lt;span class=&quot;n&quot;&gt;cash&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FLOAT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NULL&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;In this case, the database columns have the correct data types because the type is inferred from the CSV data.
- Other tools within &lt;code&gt;csvkit&lt;/code&gt; that might be of interest are: &lt;code&gt;in2csv&lt;/code&gt;, &lt;code&gt;csvgrep&lt;/code&gt;, and &lt;code&gt;csvjoin&lt;/code&gt;. And with &lt;code&gt;csvjson&lt;/code&gt;, the data can even be converted back to JSON. All in all, &lt;code&gt;csvkit&lt;/code&gt; is worth &lt;a href=&quot;http://csvkit.readthedocs.org/&quot;&gt;checking out&lt;/a&gt;.&lt;/p&gt;
+ Other tools within &lt;code class=&quot;highlighter-rouge&quot;&gt;csvkit&lt;/code&gt; that might be of interest are: &lt;code class=&quot;highlighter-rouge&quot;&gt;in2csv&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;csvgrep&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;csvjoin&lt;/code&gt;. And with &lt;code class=&quot;highlighter-rouge&quot;&gt;csvjson&lt;/code&gt;, the data can even be converted back to JSON. All in all, &lt;code class=&quot;highlighter-rouge&quot;&gt;csvkit&lt;/code&gt; is worth &lt;a href=&quot;http://csvkit.readthedocs.org/&quot;&gt;checking out&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h3 id=&quot;4-scrape---html-extraction-using-xpath-or-css-selectors&quot;&gt;4. scrape - HTML extraction using XPath or CSS selectors&lt;/h3&gt;
 
-&lt;p&gt;JSON APIs sure are nice, but they aren’t the only source of data; a lot of it is &lt;a href=&quot;http://www.ted.com/talks/tim_berners_lee_on_the_next_web.html&quot;&gt;unfortunately still&lt;/a&gt; embedded in HTML. &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox&quot;&gt;scrape&lt;/a&gt; is a python script I put together that employs the &lt;code&gt;lxml&lt;/code&gt; and &lt;code&gt;cssselect&lt;/code&gt; packages to select certain HTML elements by means of an XPath query or &lt;a href=&quot;http://net.tutsplus.com/tutorials/html-css-techniques/the-30-css-selectors-you-must-memorize/&quot;&gt;CSS selector&lt;/a&gt;. (I tried &lt;a href=&quot;https://metacpan.org/module/scrape.pl&quot;&gt;scrape.pl&lt;/a&gt;, but I couldn’t get it to work properly. Moreover, rather than processing HTML from stdin, it expects a url and then downloads the HTML itself.)
+&lt;p&gt;JSON APIs sure are nice, but they aren’t the only source of data; a lot of it is &lt;a href=&quot;http://www.ted.com/talks/tim_berners_lee_on_the_next_web.html&quot;&gt;unfortunately still&lt;/a&gt; embedded in HTML. &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox&quot;&gt;scrape&lt;/a&gt; is a python script I put together that employs the &lt;code class=&quot;highlighter-rouge&quot;&gt;lxml&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;cssselect&lt;/code&gt; packages to select certain HTML elements by means of an XPath query or &lt;a href=&quot;http://net.tutsplus.com/tutorials/html-css-techniques/the-30-css-selectors-you-must-memorize/&quot;&gt;CSS selector&lt;/a&gt;. (I tried &lt;a href=&quot;https://metacpan.org/module/scrape.pl&quot;&gt;scrape.pl&lt;/a&gt;, but I couldn’t get it to work properly. Moreover, rather than processing HTML from stdin, it expects a url and then downloads the HTML itself.)
 Let’s extract the table from &lt;a href=&quot;http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio&quot;&gt;this Wikipedia article that lists the border and area ratio of each country&lt;/a&gt;.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;curl -s 'http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio' | scrape -b -e 'table.wikitable &amp;gt; tr:not(:first-child)' | head
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -s &lt;span class=&quot;s1&quot;&gt;'http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio'&lt;/span&gt; | scrape -b -e &lt;span class=&quot;s1&quot;&gt;'table.wikitable &amp;gt; tr:not(:first-child)'&lt;/span&gt; | head
 &lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html&amp;gt;
-&amp;lt;body&amp;gt;
-&amp;lt;tr&amp;gt;
-&amp;lt;td&amp;gt;1&amp;lt;/td&amp;gt;
-&amp;lt;td&amp;gt;Vatican City&amp;lt;/td&amp;gt;
-&amp;lt;td&amp;gt;3.2&amp;lt;/td&amp;gt;
-&amp;lt;td&amp;gt;0.44&amp;lt;/td&amp;gt;
-&amp;lt;td&amp;gt;7.2727273&amp;lt;/td&amp;gt;
-&amp;lt;/tr&amp;gt;
+&lt;/div&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;tr&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;td&amp;gt;&lt;/span&gt;1&lt;span class=&quot;nt&quot;&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;td&amp;gt;&lt;/span&gt;Vatican City&lt;span class=&quot;nt&quot;&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;td&amp;gt;&lt;/span&gt;3.2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;td&amp;gt;&lt;/span&gt;0.44&lt;span class=&quot;nt&quot;&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;td&amp;gt;&lt;/span&gt;7.2727273&lt;span class=&quot;nt&quot;&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/tr&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;The &lt;code&gt;-b&lt;/code&gt; argument lets &lt;code&gt;scrape&lt;/code&gt; enclose the output with &lt;code&gt;&amp;lt;html&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;body&amp;gt;&lt;/code&gt; tags, which is sometimes required by &lt;code&gt;xml2json&lt;/code&gt; to convert correctly the HTML to JSON.&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;-b&lt;/code&gt; argument lets &lt;code class=&quot;highlighter-rouge&quot;&gt;scrape&lt;/code&gt; enclose the output with &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;body&amp;gt;&lt;/code&gt; tags, which is sometimes required by &lt;code class=&quot;highlighter-rouge&quot;&gt;xml2json&lt;/code&gt; to convert correctly the HTML to JSON.&lt;/p&gt;
 
 &lt;h3 id=&quot;5-xml2json---convert-xml-to-json&quot;&gt;5. xml2json - convert XML to JSON&lt;/h3&gt;
 
-&lt;p&gt;As its name implies, &lt;a href=&quot;https://github.com/parmentf/xml2json&quot;&gt;xml2json&lt;/a&gt; takes XML (and HTML) as input and returns JSON as output. Therefore, &lt;code&gt;xml2json&lt;/code&gt; is a great liaison between &lt;code&gt;scrape&lt;/code&gt; and &lt;code&gt;jq&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;As its name implies, &lt;a href=&quot;https://github.com/parmentf/xml2json&quot;&gt;xml2json&lt;/a&gt; takes XML (and HTML) as input and returns JSON as output. Therefore, &lt;code class=&quot;highlighter-rouge&quot;&gt;xml2json&lt;/code&gt; is a great liaison between &lt;code class=&quot;highlighter-rouge&quot;&gt;scrape&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;jq&lt;/code&gt;.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;curl -s 'http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio' | scrape -be 'table.wikitable &amp;gt; tr:not(:first-child)' | xml2json | jq -c '.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]}' | head
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -s &lt;span class=&quot;s1&quot;&gt;'http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio'&lt;/span&gt; | scrape -be &lt;span class=&quot;s1&quot;&gt;'table.wikitable &amp;gt; tr:not(:first-child)'&lt;/span&gt; | xml2json | jq -c &lt;span class=&quot;s1&quot;&gt;'.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]}'&lt;/span&gt; | head
 &lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;{&quot;ratio&quot;:&quot;7.2727273&quot;,&quot;surface&quot;:&quot;0.44&quot;,&quot;border&quot;:&quot;3.2&quot;,&quot;country&quot;:&quot;Vatican City&quot;}
-{&quot;ratio&quot;:&quot;2.2000000&quot;,&quot;surface&quot;:&quot;2&quot;,&quot;border&quot;:&quot;4.4&quot;,&quot;country&quot;:&quot;Monaco&quot;}
-{&quot;ratio&quot;:&quot;0.6393443&quot;,&quot;surface&quot;:&quot;61&quot;,&quot;border&quot;:&quot;39&quot;,&quot;country&quot;:&quot;San Marino&quot;}
-{&quot;ratio&quot;:&quot;0.4750000&quot;,&quot;surface&quot;:&quot;160&quot;,&quot;border&quot;:&quot;76&quot;,&quot;country&quot;:&quot;Liechtenstein&quot;}
-{&quot;ratio&quot;:&quot;0.3000000&quot;,&quot;surface&quot;:&quot;34&quot;,&quot;border&quot;:&quot;10.2&quot;,&quot;country&quot;:&quot;Sint Maarten (Netherlands)&quot;}
-{&quot;ratio&quot;:&quot;0.2570513&quot;,&quot;surface&quot;:&quot;468&quot;,&quot;border&quot;:&quot;120.3&quot;,&quot;country&quot;:&quot;Andorra&quot;}
-{&quot;ratio&quot;:&quot;0.2000000&quot;,&quot;surface&quot;:&quot;6&quot;,&quot;border&quot;:&quot;1.2&quot;,&quot;country&quot;:&quot;Gibraltar (United Kingdom)&quot;}
-{&quot;ratio&quot;:&quot;0.1888889&quot;,&quot;surface&quot;:&quot;54&quot;,&quot;border&quot;:&quot;10.2&quot;,&quot;country&quot;:&quot;Saint Martin (France)&quot;}
-{&quot;ratio&quot;:&quot;0.1388244&quot;,&quot;surface&quot;:&quot;2586&quot;,&quot;border&quot;:&quot;359&quot;,&quot;country&quot;:&quot;Luxembourg&quot;}
-{&quot;ratio&quot;:&quot;0.0749196&quot;,&quot;surface&quot;:&quot;6220&quot;,&quot;border&quot;:&quot;466&quot;,&quot;country&quot;:&quot;Palestinian territories&quot;}
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;ratio&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;7.2727273&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;surface&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;0.44&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;border&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;3.2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;country&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Vatican City&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;ratio&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2.2000000&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;surface&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;border&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;4.4&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;country&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Monaco&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;ratio&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;0.6393443&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;surface&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;61&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;border&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;39&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;country&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;San Marino&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;ratio&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;0.4750000&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;surface&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;160&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;border&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;76&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;country&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Liechtenstein&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;ratio&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;0.3000000&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;surface&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;34&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;border&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;10.2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;country&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Sint Maarten (Netherlands)&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;ratio&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;0.2570513&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;surface&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;468&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;border&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;120.3&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;country&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Andorra&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;ratio&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;0.2000000&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;surface&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;6&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;border&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1.2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;country&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Gibraltar (United Kingdom)&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;ratio&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;0.1888889&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;surface&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;54&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;border&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;10.2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;country&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Saint Martin (France)&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;ratio&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;0.1388244&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;surface&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2586&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;border&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;359&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;country&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Luxembourg&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;ratio&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;0.0749196&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;surface&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;6220&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;border&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;466&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;country&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Palestinian territories&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;Of course this JSON data could then be piped into &lt;code&gt;json2csv&lt;/code&gt; and so forth.&lt;/p&gt;
+&lt;p&gt;Of course this JSON data could then be piped into &lt;code class=&quot;highlighter-rouge&quot;&gt;json2csv&lt;/code&gt; and so forth.&lt;/p&gt;
 
 &lt;h3 id=&quot;6-sample---when-youre-in-debug-mode&quot;&gt;6. sample - when you’re in debug mode&lt;/h3&gt;
 
-&lt;p&gt;The second tool I made is &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox/blob/master/tools/sample&quot;&gt;sample&lt;/a&gt;. (It’s based on two scripts in &lt;a href=&quot;https://github.com/bitly/data_hacks&quot;&gt;bitly’s data_hacks&lt;/a&gt;, which contains some other tools worth checking out.) When you’re in the process of formulating your data pipeline and you have a lot of data, then debugging your pipeline can be cumbersome. In that case, &lt;code&gt;sample&lt;/code&gt; might be useful. 
+&lt;p&gt;The second tool I made is &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox/blob/master/tools/sample&quot;&gt;sample&lt;/a&gt;. (It’s based on two scripts in &lt;a href=&quot;https://github.com/bitly/data_hacks&quot;&gt;bitly’s data_hacks&lt;/a&gt;, which contains some other tools worth checking out.) When you’re in the process of formulating your data pipeline and you have a lot of data, then debugging your pipeline can be cumbersome. In that case, &lt;code class=&quot;highlighter-rouge&quot;&gt;sample&lt;/code&gt; might be useful. 
 The tool serves three purposes (which isn’t very Unix-minded, but since it’s mostly useful when you’re in debug mode, that’s not such a big deal).&lt;/p&gt;
 
-&lt;p&gt;The first purpose of &lt;code&gt;sample&lt;/code&gt; is to get a subset of the data by outputting only a certain percentage of the input on a line-by-line basis. The second purpose is to add some delay to the output. This comes in handy when the input is a constant stream (e.g., the Twitter firehose), and the data comes in too fast to see what’s going on.
+&lt;p&gt;The first purpose of &lt;code class=&quot;highlighter-rouge&quot;&gt;sample&lt;/code&gt; is to get a subset of the data by outputting only a certain percentage of the input on a line-by-line basis. The second purpose is to add some delay to the output. This comes in handy when the input is a constant stream (e.g., the Twitter firehose), and the data comes in too fast to see what’s going on.
 The third purpose is to run only for a certain time. The following invocation illustrates all three purposes.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;seq 10000 | sample -r 20% -d 1000 -s 5 | jq '{number: .}'
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;seq 10000 | sample -r 20% -d 1000 -s 5 | jq &lt;span class=&quot;s1&quot;&gt;'{number: .}'&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;This way, every input line has a 20% chance of being forwarded to &lt;code&gt;jq&lt;/code&gt;. Moreover, there is a 1000 millisecond delay between each line and after five seconds &lt;code&gt;sample&lt;/code&gt; will stop entirely. Please note that each argument is optional. 
-In order to prevent unnecessary computation, try to put &lt;code&gt;sample&lt;/code&gt; as early as possible in your pipeline (the same argument holds for &lt;code&gt;head&lt;/code&gt; and &lt;code&gt;tail&lt;/code&gt;). Once you’re done debugging you can simply take it out of the pipeline.&lt;/p&gt;
+&lt;p&gt;This way, every input line has a 20% chance of being forwarded to &lt;code class=&quot;highlighter-rouge&quot;&gt;jq&lt;/code&gt;. Moreover, there is a 1000 millisecond delay between each line and after five seconds &lt;code class=&quot;highlighter-rouge&quot;&gt;sample&lt;/code&gt; will stop entirely. Please note that each argument is optional. 
+In order to prevent unnecessary computation, try to put &lt;code class=&quot;highlighter-rouge&quot;&gt;sample&lt;/code&gt; as early as possible in your pipeline (the same argument holds for &lt;code class=&quot;highlighter-rouge&quot;&gt;head&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;tail&lt;/code&gt;). Once you’re done debugging you can simply take it out of the pipeline.&lt;/p&gt;
 
 &lt;h3 id=&quot;7-rio---making-r-part-of-the-pipeline&quot;&gt;7. Rio - making R part of the pipeline&lt;/h3&gt;
 
@@ -819,18 +844,19 @@ It’s not straightforward to make R/Rscript part of the pipeline since they don
 work with stdin and stdout out of the box.
 Therefore, as a proof of concept, I put together a bash script called &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox/blob/master/tools/Rio&quot;&gt;Rio&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;Rio&lt;/code&gt; works as follows.
-First, the CSV provided to stdin is redirected to a temporary file and lets R read that into a data frame &lt;code&gt;df&lt;/code&gt;.
-Second, the specified commands in the &lt;code&gt;-e&lt;/code&gt; option are executed.
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Rio&lt;/code&gt; works as follows.
+First, the CSV provided to stdin is redirected to a temporary file and lets R read that into a data frame &lt;code class=&quot;highlighter-rouge&quot;&gt;df&lt;/code&gt;.
+Second, the specified commands in the &lt;code class=&quot;highlighter-rouge&quot;&gt;-e&lt;/code&gt; option are executed.
 Third, the output of the last command is redirected to stdout. 
 Allow me to demonstrate three one-liners that use the Iris dataset (don’t mind the url).&lt;/p&gt;
 
 &lt;p&gt;Display the five-number-summary of each field.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;curl -s 'https://raw.github.com/pydata/pandas/master/pandas/tests/data/iris.csv' &amp;gt; iris.csv
-&amp;lt; iris.csv Rio -e 'summary(df)'
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -s &lt;span class=&quot;s1&quot;&gt;'https://raw.github.com/pydata/pandas/master/pandas/tests/data/iris.csv'&lt;/span&gt; &amp;gt; iris.csv
+&amp;lt; iris.csv Rio -e &lt;span class=&quot;s1&quot;&gt;'summary(df)'&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;  SepalLength      SepalWidth     PetalLength      PetalWidth   
+&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  SepalLength      SepalWidth     PetalLength      PetalWidth   
  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
  Median :5.800   Median :3.000   Median :4.350   Median :1.300  
@@ -842,13 +868,15 @@ Allow me to demonstrate three one-liners that use the Iris dataset (don’t mind
  Class :character  
  Mode  :character 
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;If you specify the &lt;code&gt;-s&lt;/code&gt; option, the &lt;code&gt;sqldf&lt;/code&gt; package will be imported.
+&lt;p&gt;If you specify the &lt;code class=&quot;highlighter-rouge&quot;&gt;-s&lt;/code&gt; option, the &lt;code class=&quot;highlighter-rouge&quot;&gt;sqldf&lt;/code&gt; package will be imported.
 In case tthe output is a data frame, CSV will be written to stdout. This enables you to further process that data using other tools.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;&amp;lt; iris.csv Rio -se 'sqldf(&quot;select * from df where df.SepalLength &amp;gt; 7.5&quot;)' | csvlook
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt; iris.csv Rio -se &lt;span class=&quot;s1&quot;&gt;'sqldf(&quot;select * from df where df.SepalLength &amp;gt; 7.5&quot;)'&lt;/span&gt; | csvlook
 &lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;|--------------+------------+-------------+------------+-----------------|
+&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;|--------------+------------+-------------+------------+-----------------|
 |  SepalLength | SepalWidth | PetalLength | PetalWidth | Name            |
 |--------------+------------+-------------+------------+-----------------|
 |  7.6         | 3          | 6.6         | 2.1        | Iris-virginica  |
@@ -859,12 +887,14 @@ In case tthe output is a data frame, CSV will be written to stdout. This enables
 |  7.7         | 3          | 6.1         | 2.3        | Iris-virginica  |
 |--------------+------------+-------------+------------+-----------------|
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;If you specify the &lt;code&gt;-g&lt;/code&gt; option, &lt;code&gt;ggplot2&lt;/code&gt; gets imported and a ggplot object called &lt;code&gt;g&lt;/code&gt; with &lt;code&gt;df&lt;/code&gt; as the data is initialized.
+&lt;p&gt;If you specify the &lt;code class=&quot;highlighter-rouge&quot;&gt;-g&lt;/code&gt; option, &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; gets imported and a ggplot object called &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; with &lt;code class=&quot;highlighter-rouge&quot;&gt;df&lt;/code&gt; as the data is initialized.
 If the final output is a ggplot object, a PNG will be written to stdout.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;&amp;lt; iris.csv Rio -ge 'g+geom_point(aes(x=SepalLength,y=SepalWidth,colour=Name))' &amp;gt; iris.png
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt; iris.csv Rio -ge &lt;span class=&quot;s1&quot;&gt;'g+geom_point(aes(x=SepalLength,y=SepalWidth,colour=Name))'&lt;/span&gt; &amp;gt; iris.png
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;&lt;img src=&quot;/img/iris.png&quot; alt=&quot;iris.csv&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;I made this tool so that I could take advantage of the power of R on the command-line. Of course it has its limits, but at least there’s no need to learn &lt;a href=&quot;http://www.gnuplot.info&quot;&gt;gnuplot&lt;/a&gt; any more.&lt;/p&gt;
@@ -893,12 +923,12 @@ If the final output is a ggplot object, a PNG will be written to stdout.&lt;/p&g
 &lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
 
 &lt;p&gt;I have shown you seven command-line tools that I use in my daily work as a data scientist.
-While each tool is useful in its own way, I often find myself combining them with, or just resorting to, the classics such as &lt;code&gt;grep&lt;/code&gt;, &lt;code&gt;sed&lt;/code&gt;, and &lt;code&gt;awk&lt;/code&gt;. Combining such small tools into a larger pipeline is what makes them really powerful.&lt;/p&gt;
+While each tool is useful in its own way, I often find myself combining them with, or just resorting to, the classics such as &lt;code class=&quot;highlighter-rouge&quot;&gt;grep&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;sed&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;awk&lt;/code&gt;. Combining such small tools into a larger pipeline is what makes them really powerful.&lt;/p&gt;
 
 &lt;p&gt;I’m curious to hear what you think about this list and what command-line tools you like to use.
 Also, if you’ve made any tools yourself, you’re more than welcome to add them to this &lt;a href=&quot;https://github.com/jeroenjanssens/data-science-toolbox&quot;&gt;data science toolbox&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Don’t worry if you don’t regard yourself as a toolmaker. The next time you’re cooking up that exotic pipeline, consider to put it in a file, add a &lt;a href=&quot;http://en.wikipedia.org/wiki/Shebang_%28Unix%29&quot;&gt;shebang&lt;/a&gt;, parametrize it with some &lt;code&gt;$1&lt;/code&gt;s and &lt;code&gt;$2&lt;/code&gt;s, and &lt;code&gt;chmod +x&lt;/code&gt; it. That’s all there is to it. Who knows, you might even become interested in applying the &lt;a href=&quot;http://www.faqs.org/docs/artu/ch01s06.html&quot;&gt;Unix philosophy&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Don’t worry if you don’t regard yourself as a toolmaker. The next time you’re cooking up that exotic pipeline, consider to put it in a file, add a &lt;a href=&quot;http://en.wikipedia.org/wiki/Shebang_%28Unix%29&quot;&gt;shebang&lt;/a&gt;, parametrize it with some &lt;code class=&quot;highlighter-rouge&quot;&gt;$1&lt;/code&gt;s and &lt;code class=&quot;highlighter-rouge&quot;&gt;$2&lt;/code&gt;s, and &lt;code class=&quot;highlighter-rouge&quot;&gt;chmod +x&lt;/code&gt; it. That’s all there is to it. Who knows, you might even become interested in applying the &lt;a href=&quot;http://www.faqs.org/docs/artu/ch01s06.html&quot;&gt;Unix philosophy&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;While the power of the command-line should not be underestimated when it comes to Obtaining, Scrubbing, and Exploring data, it can only get you so far. When you’re ready to do some more serious Exploring, Modelling, and iNterpretation of your data, you’re probably better off continuing your work in a statistical computing environment, such as &lt;a href=&quot;http://www.r-project.org/&quot;&gt;R&lt;/a&gt; or &lt;a href=&quot;http://ipython.org/notebook.html&quot;&gt;IPython notebook&lt;/a&gt;+&lt;a href=&quot;http://pandas.pydata.org/&quot;&gt;pandas&lt;/a&gt;.&lt;/p&gt;
 
@@ -942,8 +972,9 @@ Also, if you’ve made any tools yourself, you’re more than welcome to add the
 
 &lt;p&gt;Reporter can be invoked from the command line:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;$ reporter.py --url URL
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;reporter.py --url URL
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;The HTML from URL will be parsed by &lt;a href=&quot;http://www.crummy.com/software/BeautifulSoup/bs4/doc/&quot;&gt;Beautiful Soup&lt;/a&gt; and the main
 text will be printed on stdout. If the &lt;strong&gt;–debug&lt;/strong&gt; flag is added, the text and HTML will be saved to file. The HTML will be styled as follows. Each tag will get a background color based on its score, ranging from red (low score) to green (high score). Moreover, the tag that is selected as news container (see below) will have a blue dashed line.&lt;/p&gt;
@@ -956,10 +987,11 @@ text will be printed on stdout. If the &lt;strong&gt;–debug&lt;/strong&gt; fla
 
 &lt;p&gt;Reporter can also be used from Python:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;my_reporter = Reporter()
-my_reporter.read(url='http://example.com')
-print my_reporter.report_news()
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;my_reporter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Reporter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;my_reporter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'http://example.com'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;my_reporter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;report_news&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;h3 id=&quot;scoring-algorithm&quot;&gt;Scoring algorithm&lt;/h3&gt;
 
@@ -968,8 +1000,9 @@ print my_reporter.report_news()
 &lt;p&gt;The main part of the scoring algorithm is based on traversing the parsed HTML and works as follows. Reporter traverses the HTML in reverse order, i.e., it starts at the leaves of the DOM tree. Each tag is scored either as a paragraph or as a container. A tag is considered to be a paragraph (in the abstract sense, not in the P sense) when it contains more than 10 characters*, otherwise it is considered to be a container. The exact scoring of a tag is defined in the &lt;strong&gt;Autocue&lt;/strong&gt;. An Autocue is a list of scoring rules that get triggered at various stages. For example, when a tag is to be scored as a paragraph, one rule may count the number of words and return 2 points per word. Once a tag (and its siblings) are scored, its parent is scored. If the parent is also considered to be a paragraph, which happens, for
 instance, with the P tag in:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;DIV&amp;gt;&amp;lt;P&amp;gt;Hello World, this is the &amp;lt;B&amp;gt;Reporter package&amp;lt;/B&amp;gt;&amp;lt;/P&amp;gt;&amp;lt;/DIV&amp;gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;DIV&amp;gt;&amp;lt;P&amp;gt;&lt;/span&gt;Hello World, this is the &lt;span class=&quot;nt&quot;&gt;&amp;lt;B&amp;gt;&lt;/span&gt;Reporter package&lt;span class=&quot;nt&quot;&gt;&amp;lt;/B&amp;gt;&amp;lt;/P&amp;gt;&amp;lt;/DIV&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;the scores of the B tag are discarded and the complete text is re-scored. The DIV tag is scored as a container because (in this case) it contains no text by itself. In fact, there is
 an important scoring rule which penalises containers. If such a rule would not be included, the HTML tag would always receive the highest score, which would not be very effective.&lt;/p&gt;
@@ -983,15 +1016,17 @@ an important scoring rule which penalises containers. If such a rule would not b
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;HTML&lt;/strong&gt;, operates on the raw HTML. For example: split a paragraph with two consecutive line breaks into two paragraphs&lt;/p&gt;
 
-    &lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;  default_autocue.append((RegExReplacer(pattern='&amp;lt;br */? *&amp;gt;[\\r\\n]\*&amp;lt;br */? *&amp;gt;', repl='&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;'), HTML))
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;n&quot;&gt;default_autocue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RegExReplacer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&amp;lt;br */? *&amp;gt;[&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;n]&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;*&amp;lt;br */? *&amp;gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;repl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HTML&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;PRE_TRAVERSAL&lt;/strong&gt;, scores or prunes (deletes tags) before the DOM is traversed. This is useful for getting rid of specific tags such as footers, or give positive scores to certain tags For example, delete all comments (specific to a certain news property):&lt;/p&gt;
 
-    &lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;  default_autocue.append((CSSSelector(&quot;div#comments&quot;, Pruner()),
-    PRE_TRAVERSAL))
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;n&quot;&gt;default_autocue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CSSSelector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;div#comments&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pruner&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()),&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;PRE_TRAVERSAL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -1001,18 +1036,20 @@ an important scoring rule which penalises containers. If such a rule would not b
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;EVAL_PARAGRAPH&lt;/strong&gt;, scores a tag as a paragraph. For example, by counting words.&lt;/p&gt;
 
-    &lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;  default_autocue.append(
-    (Scorer(RegExMatcher(&quot;(\w)+(['`]\w)?&quot;, factor=2, name=&quot;word&quot;),
-    reset_children=True), EVAL_PARAGRAPH))
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;n&quot;&gt;default_autocue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Scorer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RegExMatcher&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;w)+(['`]&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;w)?&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;word&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;reset_children&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;EVAL_PARAGRAPH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;EVAL_CONTAINER&lt;/strong&gt;, scores a tag as a container. For example, combining the scores of the children tags with a 70 points penalty, giving a minimal score of 0.&lt;/p&gt;
 
-    &lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;  default_autocue.append(
-    (ScoreAggregator(start_score=-70, vmin=0),
-    EVAL_CONTAINER))
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;n&quot;&gt;default_autocue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ScoreAggregator&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start_score&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;70&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vmin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;EVAL_CONTAINER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -1030,21 +1067,24 @@ an important scoring rule which penalises containers. If such a rule would not b
 
     &lt;p&gt;Example: penalize DIVs inside the news container:&lt;/p&gt;
 
-    &lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;  default_autocue.append(
-    (CSSSelector(&quot;div&quot;, Scorer(FixedValue(-60))),
-    NEWS_CONTAINER))
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;n&quot;&gt;default_autocue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CSSSelector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;div&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Scorer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FixedValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))),&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;NEWS_CONTAINER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
     &lt;p&gt;Example: Get rid of any tags that have a score below -50:&lt;/p&gt;
 
-    &lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;  default_autocue.append((ScoreSelector(threshold=-50, 
-    mode=&quot;upper&quot;, actor=Pruner()), NEWS_CONTAINER))
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;n&quot;&gt;default_autocue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ScoreSelector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;threshold&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+    &lt;span class=&quot;n&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;upper&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;actor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Pruner&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NEWS_CONTAINER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;NEWS_TEXT&lt;/strong&gt;, operates on the text inside the news container. For example, put all text on one line:&lt;/p&gt;
 
-    &lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;  default_autocue.append((RegExReplacer(pattern='\s+', repl=' '), NEWS_TEXT))
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;n&quot;&gt;default_autocue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RegExReplacer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s+'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;repl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;' '&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NEWS_TEXT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 

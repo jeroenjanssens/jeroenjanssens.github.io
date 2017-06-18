@@ -64,7 +64,7 @@
 					<div class="post">
 						<p>Did you know that there’s a Bash kernel for IPython Notebook?
 It even displays inline images.
-To give you a glimpse, the code cell below makes an API call to <a href="http://memegenerator.net">memegenerator.net</a>, which generates images on demand. From the response, the URL of the generated image is extracted  using <code>jq</code> and subsequently downloaded using <code>curl</code>. The output is then displayed as an inline image by piping it to a function called <code>display</code>. Perhaps a bit contrived, but if not with a meme, how else am I supposed to grab your attention these days?</p>
+To give you a glimpse, the code cell below makes an API call to <a href="http://memegenerator.net">memegenerator.net</a>, which generates images on demand. From the response, the URL of the generated image is extracted  using <code class="highlighter-rouge">jq</code> and subsequently downloaded using <code class="highlighter-rouge">curl</code>. The output is then displayed as an inline image by piping it to a function called <code class="highlighter-rouge">display</code>. Perhaps a bit contrived, but if not with a meme, how else am I supposed to grab your attention these days?</p>
 
 <p><img src="/img/ibash-notebook.png" alt="" /></p>
 
@@ -86,7 +86,7 @@ To give you a glimpse, the code cell below makes an API call to <a href="http://
 
 <p>First, and perhaps most importantly, the command line is ad-hoc in nature, which makes it difficult to reproduce your steps or share them with your peers. To improve reproducibility, you could put those steps in a shell script, <a href="http://www.gnu.org/software/make/">Makefile</a>, or <a href="https://github.com/Factual/drake">Drakefile</a>, but when you’re working in a notebook, they would be stored automatically.</p>
 
-<p>Second, if you’re running a server or virtual machine, there would be no need to <code>ssh</code> into it. As a result, Microsoft Windows users wouldn’t need to resort to a third-party tool like <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/">PuTTY</a> anymore. I’m particularly interested in this advantage, together with the next two, because ever since I started writing <a href="http://datascienceatthecommandline.com">Data Science at the Command Line</a>, I’ve been looking for ways to make the command line more accessible to newcomers.</p>
+<p>Second, if you’re running a server or virtual machine, there would be no need to <code class="highlighter-rouge">ssh</code> into it. As a result, Microsoft Windows users wouldn’t need to resort to a third-party tool like <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/">PuTTY</a> anymore. I’m particularly interested in this advantage, together with the next two, because ever since I started writing <a href="http://datascienceatthecommandline.com">Data Science at the Command Line</a>, I’ve been looking for ways to make the command line more accessible to newcomers.</p>
 
 <p>Third, for users who are new to the command line, a notebook with code cells could be less intimidating than a terminal with a prompt. Because the browser (and perhaps also IPython Notebook) is a familiar environment, the threshold to try out the command line will be lower.</p>
 
@@ -96,39 +96,42 @@ To give you a glimpse, the code cell below makes an API call to <a href="http://
 
 <p>For the Bash kernel to be a convenient environment for doing data science, it could use a few additional features besides running commands. Thanks to the architecture of IPython Notebook, inline Markdown and LaTeX equations work out of the box. Having seen <a href="http://liftoffsoftware.com/Products/GateOne">Gate One</a> (a browser-based terminal that I had running on 200 EC2 instances for <a href="http://strataconf.com/stratany2014/public/schedule/detail/36204">my workshop at Strata NYC</a>) and <a href="https://pigshell.com">pigshell</a> (a shell-like website that lets you interact with various APIs as Unix files), which are both able to display inline images, I knew that’s what the Bash kernel needed next.</p>
 
-<p>I initially thought this would be as easy as detecting the MIME type of the output of a command. That way, when you would run <code>cat file.png</code>, an image would be shown automatically. Unfortunately this approach didn’t work because, as I later learned, <code>pexpect</code> isn’t meant to transfer binary data. With some suggestions from <a href="https://twitter.com/takluyver/">Thomas Kluyver</a>, I implemented the following solution instead. (You may decide whether it’s a hack or not.)</p>
+<p>I initially thought this would be as easy as detecting the MIME type of the output of a command. That way, when you would run <code class="highlighter-rouge">cat file.png</code>, an image would be shown automatically. Unfortunately this approach didn’t work because, as I later learned, <code class="highlighter-rouge">pexpect</code> isn’t meant to transfer binary data. With some suggestions from <a href="https://twitter.com/takluyver/">Thomas Kluyver</a>, I implemented the following solution instead. (You may decide whether it’s a hack or not.)</p>
 
-<p>The solution includes a Bash function called <code>display</code> that is registered when the kernel starts. That way, images can now be displayed by running something as simple as:</p>
+<p>The solution includes a Bash function called <code class="highlighter-rouge">display</code> that is registered when the kernel starts. That way, images can now be displayed by running something as simple as:</p>
 
-<pre><code class="language-bash">display &lt; file.png
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>display &lt; file.png
 </code></pre>
+</div>
 
 <p>or something as involved as:</p>
 
-<pre><code class="language-bash">cat iris.csv |                        # Read our beloved Iris data set
-cols -C species body tapkee -m pca |  # Apply PCA using tapkee
-header -r x,y,species |               # Replace header of CSV
-Rio-scatter x y species | display     # Create scatter plot using ggplot2
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>cat iris.csv |                        <span class="c"># Read our beloved Iris data set</span>
+cols -C species body tapkee -m pca |  <span class="c"># Apply PCA using tapkee</span>
+header -r x,y,species |               <span class="c"># Replace header of CSV</span>
+Rio-scatter x y species | display     <span class="c"># Create scatter plot using ggplot2</span>
 </code></pre>
+</div>
 
 <p>which produces:</p>
 
 <p><img src="/img/iris-pca.png" alt="" /></p>
 
-<p>In case you’re interested, <code>cols</code> and <code>body</code> are used to only pass numerical columns and no header to <a href="http://tapkee.lisitsyn.me/">tapkee</a>, which is a fantastic library for dimensionality reduction by <a href="https://twitter.com/qdrgsm/">Sergey Lisitsyn</a>. These two Bash scripts, together with <code>header</code> and <code>Rio-scatter</code>, can be found in <a href="https://github.com/jeroenjanssens/data-science-at-the-command-line/tree/master/tools">this repository</a>. Speaking of command-line tools for plotting, <a href="http://bokeh.pydata.org/">Bokeh</a>, which is a Python visualization library built on top of matplotlib, will soon have its own command-line tool as well.</p>
+<p>In case you’re interested, <code class="highlighter-rouge">cols</code> and <code class="highlighter-rouge">body</code> are used to only pass numerical columns and no header to <a href="http://tapkee.lisitsyn.me/">tapkee</a>, which is a fantastic library for dimensionality reduction by <a href="https://twitter.com/qdrgsm/">Sergey Lisitsyn</a>. These two Bash scripts, together with <code class="highlighter-rouge">header</code> and <code class="highlighter-rouge">Rio-scatter</code>, can be found in <a href="https://github.com/jeroenjanssens/data-science-at-the-command-line/tree/master/tools">this repository</a>. Speaking of command-line tools for plotting, <a href="http://bokeh.pydata.org/">Bokeh</a>, which is a Python visualization library built on top of matplotlib, will soon have its own command-line tool as well.</p>
 
-<p>To see what the <code>display</code> function looks like, we can run <code>type display</code> in a notebook:</p>
+<p>To see what the <code class="highlighter-rouge">display</code> function looks like, we can run <code class="highlighter-rouge">type display</code> in a notebook:</p>
 
-<pre><code class="language-bash">display is a function
-display ()
-{
-    TMPFILE=$(mktemp ${TMPDIR-/tmp}/bash_kernel.XXXXXXXXXX);
-    cat &gt; $TMPFILE;
-    echo "bash_kernel: saved image data to: $TMPFILE" 1&gt;&amp;2
-}
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>display is a <span class="k">function
+</span>display <span class="o">()</span>
+<span class="o">{</span>
+    <span class="nv">TMPFILE</span><span class="o">=</span><span class="k">$(</span>mktemp <span class="k">${</span><span class="nv">TMPDIR</span><span class="p">-/tmp</span><span class="k">}</span>/bash_kernel.XXXXXXXXXX<span class="k">)</span>;
+    cat &gt; <span class="nv">$TMPFILE</span>;
+    <span class="nb">echo</span> <span class="s2">"bash_kernel: saved image data to: </span><span class="nv">$TMPFILE</span><span class="s2">"</span> 1&gt;&amp;2
+<span class="o">}</span>
 </code></pre>
+</div>
 
-<p>In words, <code>display</code> saves the standard input to a temporary file and prints the filename to standard error. After a code cell has been evaluated, the Bash kernel simply extracts the filename from the output, detects its MIME type using the <a href="https://docs.python.org/3.4/library/imghdr.html">imghdr</a> library, and sends the image data (encoded with base64) to the front end. Easy peasy.</p>
+<p>In words, <code class="highlighter-rouge">display</code> saves the standard input to a temporary file and prints the filename to standard error. After a code cell has been evaluated, the Bash kernel simply extracts the filename from the output, detects its MIME type using the <a href="https://docs.python.org/3.4/library/imghdr.html">imghdr</a> library, and sends the image data (encoded with base64) to the front end. Easy peasy.</p>
 
 <p>I chose the name “display” because there’s also a <a href="http://www.imagemagick.org/script/display.php">command-line tool in ImageMagick</a> called “display” that accepts image data from standard input and shows it in a new window. Because that tool works only when X is running, I figured that a function called “display” could serve as a drop-in replacement when using IPython Notebook.</p>
 
@@ -144,7 +147,7 @@ display ()
 
 <h3 id="whats-next">What’s next?</h3>
 
-<p>Having inline Markdown, equations, and images sure is nice. However, in my opinion, the Bash kernel currently has two issues that hamper usability. First, the output is only printed when the command is finished; there are no real-time updates. This is especially inconvenient if you want to keep an eye on some long-running process using, say, <code>tail -f</code> or <code>htop</code>. Second, there’s no interactivity with the process possible. This means that you cannot drop into some other REPL like <code>julia</code> or <code>psql</code>. If there’s sufficient interest in IBash Notebook, then I suspect that these issues can be solved. Regardless, I believe that despite these two issues, IBash Notebook could very well serve as a means to introduce people to the command line.</p>
+<p>Having inline Markdown, equations, and images sure is nice. However, in my opinion, the Bash kernel currently has two issues that hamper usability. First, the output is only printed when the command is finished; there are no real-time updates. This is especially inconvenient if you want to keep an eye on some long-running process using, say, <code class="highlighter-rouge">tail -f</code> or <code class="highlighter-rouge">htop</code>. Second, there’s no interactivity with the process possible. This means that you cannot drop into some other REPL like <code class="highlighter-rouge">julia</code> or <code class="highlighter-rouge">psql</code>. If there’s sufficient interest in IBash Notebook, then I suspect that these issues can be solved. Regardless, I believe that despite these two issues, IBash Notebook could very well serve as a means to introduce people to the command line.</p>
 
 <p>If you want to try out the Bash kernel for yourself, you should install <a href="https://github.com/ipython/ipython">IPython 3</a> (which is currently in development). Then, you can clone the <a href="https://github.com/takluyver/bash_kernel">Bash kernel GitHub repository</a> and install the package. (Best to do this all inside a virtual environment.) Next time you start a new notebook, you should be able to select the Bash kernel in the top-right corner.</p>
 

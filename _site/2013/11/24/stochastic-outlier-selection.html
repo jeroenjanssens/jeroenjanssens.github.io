@@ -120,32 +120,33 @@ The demo illustrates how the approximated outlier probability of each senator ev
 
 <p><a href="http://bl.ocks.org/jeroenjanssens/7608890"><img src="/img/sos-senators.png" alt="Detecting anomalous senators" /></a></p>
 
-<p>Let’s see how the approximated outlier probabilities compare to the outlier probabilities computed on the command-line. Recently, I started using <a href="https://github.com/Factual/drake#drake">drake</a> to organize my data workflow. (If you care about reproducibility, then I recommend you try it out.) The following <code>Drakefile</code> shows how to fetch the roll call voting data, extract its features and labels, and apply the <a href="https://github.com/jeroenjanssens/sos/blob/master/bin/sos">Python implementation of SOS</a> with a perplexity of 50 to it.</p>
+<p>Let’s see how the approximated outlier probabilities compare to the outlier probabilities computed on the command-line. Recently, I started using <a href="https://github.com/Factual/drake#drake">drake</a> to organize my data workflow. (If you care about reproducibility, then I recommend you try it out.) The following <code class="highlighter-rouge">Drakefile</code> shows how to fetch the roll call voting data, extract its features and labels, and apply the <a href="https://github.com/jeroenjanssens/sos/blob/master/bin/sos">Python implementation of SOS</a> with a perplexity of 50 to it.</p>
 
-<pre><code class="language-bash">cat Drakefile
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>cat Drakefile
 
-;# Get dataset
-dataset.csv &lt;- [-timecheck]
-	curl -s https://raw.github.com/VikParuchuri/political-positions/master/113_frame.csv &gt; $OUTPUT
+<span class="gp">;# </span>Get dataset
+dataset.csv &lt;- <span class="o">[</span>-timecheck]
+	curl -s https://raw.github.com/VikParuchuri/political-positions/master/113_frame.csv &gt; <span class="nv">$OUTPUT</span>
 
-;# Extract features
+<span class="gp">;# </span>Extract features
 features.csv &lt;- dataset.csv
-	csvcut $INPUT -C 1,name,party,state | sed '1d;s/NA/4/g' &gt; $OUTPUT
+	csvcut <span class="nv">$INPUT</span> -C 1,name,party,state | sed <span class="s1">'1d;s/NA/4/g'</span> &gt; <span class="nv">$OUTPUT</span>
 
-;# Extract labels
+<span class="gp">;# </span>Extract labels
 labels.csv &lt;- dataset.csv
-	csvcut $INPUT -c name,party,state &gt; $OUTPUT
+	csvcut <span class="nv">$INPUT</span> -c name,party,state &gt; <span class="nv">$OUTPUT</span>
 
-;# Compute outlier probabilities using SOS
+<span class="gp">;# </span>Compute outlier probabilities using SOS
 outlier.csv &lt;- features.csv
-	echo 'outlier' &gt; $OUTPUT
-	&lt; $INPUT sos -p 50 &gt;&gt; $OUTPUT
+	<span class="nb">echo</span> <span class="s1">'outlier'</span> &gt; <span class="nv">$OUTPUT</span>
+	&lt; <span class="nv">$INPUT</span> sos -p 50 &gt;&gt; <span class="nv">$OUTPUT</span>
 
-;# Combine labels and outlier probabilities and sort
+<span class="gp">;# </span>Combine labels and outlier probabilities and sort
 result.csv &lt;- labels.csv, outlier.csv
-	paste -d, $INPUT0 $INPUT1 | csvsort -rc outlier &gt; $OUTPUT
+	paste -d, <span class="nv">$INPUT0</span> <span class="nv">$INPUT1</span> | csvsort -rc outlier &gt; <span class="nv">$OUTPUT</span>
 </code></pre>
-<pre><code>drake
+</div>
+<div class="highlighter-rouge"><pre class="highlight"><code>drake
 head result.csv | csvlook
 
 |-------------+-------+-------+-------------|
@@ -162,9 +163,10 @@ head result.csv | csvlook
 |  Vitter     | R     | LA    | 0.59739462  |
 |-------------+-------+-------+-------------|
 </code></pre>
+</div>
 
-<p>The tools <code>csvcut</code>, <code>csvsort</code>, and <code>csvlook</code> are part of <a href="http://csvkit.readthedocs.org/">csvkit</a>. 
-You may notice that the outlier probabilities shown in the screenshot do not match the exact ones computed with <code>sos</code>. That’s because (1) the screenshot was taken not long after the demo started and (2) the demo was running in Chrome, which apparently has a different implementation of <code>Math.random</code>. In Firefox, the approximated outlier probabilities will match the exact ones, eventually.</p>
+<p>The tools <code class="highlighter-rouge">csvcut</code>, <code class="highlighter-rouge">csvsort</code>, and <code class="highlighter-rouge">csvlook</code> are part of <a href="http://csvkit.readthedocs.org/">csvkit</a>. 
+You may notice that the outlier probabilities shown in the screenshot do not match the exact ones computed with <code class="highlighter-rouge">sos</code>. That’s because (1) the screenshot was taken not long after the demo started and (2) the demo was running in Chrome, which apparently has a different implementation of <code class="highlighter-rouge">Math.random</code>. In Firefox, the approximated outlier probabilities will match the exact ones, eventually.</p>
 
 <p>If you enjoyed this post then you may want to <a href="https://twitter.com/jeroenhjanssens/">follow me on Twitter</a>.</p>
 
