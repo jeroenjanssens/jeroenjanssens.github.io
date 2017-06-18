@@ -6,13 +6,9 @@ description: "In this post I would like to share seven command-line tools that I
 image:  /img/iris.png
 ---
 
-*Newsflash! On October 5, I'm giving a one-day, hands-on [workshop](http://datascienceatthecommandline.com/#workshop) in Budapest.* 
+*Update (05-02-2017) My new company [Data Science Workshops](https://datascienceworkshops.com) provides in-company training and coaching on this exciting topic.* 
 
-<a href="http://datascienceatthecommandline.com/#workshop"><img src="/img/workshop-crunching-data-at-the-command-line.png" style="height:314px; width:600px;"alt="Workshop Crunching Data at the Command Line" /></a>
-
-*Update (23-5-2015) I'm now also doing [consulting and training](http://jeroenjanssens.com/consulting-and-training) on this exciting topic.* 
-
-*Update (7-17-2014) Check out my new book [Data Science at the Command Line](http://datascienceatthecommandline.com), which contains over 70 command-line tools for doing data science.*
+*Update (7-17-2014) You may be interested in my book [Data Science at the Command Line](http://datascienceatthecommandline.com), which contains over 70 command-line tools for doing data science.*
 
 Data science is [OSEMN](http://www.dataists.com/2010/09/a-taxonomy-of-data-science/) (pronounced as awesome).
 That is, it involves Obtaining, Scrubbing, Exploring, Modeling, and iNterpreting data.
@@ -36,9 +32,9 @@ JSON is becoming an increasingly common data format, especially as APIs are appe
 
 Imagine we're interested in the candidate totals of the 2008 presidential election. It so happens that the New York Times has a [Campaign Finance API](http://developer.nytimes.com/docs/campaign_finance_api/). (You can [get your own API keys](http://developer.nytimes.com/apps/mykeys) if you want to access any of their APIs.) Let's get some JSON using `curl`:
 
-```bash
+~~~ bash
 curl -s 'http://api.nytimes.com/svc/elections/us/v3/finances/2008/president/totals.json?api-key=super-secret' > nyt.json
-```
+~~~
 
 where `-s` puts `curl` in silent mode. In its simplest form, i.e., `jq '.'`, the tool transforms the incomprehensible API response we got:
 
