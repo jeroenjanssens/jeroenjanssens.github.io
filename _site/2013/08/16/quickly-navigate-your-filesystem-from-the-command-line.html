@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Quickly navigate your filesystem from the command-line</title>
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="Independent Data Science Consultant and Trainer">
+    <meta name="description" content="Dutch Data Scientist, Teacher, Author, Entrepreneur">
     <link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
     <link rel="alternate" type="application/rss+xml" title="Jeroen Janssens" href="http://www.jeroenjanssens.com/feed.xml">
 
@@ -24,7 +24,7 @@
     <meta name="twitter:url" content="http://www.jeroenjanssens.com/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html">
     
     
-      <meta name="twitter:description" content="Independent Data Science Consultant and Trainer">
+      <meta name="twitter:description" content="Dutch Data Scientist, Teacher, Author, Entrepreneur">
     
     
       <meta name="twitter:image:src" content="http://www.jeroenjanssens.com/img/jeroenjanssens.jpg">
@@ -44,17 +44,15 @@
     <div id="site">
       <div id="header">
         <h1><a href="/">Jeroen Janssens</a></h1>
-        <div id="description">Independent Data Science Consultant and Trainer</div>
+        <div id="description">Dutch Data Scientist, Teacher, Author, Entrepreneur</div>
         <div id="social">
           <ul>
-            <li><a href="/">Consulting &amp; Training</a></li>
-            <li><a href="/blog">Blog</a></li>
+            <li><a href="https://datascienceworkshops.com">Data Science Workshops</a></li>
             <li><a href="http://datascienceatthecommandline.com">Book</a></li>
+            <li><a href="/blog">Blog</a></li>
             <li><a href="http://twitter.com/jeroenhjanssens/"><img class="icon" title="Twitter" alt="Twitter" src="/img/icon-twitter.png" /></a></li>
             <li><a href="http://www.linkedin.com/in/jeroenjanssens"><img class="icon" title="LinkedIn" alt="LinkedIn" src="/img/icon-linkedin.png" /></a></li>
             <li><a href="http://github.com/jeroenjanssens/"><img class="icon" title="Github" alt="Github" src="/img/icon-github.png" /></a></li>
-            <li><a href="http://www.jeroenjanssens.com/feed.xml"><img class="icon" title="RSS" alt="RSS" src="/img/icon-rss.png" /></a></li>
-
           <ul>
         </div>
       </div>
@@ -64,7 +62,7 @@
 					<a href="https://twitter.com/share" class="twitter-share-button" data-via="jeroenhjanssens">Tweet</a>
 					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 					<div class="post">
-						<p><em>Update (6-9-2013) This code is now also available as the &quot;jump&quot; plugin in <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a>.</em></p>
+						<p><em>Update (6-9-2013) This code is now also available as the “jump” plugin in <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a>.</em></p>
 
 <p><em>Update (18-8-2013): Thanks to the many useful suggestions in <a href="https://news.ycombinator.com/item?id=6229001">the discussion on Hacker News</a>, I have added (1) quotes to the code, (2) a section about tab completion, and (3) a note for Mac OS X users.</em></p>
 
@@ -78,72 +76,89 @@ I prefer to use the command-line for this, but typing <code>cd ~/some/very/deep/
 Personally, I prefer a more manual solution, which I would like to share with you.
 I have noticed quite an increase in efficiency with this, and perhaps you will too.</p>
 
-<h3>Jumping with symbolic links</h3>
+<h3 id="jumping-with-symbolic-links">Jumping with symbolic links</h3>
 
 <p>Under the hood this manual solution comes down to storing symbolic links in a hidden directory (e.g., <code>~/.marks</code>).
 There are four shell functions <code>jump</code>, <code>mark</code>, <code>unmark</code>, and <code>marks</code>, and they look like this:</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">export </span><span class="nv">MARKPATH</span><span class="o">=</span><span class="nv">$HOME</span>/.marks
-<span class="k">function</span> jump <span class="o">{</span> 
-    <span class="nb">cd</span> -P <span class="s2">&quot;$MARKPATH/$1&quot;</span> 2&gt;/dev/null <span class="o">||</span> <span class="nb">echo</span> <span class="s2">&quot;No such mark: $1&quot;</span>
-<span class="o">}</span>
-<span class="k">function</span> mark <span class="o">{</span> 
-    mkdir -p <span class="s2">&quot;$MARKPATH&quot;</span><span class="p">;</span> ln -s <span class="s2">&quot;$(pwd)&quot;</span> <span class="s2">&quot;$MARKPATH/$1&quot;</span>
-<span class="o">}</span>
-<span class="k">function</span> unmark <span class="o">{</span> 
-    rm -i <span class="s2">&quot;$MARKPATH/$1&quot;</span>
-<span class="o">}</span>
-<span class="k">function</span> marks <span class="o">{</span>
-    ls -l <span class="s2">&quot;$MARKPATH&quot;</span> <span class="p">|</span> sed <span class="s1">&#39;s/  / /g&#39;</span> <span class="p">|</span> cut -d<span class="s1">&#39; &#39;</span> -f9- <span class="p">|</span> sed <span class="s1">&#39;s/ -/\t-/g&#39;</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
-<span class="o">}</span>
-</code></pre></div>
-<p>Put this in your <code>.zshrc</code> or <code>.bashrc</code> and you&#39;re ready to jump (Mac OS X users need a slightly different version of the <code>marks</code> function; see below). I have also turned this into a plugin for <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a> called <code>jump</code>. To add a new bookmark, <code>cd</code> into the directory and <code>mark</code> it with a name to your liking:</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> ~/some/very/deep/often-used/directory
-<span class="nv">$ </span>mark deep
-</code></pre></div>
+
+<pre><code class="language-bash">export MARKPATH=$HOME/.marks
+function jump { 
+	cd -P "$MARKPATH/$1" 2&gt;/dev/null || echo "No such mark: $1"
+}
+function mark { 
+	mkdir -p "$MARKPATH"; ln -s "$(pwd)" "$MARKPATH/$1"
+}
+function unmark { 
+	rm -i "$MARKPATH/$1"
+}
+function marks {
+	ls -l "$MARKPATH" | sed 's/  / /g' | cut -d' ' -f9- | sed 's/ -/\t-/g' &amp;&amp; echo
+}
+</code></pre>
+
+<p>Put this in your <code>.zshrc</code> or <code>.bashrc</code> and you’re ready to jump (Mac OS X users need a slightly different version of the <code>marks</code> function; see below). I have also turned this into a plugin for <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a> called <code>jump</code>. To add a new bookmark, <code>cd</code> into the directory and <code>mark</code> it with a name to your liking:</p>
+
+<pre><code class="language-bash">$ cd ~/some/very/deep/often-used/directory
+$ mark deep
+</code></pre>
+
 <p>This adds a symbolic link named <code>deep</code> to the directory <code>~/.marks</code>. To <code>jump</code> to this directory, type the following from any place in the filesystem:</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>jump deep
-</code></pre></div>
+
+<pre><code class="language-bash">$ jump deep
+</code></pre>
+
 <p>To remove the bookmark (i.e., the symbolic link), type:</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>unmark deep
-</code></pre></div>
+
+<pre><code class="language-bash">$ unmark deep
+</code></pre>
+
 <p>You can view all marks by typing:</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>marks
 
-deep    -&gt; /home/johndoe/some/very/deep/often-used/directory
-foo     -&gt; /usr/bin/foo/bar
-</code></pre></div>
-<p>That&#39;s all there is to it! </p>
+<pre><code class="language-bash">$ marks
 
-<h3>Adding tab completion</h3>
+deep	-&gt; /home/johndoe/some/very/deep/often-used/directory
+foo		-&gt; /usr/bin/foo/bar
+</code></pre>
+
+<p>That’s all there is to it!</p>
+
+<h3 id="adding-tab-completion">Adding tab completion</h3>
 
 <p>In order to add tab completion for the <code>jump</code> and <code>unmark</code> functions, add the following code to your .zshrc (thanks to <a href="https://news.ycombinator.com/item?id=6229468">tiziano88</a>):</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="k">function</span> _completemarks <span class="o">{</span>
-  <span class="nv">reply</span><span class="o">=(</span><span class="k">$(</span>ls <span class="nv">$MARKPATH</span><span class="k">)</span><span class="o">)</span>
-<span class="o">}</span>
+
+<pre><code class="language-bash">function _completemarks {
+  reply=($(ls $MARKPATH))
+}
 
 compctl -K _completemarks jump
 compctl -K _completemarks unmark
-</code></pre></div>
-<p>or the following to your .bashrc (thanks to <a href="https://news.ycombinator.com/item?id=6229768">microcolonel</a>):</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">_completemarks<span class="o">()</span> <span class="o">{</span>
-  <span class="nb">local </span><span class="nv">curw</span><span class="o">=</span><span class="k">${</span><span class="nv">COMP_WORDS</span><span class="p">[COMP_CWORD]</span><span class="k">}</span>
-  <span class="nb">local </span><span class="nv">wordlist</span><span class="o">=</span><span class="k">$(</span>find <span class="nv">$MARKPATH</span> -type l -printf <span class="s2">&quot;%f\n&quot;</span><span class="k">)</span>
-  <span class="nv">COMPREPLY</span><span class="o">=(</span><span class="k">$(</span><span class="nb">compgen</span> -W <span class="s1">&#39;${wordlist[@]}&#39;</span> -- <span class="s2">&quot;$curw&quot;</span><span class="k">)</span><span class="o">)</span>
-  <span class="k">return</span> 0
-<span class="o">}</span>
+</code></pre>
 
-<span class="nb">complete</span> -F _completemarks jump unmark
-</code></pre></div>
+<p>or the following to your .bashrc (thanks to <a href="https://news.ycombinator.com/item?id=6229768">microcolonel</a>):</p>
+
+<pre><code class="language-bash">_completemarks() {
+  local curw=${COMP_WORDS[COMP_CWORD]}
+  local wordlist=$(find $MARKPATH -type l -printf "%f\n")
+  COMPREPLY=($(compgen -W '${wordlist[@]}' -- "$curw"))
+  return 0
+}
+
+complete -F _completemarks jump unmark
+</code></pre>
+
 <p>If you now type <code>jump</code> or <code>unmark</code> and then press TAB, you see a list of available marks. Neat!</p>
 
-<h3>Note for Mac OS X users</h3>
+<h3 id="note-for-mac-os-x-users">Note for Mac OS X users</h3>
 
 <p>As pointed out by <a href="https://news.ycombinator.com/item?id=6229428">guygurari</a>, Mac OS X users need a slightly different version of the <code>marks</code> function:</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="k">function</span> marks <span class="o">{</span>
-    <span class="se">\l</span>s -l <span class="s2">&quot;$MARKPATH&quot;</span> <span class="p">|</span> tail -n +2 <span class="p">|</span> sed <span class="s1">&#39;s/  / /g&#39;</span> <span class="p">|</span> cut -d<span class="s1">&#39; &#39;</span> -f9- <span class="p">|</span> awk -F <span class="s1">&#39; -&gt; &#39;</span> <span class="s1">&#39;{printf &quot;%-10s -&gt; %s\n&quot;, $1, $2}&#39;</span>
-<span class="o">}</span>
-</code></pre></div>
+
+<pre><code class="language-bash">function marks {
+	\ls -l "$MARKPATH" | tail -n +2 | sed 's/  / /g' | cut -d' ' -f9- | awk -F ' -&gt; ' '{printf "%-10s -&gt; %s\n", $1, $2}'
+}
+</code></pre>
+
 <p>If you like what I had to say then you may want to <a href="https://twitter.com/jeroenhjanssens/">follow me on Twitter</a>.</p>
+
 
 					</div>
 
