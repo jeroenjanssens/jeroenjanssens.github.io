@@ -70,57 +70,51 @@
 
 <p>Unfortunately, setting up a workable environment and installing the latest command-line tools can be quite a pain. This post describes how to alleviate that pain and how to get you started doing data science on the command-line in a matter minutes.</p>
 
-<h3 id="data-science-at-the-command-line">Data Science at the Command Line</h3>
+<h3>Data Science at the Command Line</h3>
 
-<p>I am currently authoring a book titled “Data Science at the Command Line”, which will be published by O’Reilly in summer 2014.
+<p>I am currently authoring a book titled &quot;Data Science at the Command Line&quot;, which will be published by O&#39;Reilly in summer 2014.
 The main goal of the book is to teach why, how, and when the command-line could be employed for data science. The tentative outline is as follows:</p>
 
 <ol>
-  <li>Introduction</li>
-  <li>Getting Started</li>
-  <li>Step 1: Obtaining Data</li>
-  <li>Creating Reusable Command-line Tools</li>
-  <li>Step 2: Scrubbing Data</li>
-  <li>Managing Your Data Workflow</li>
-  <li>Step 3: Exploring Data</li>
-  <li>Speeding Up Data-Intensive Commands</li>
-  <li>Step 4: Modeling Data</li>
-  <li>Poor Man’s MapReduce</li>
-  <li>Step 5: Interpreting Data</li>
-  <li>Conclusion</li>
+<li>Introduction</li>
+<li>Getting Started</li>
+<li>Step 1: Obtaining Data</li>
+<li>Creating Reusable Command-line Tools</li>
+<li>Step 2: Scrubbing Data</li>
+<li>Managing Your Data Workflow</li>
+<li>Step 3: Exploring Data</li>
+<li>Speeding Up Data-Intensive Commands</li>
+<li>Step 4: Modeling Data</li>
+<li>Poor Man&#39;s MapReduce</li>
+<li>Step 5: Interpreting Data</li>
+<li>Conclusion</li>
 </ol>
 
 <p>Naturally, the book will be drenched with commands and source code. It is important that the text, the code, and the output of the code are consistent with each other. Manually running the code and copy-pasting the output is a cumbersome and error-prone process. 
-To automate this process, I have created a script (a <a href="http://www.dexy.it/">dexy</a> filter to be precise) that will (1) extract all the source code from the text, (2) run these in an isolated environment, and (3) paste the output back into the text. From here the O’Reilly toolchain takes over and converts the text to a variety of digital formats. Very smooth.</p>
+To automate this process, I have created a script (a <a href="http://www.dexy.it/">dexy</a> filter to be precise) that will (1) extract all the source code from the text, (2) run these in an isolated environment, and (3) paste the output back into the text. From here the O&#39;Reilly toolchain takes over and converts the text to a variety of digital formats. Very smooth.</p>
 
-<h3 id="your-own-data-science-toolbox-environment-with-vagrant">Your own Data Science Toolbox environment with Vagrant</h3>
+<h3>Your own Data Science Toolbox environment with Vagrant</h3>
 
-<p>The environment is created and configured using <a href="http://www.vagrantup.com/">Vagrant</a>, which is basically a wrapper around VirtualBox and other virtualization software such AWS EC2. With a few commands, a fresh virtual machine is spun up and configured according to a simple script. It was <a href="http://miningthesocialweb.com/2013/11/23/confessions-of-a-prolific-moonlighter-with-a-chronic-writing-disorder">Matthew Russell’s Ignite talk</a> that inspired me to use Vagrant; he provides one for his book <a href="http://miningthesocialweb.com">Mining the Social Web</a> that is focused more on Python.
+<p>The environment is created and configured using <a href="http://www.vagrantup.com/">Vagrant</a>, which is basically a wrapper around VirtualBox and other virtualization software such AWS EC2. With a few commands, a fresh virtual machine is spun up and configured according to a simple script. It was <a href="http://miningthesocialweb.com/2013/11/23/confessions-of-a-prolific-moonlighter-with-a-chronic-writing-disorder">Matthew Russell&#39;s Ignite talk</a> that inspired me to use Vagrant; he provides one for his book <a href="http://miningthesocialweb.com">Mining the Social Web</a> that is focused more on Python.
 If my Vagrant environment would be provided with Data Science at the Command Line, then the reader would be able to follow along with the commands and source code. But since my mission is to enable everybody to do data science at the command-line as soon as possible, I have decided to make it available right now.</p>
 
 <p>Currently, the environment includes the <a href="http://jeroenjanssens.com/2013/09/19/seven-command-line-tools-for-data-science.html">seven command-line tools I discussed</a> a while ago and <a href="http://www.gnu.org/software/parallel/">GNU parallel</a>, which will be discussed in Chapter 8. Just like the book itself, the environment is a work in progress. In order to be able to run <a href="https://github.com/jeroenjanssens/data-science-toolbox/blob/master/tools/Rio">Rio</a> (one of the seven tools), I had to include the latest version of <code>R</code>, together with the packages <code>ggplot2</code>, <code>sqldf</code>, and <code>plyr</code>. <del>I am aware that many of you would prefer the Python scientific stack to be included as well.</del> The Python scientific stack (<code>ipython</code>, <code>numpy</code>, <code>scipy</code>, <code>matplotlib</code>, <code>pandas</code>, and <code>scikit-learn</code>) is also included. However, because of disk-space and provision-time constraints, I doubt whether it is desirable (or even possible) to create an environment that includes everything. Perhaps that we can devise a solution where you select which tools, packages, and languages you would like to have installed. As mentioned, it is a work in progress and my main goal is to get you up and running on the command-line.</p>
 
-<h3 id="installing-the-data-science-toolbox-environment">Installing the Data Science Toolbox environment</h3>
+<h3>Installing the Data Science Toolbox environment</h3>
 
 <p>The environment is currently configured to run on top of <a href="https://www.virtualbox.org">VirtualBox</a>. (I am looking into the option to deploy it on an AWS EC2 instance.)
 So, first you will need to install <a href="https://www.virtualbox.org">VirtualBox</a>. 
 Second you need to install <a href="http://www.vagrantup.com/">Vagrant</a>. 
 Third, you need to download the environment by cloning the data science toolbox. (If you do not want to use <code>git</code> you can also <a href="https://github.com/jeroenjanssens/data-science-toolbox/archive/master.zip">download the zip file</a>.)</p>
-
-<pre><code class="language-bash">git clone https://github.com/jeroenjanssens/data-science-toolbox.git
-cd data-science-toolbox/box
-</code></pre>
-
-<p>Running <code>vagrant up</code> in the <code>box</code> directory will download the base box (Ubuntu 12.04 LTS 64-bit), spin up a virtual machine, and provision it. (Now would be the perfect time to think about any command-line scripts you may have lying around and donate them to the <a href="http://datasciencetoolbox.org">data science toolbox</a>.) Once the provisioning is complete, you will be able to log into your own lean, mean data science machine:</p>
-
-<pre><code>vagrant ssh
-</code></pre>
-
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git clone https://github.com/jeroenjanssens/data-science-toolbox.git
+<span class="nb">cd </span>data-science-toolbox/box
+</code></pre></div>
+<p>Running <code>vagrant up</code> in the <code>box</code> directory will download the base box (Ubuntu 12.04 LTS 64-bit), spin up a virtual machine, and provision it. (Now would be the perfect time to think about any command-line scripts you may have lying around and donate them to the <a href="http://datasciencetoolbox.org">data science toolbox</a>.) Once the provisioning is complete, you will be able to log into your own lean, mean data science machine: </p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">vagrant ssh
+</code></pre></div>
 <p>Run the following command to test whether everything has been installed correctly:</p>
-
-<pre><code class="language-bash">curl -s 'http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio' | scrape -be 'table.wikitable &gt; tr:not(:first-child)' | xml2json | jq -c '.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]}' | json2csv -p -k=country,ratio | Rio -se'sqldf("select * from df where ratio &gt; 0.3 order by ratio desc")' | csvlook
-</code></pre>
-<pre><code>|----------------+------------|
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">curl -s <span class="s1">&#39;http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio&#39;</span> <span class="p">|</span> scrape -be <span class="s1">&#39;table.wikitable &gt; tr:not(:first-child)&#39;</span> <span class="p">|</span> xml2json <span class="p">|</span> jq -c <span class="s1">&#39;.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]}&#39;</span> <span class="p">|</span> json2csv -p -k<span class="o">=</span>country,ratio <span class="p">|</span> Rio -se<span class="s1">&#39;sqldf(&quot;select * from df where ratio &gt; 0.3 order by ratio desc&quot;)&#39;</span> <span class="p">|</span> csvlook
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">|----------------+------------|
 |  country       | ratio      |
 |----------------+------------|
 |  Vatican City  | 7.2727273  |
@@ -128,11 +122,10 @@ cd data-science-toolbox/box
 |  San Marino    | 0.6393443  |
 |  Liechtenstein | 0.475      |
 |----------------+------------|
-</code></pre>
+</code></pre></div>
+<p>The virtual machine is not entirely isolated. Files that you put in the <code>box</code> directory will be accessible from the <code>/vagrant</code> directory in the virtual machine. This allows you to use both the tools you already have installed and the command-line tools provided by the environment. If you want to install any of these tools on your own machine, then you can run the relevant commands from the <a href="https://github.com/jeroenjanssens/data-science-toolbox/blob/master/box/bootstrap.sh">provisioning script</a>. </p>
 
-<p>The virtual machine is not entirely isolated. Files that you put in the <code>box</code> directory will be accessible from the <code>/vagrant</code> directory in the virtual machine. This allows you to use both the tools you already have installed and the command-line tools provided by the environment. If you want to install any of these tools on your own machine, then you can run the relevant commands from the <a href="https://github.com/jeroenjanssens/data-science-toolbox/blob/master/box/bootstrap.sh">provisioning script</a>.</p>
-
-<h3 id="a-namecomparison-of-virtual-environments-for-data-scienceacomparison-of-virtual-environments-for-data-science"><a name="comparison-of-virtual-environments-for-data-science"></a>Comparison of virtual environments for data science</h3>
+<h3><a name="comparison-of-virtual-environments-for-data-science"></a>Comparison of virtual environments for data science</h3>
 
 <p>Of course the Data Science Toolbox environment is not the only one available for doing data science! 
 So far, I have been able to perform a rudimentary comparison with three other solutions.
@@ -165,74 +158,74 @@ It installs R, Shiny, IPython Notebook, and the Python scientific stack.</p>
 <p>For your convenience I have summarized this information in the following table.</p>
 
 <table>
-	<thead>
-		<tr>
-			<th />
-			<th>Configuration</th>
-			<th>VirtualBox</th>
-			<th>AWS</th>
-			<th>AMI</th>
-			<th>Python</th>
-			<th>R</th>
-			<th>Shiny</th>
-			<th>Comments</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<th>1. DST</th>
-			<td>Vagrant</td>
-			<td class="yes">Yes</td>
-			<td class="no">No</td>
-			<td class="no">No</td>
-			<td class="yes">Yes</td>
-			<td class="yes">Yes</td>
-			<td class="no">No</td>
-			<td>Includes the Data Science Toolbox</td>
-		</tr>
-		<tr>
-			<th>2. MTSW</th>
-			<td>Vagrant</td>
-			<td class="yes">Yes</td>
-			<td class="yes">Yes</td>
-			<td class="yes">Yes</td>
-			<td class="yes">Yes</td>
-			<td class="no">No</td>
-			<td class="no">No</td>
-			<td></td>
-		</tr>
-		<tr>
-			<th>3. DSTK</th>
-			<td>Vagrant</td>
-			<td class="yes">Yes</td>
-			<td class="yes">Yes</td>
-			<td class="yes">Yes</td>
-			<td class="no">No</td>
-			<td class="no">No</td>
-			<td class="no">No</td>
-			<td>Includes various command-line tools</td>
-		</tr>
-		<tr>
-			<th>4. DSB</th>
-			<td>Bash</td>
-			<td class="no">No</td>
-			<td class="yes">Yes</td>
-			<td class="no">No</td>
-			<td class="yes">Yes</td>
-			<td class="yes">Yes</td>
-			<td class="yes">Yes</td>
-			<td></td>
-		</tr>
-	</tbody>
+    <thead>
+        <tr>
+            <th />
+            <th>Configuration</th>
+            <th>VirtualBox</th>
+            <th>AWS</th>
+            <th>AMI</th>
+            <th>Python</th>
+            <th>R</th>
+            <th>Shiny</th>
+            <th>Comments</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>1. DST</th>
+            <td>Vagrant</td>
+            <td class="yes">Yes</td>
+            <td class="no">No</td>
+            <td class="no">No</td>
+            <td class="yes">Yes</td>
+            <td class="yes">Yes</td>
+            <td class="no">No</td>
+            <td>Includes the Data Science Toolbox</td>
+        </tr>
+        <tr>
+            <th>2. MTSW</th>
+            <td>Vagrant</td>
+            <td class="yes">Yes</td>
+            <td class="yes">Yes</td>
+            <td class="yes">Yes</td>
+            <td class="yes">Yes</td>
+            <td class="no">No</td>
+            <td class="no">No</td>
+            <td></td>
+        </tr>
+        <tr>
+            <th>3. DSTK</th>
+            <td>Vagrant</td>
+            <td class="yes">Yes</td>
+            <td class="yes">Yes</td>
+            <td class="yes">Yes</td>
+            <td class="no">No</td>
+            <td class="no">No</td>
+            <td class="no">No</td>
+            <td>Includes various command-line tools</td>
+        </tr>
+        <tr>
+            <th>4. DSB</th>
+            <td>Bash</td>
+            <td class="no">No</td>
+            <td class="yes">Yes</td>
+            <td class="no">No</td>
+            <td class="yes">Yes</td>
+            <td class="yes">Yes</td>
+            <td class="yes">Yes</td>
+            <td></td>
+        </tr>
+    </tbody>
 </table>
 
 <p>In short, I think that they all have some strong aspects. Some of these may be improved over time (I am currently looking into using Chef as the provisioner), new environments may arise; that is the way open source works. In the end, it is up to you to decide which one works best for you. And if you want to make some tweaks, you can always fork the appropriate Github repository.</p>
 
-<p>It is in general just amazing to be able to spin up a new virtual machine with your own or somebody else’s environment, whether by running <code>vagrant up</code> or by clicking a few buttons on AWS.</p>
+<p>It is in general just amazing to be able to spin up a new virtual machine with your own or somebody else&#39;s environment, whether by running <code>vagrant up</code> or by clicking a few buttons on AWS.</p>
 
 <p>I realize that three out of four names look really alike, which can be confusing, but it could also indicate that there is a need for having an automated (and isolated) setup to start doing data science without any additional hassle.</p>
 
-<h3 id="conclusion">Conclusion</h3>
+<h3>Conclusion</h3>
 
 <p>While the command-line is a very powerful environment to process data, manually installing the latest command-line tools is not straightforward. Vagrant allows you to spin up a virtual machine and to install all the tools automatically.
 In this post I have shared with you the exact same Vagrant environment as that I am using for my upcoming book, in the hope that it will be useful to get you started with doing data science at the command line. I have also compared my environment with three other virtual environments for data science.
@@ -240,9 +233,8 @@ Please let me know if you have any questions, suggestions, or contributions.</p>
 
 <p>Best wishes,</p>
 
-<p>Jeroen <br />
+<p>Jeroen <br>
 <a href="https://twitter.com/jeroenhjanssens/">@jeroenhjanssens</a></p>
-
 
 					</div>
 

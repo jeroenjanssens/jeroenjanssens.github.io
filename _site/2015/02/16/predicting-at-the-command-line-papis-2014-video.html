@@ -71,37 +71,36 @@ function onYouTubeIframeAPIReady() {
 }
 
 function skipTo(time) {
-	timeParts = time.innerHTML.split(":");
-	minutes = parseInt(timeParts[0]);
-	seconds = parseInt(timeParts[1]);
-	player.seekTo((minutes * 60) + seconds);
-}	
+    timeParts = time.innerHTML.split(":");
+    minutes = parseInt(timeParts[0]);
+    seconds = parseInt(timeParts[1]);
+    player.seekTo((minutes * 60) + seconds);
+}   
 </script>
 
-<p>On November 17 of last year, I gave a tutorial at the first International Conference on Predictive APIs and Apps, also known as <a href="http://www.papis.io/2014/">PAPi’s.io ‘14</a>. The recording is now available for your viewing pleasure:</p>
+<p>On November 17 of last year, I gave a tutorial at the first International Conference on Predictive APIs and Apps, also known as <a href="http://www.papis.io/2014/">PAPi&#39;s.io &#39;14</a>. The recording is now available for your viewing pleasure:</p>
 
-<p><a name="video"></a></p>
-<iframe id="player" type="text/html" width="640" height="360" src="http://www.youtube.com/embed/3TieT2eOM1Y?enablejsapi=1&amp;autoplay=0" frameborder="0"></iframe>
+<p><a name="video"></a>
+<iframe id="player" type="text/html" width="640" height="360" src="http://www.youtube.com/embed/3TieT2eOM1Y?enablejsapi=1&autoplay=0" frameborder="0"></iframe></p>
 
 <p>After a <a href="http://lanyrd.com/2014/papis2014/schedule/">myriad of API presentations</a>, including those by <a href="https://yhathq.com/">Yhat</a>, <a href="https://bigml.com/">BigML</a>, and <a href="https://dato.com/index.html">GraphLab</a>, 
-I thought it would be nice to switch gears by demonstrating how such APIs can be employed from the command line (hence the title “Predicting at the Command Line”).</p>
+I thought it would be nice to switch gears by demonstrating how such APIs can be employed from the command line (hence the title &quot;Predicting at the Command Line&quot;). </p>
 
-<p>Don’t worry about <a href="http://lanyrd.com/2014/papis2014/sdfywx/">the slides</a>, they’re quite boring. More interesting is the live demo, in which I demonstrate how to use the command line to:</p>
+<p>Don&#39;t worry about <a href="http://lanyrd.com/2014/papis2014/sdfywx/">the slides</a>, they&#39;re quite boring. More interesting is the live demo, in which I demonstrate how to use the command line to:</p>
 
 <ul>
-  <li>connect to the <a href="https://www.bicing.cat/">Barcelona bicing</a> API using <code>curl</code> (<a href="#video" onclick="skipTo(this); return false;">12:30</a>),</li>
-  <li>convert the returned XML data to CSV using <code>xml2json</code>, <code>jq</code>, and <code>json2csv</code> (<a href="#video" onclick="skipTo(this); return false;">17:59</a>),</li>
-  <li>plot the locations of bike stations using <code>Rio</code> and the <a href="http://cran.r-project.org/web/packages/ggmap/index.html">ggmap</a> package (<a href="#video" onclick="skipTo(this); return false;">27:18</a>),</li>
-  <li>assign anomaly scores using <a href="">BigML</a>’s predictive API (<a href="#video" onclick="skipTo(this); return false;">30:59</a>), and as an additional impromptu demonstration,</li>
-  <li>apply <a href="http://www.indico.io">indico</a>’s language detection API to tweets using <code>t</code> and <code>parallel</code> (<a href="#video" onclick="skipTo(this); return false;">38:21</a>).</li>
+<li>connect to the <a href="https://www.bicing.cat/">Barcelona bicing</a> API using <code>curl</code> (<a href="#video" onclick="skipTo(this); return false;">12:30</a>),</li>
+<li>convert the returned XML data to CSV using <code>xml2json</code>, <code>jq</code>, and <code>json2csv</code> (<a href="#video" onclick="skipTo(this); return false;">17:59</a>),</li>
+<li>plot the locations of bike stations using <code>Rio</code> and the <a href="http://cran.r-project.org/web/packages/ggmap/index.html">ggmap</a> package (<a href="#video" onclick="skipTo(this); return false;">27:18</a>),</li>
+<li>assign anomaly scores using <a href="">BigML</a>&#39;s predictive API (<a href="#video" onclick="skipTo(this); return false;">30:59</a>), and as an additional impromptu demonstration, </li>
+<li>apply <a href="http://www.indico.io">indico</a>&#39;s language detection API to tweets using <code>t</code> and <code>parallel</code> (<a href="#video" onclick="skipTo(this); return false;">38:21</a>).</li>
 </ul>
 
-<p>In case you’d like to try this out for yourself, you should check out my book <a href="http://datascienceatthecommandline.com/">Data Science at the Command Line</a> and the associated <a href="http://datascienceatthecommandline.com/#dst">Data Science Toolbox</a>, which has all these command-line tools pre-installed.</p>
+<p>In case you&#39;d like to try this out for yourself, you should check out my book <a href="http://datascienceatthecommandline.com/">Data Science at the Command Line</a> and the associated <a href="http://datascienceatthecommandline.com/#dst">Data Science Toolbox</a>, which has all these command-line tools pre-installed.</p>
 
 <p>Cheers,</p>
 
 <p>Jeroen</p>
-
 
 					</div>
 

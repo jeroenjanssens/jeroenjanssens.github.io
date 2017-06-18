@@ -62,32 +62,32 @@
 					<a href="https://twitter.com/share" class="twitter-share-button" data-via="jeroenhjanssens">Tweet</a>
 					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 					<div class="post">
-						<p><em>Note: This post originally appeared on February 4, 2013 on <a href="http://visualrevenue.com/blog">Visual Revenue’s blog</a>.</em></p>
+						<p><em>Note: This post originally appeared on February 4, 2013 on <a href="http://visualrevenue.com/blog">Visual Revenue&#39;s blog</a>.</em></p>
 
 <p>The Visual Revenue platform provides a number of great tools that support editors to optimize their front page. <a href="http://visualrevenue.com/instant-headline-testing">Instant Headline Testing</a> is one of those tools. The quality of a story headline greatly influences its click-through-rate (CTR). Front page editors therefore spend a lot of thought coming up with the right wording to engage their readers. But on digital media, headlines do not have to be set in stone. Instant Headline Testing gives the editor the opportunity to <a href="http://visualrevenue.com/blog/2012/08/usa-today-sports-boosted-their-olympics-coverage-by-57-with-headline-testing.html">improve the quality of a headline</a> after it has made the front page. Let me give you an example.</p>
 
-<h3 id="a-sporty-example">A sporty example</h3>
+<h3>A sporty example</h3>
 
 <p>With Super Bowl XLVII (and its power outage) still fresh in our minds, one of our clients, <a href="http://www.usatoday.com/sports/">USA Today Sports</a>, used our platform to conduct the following headline test:</p>
 
-<p><strong>Headline A: “What Harbaugh regrets about Super Bowl” (3.06% CTR)</strong></p>
+<p><strong>Headline A: &quot;What Harbaugh regrets about Super Bowl&quot; (3.06% CTR)</strong></p>
 
-<p><strong>Headline B: “John Harbaugh explains Super Bowl tirade” (4.93% CTR)</strong></p>
+<p><strong>Headline B: &quot;John Harbaugh explains Super Bowl tirade&quot; (4.93% CTR)</strong></p>
 
 <p>Headline A (the original headline) got 3.06% CTR and headline B got 4.93% CTR, which are both strong CTRs. After only seven minutes of testing the two headlines, headline B had been declared winner with 99.93% certainty (explained later). Subsequently, the winning headline was served to 100% of the audience for over one hour. Finally, the editor even made the change permanent in their CMS. Note that by changing a few words only, a 61% lift had been achieved, which eventually resulted in tens of thousands more views for <a href="http://www.usatoday.com/story/sports/nfl/2013/02/04/ravens-john-harbaugh-super-bowl-jim-harbaugh-49ers/1890387/">that article</a>!</p>
 
-<h3 id="four-challenges-for-instant-headline-testing">Four challenges for instant headline testing</h3>
+<h3>Four challenges for instant headline testing</h3>
 
 <p>Instant Headline Testing is essentially <a href="http://www.alistapart.com/articles/a-primer-on-a-b-testing/">A/B testing</a> for story headlines. However, there are four challenges when it comes to Instant Headline Testing that we need to take into account.</p>
 
 <ol>
-  <li>Headlines may be on the front page for only a couple of hours, so a headline test cannot take too long.</li>
-  <li>The number of readers varies greatly per front page.</li>
-  <li>The CTR of a headline depends on where it is positioned on the front page. For example, a headline positioned at the hero spot has a much higher CTR than one positioned at bottom.</li>
-  <li>Front pages are dynamic, so headlines can change position.</li>
+<li>Headlines may be on the front page for only a couple of hours, so a headline test cannot take too long.</li>
+<li>The number of readers varies greatly per front page.</li>
+<li>The CTR of a headline depends on where it is positioned on the front page. For example, a headline positioned at the hero spot has a much higher CTR than one positioned at bottom.</li>
+<li>Front pages are dynamic, so headlines can change position.</li>
 </ol>
 
-<h3 id="frequentist-approach-to-instant-headline-testing">Frequentist approach to instant headline testing</h3>
+<h3>Frequentist approach to instant headline testing</h3>
 
 <p>Our improved implementation overcomes these four challenges by using a Bayesian approach. Before I explain that, I’ll first discuss the frequentist approach to Instant Headline Testing.</p>
 
@@ -105,7 +105,7 @@
 
 <p>Let’s have a look at a Bayesian approach to Instant Headline Testing, which is one that I find much more straightforward and elegant.</p>
 
-<h3 id="bayesian-approach-to-instant-headline-testing">Bayesian approach to instant headline testing</h3>
+<h3>Bayesian approach to instant headline testing</h3>
 
 <p>Whereas the frequentist approach assumes that the “true” CTRs remain the same, all that the Bayesian approach cares about is the data we have actually observed. So, we don’t need to worry about estimating the required number of views beforehand. Moreover, the Bayesian approach doesn’t mind that headlines change position while testing, so that overcomes challenge 4.</p>
 
@@ -113,33 +113,33 @@
 
 <p>During the headline test we keep track of number of views and number of clicks on headline A and B. Important here is the absolute difference between the number of clicks both headlines. When the absolute difference crosses the so-called Anscombe boundary, we stop the headline test.</p>
 
-<p>The Anscombe boundary is defined in terms of (1) the number of views so far, (denoted by <img src="/img/eq_n.gif" alt="" />) and (2) the number of views we will be serving the winning headline (denoted by <img src="/img/eq_k.gif" alt="" />). Stated more formally, we stop when the following inequality is true:</p>
+<p>The Anscombe boundary is defined in terms of (1) the number of views so far, (denoted by <img src="/img/eq_n.gif" alt="">) and (2) the number of views we will be serving the winning headline (denoted by <img src="/img/eq_k.gif" alt="">). Stated more formally, we stop when the following inequality is true:</p>
 
-<p><img src="/img/eq_anscombe.gif" alt="" /></p>
+<p><img src="/img/eq_anscombe.gif" alt=""></p>
 
-<p>where <img src="/img/eq_y.gif" alt="" /> is the absolute difference between the number of clicks for both headlines. The shape of the Anscombe boundary is shown in the figure below. Here, we assumed that the front page gets 1,000 views per minute (VPM). So, after 20 minutes of testing, the front page has been viewed 20,000 times. The figure also shows the absolute difference for five simulated headline tests (CTR A=5%, CTR B=3%), which are denoted by gray lines.</p>
+<p>where <img src="/img/eq_y.gif" alt=""> is the absolute difference between the number of clicks for both headlines. The shape of the Anscombe boundary is shown in the figure below. Here, we assumed that the front page gets 1,000 views per minute (VPM). So, after 20 minutes of testing, the front page has been viewed 20,000 times. The figure also shows the absolute difference for five simulated headline tests (CTR A=5%, CTR B=3%), which are denoted by gray lines.</p>
 
-<p><img src="/img/vr-ht-anscombe.png (Anscombe Boundary)" alt="Anscombe Boundary" /></p>
+<p><img src="/img/vr-ht-anscombe.png" alt="Anscombe Boundary" title="Anscombe Boundary"></p>
 
 <p>The figure illustrates that the Anscombe boundary takes the trade-off between the number of views so far, and the number of views after conclusion into account. In a recent blog post, Aaron Goodman performed an <a href="http://blog.custora.com/2012/05/a-bayesian-approach-to-ab-testing/">interesting comparison</a> between the frequentist, multiple testing, and Bayesian approaches. He demonstrated that the Bayesian approach is best at minimizing regret, or, in other words, maximizing article views.</p>
 
 <p>Again, once the absolute difference passes the Anscombe boundary, we are ready to conclude which headline was better.</p>
 
-<h3 id="certainty-of-conclusion">Certainty of conclusion</h3>
+<h3>Certainty of conclusion</h3>
 
 <p>It would nice to know with how much certainty we can conclude that one headline is better than the other.</p>
 
 <p>The certainty associated with the CTRs of Headlines A and B can be modeled by a beta distribution. The beta distribution can be defined in terms of the number of views and CTR as follows:</p>
 
-<p><img src="/img/eq_beta.gif" alt="" /></p>
+<p><img src="/img/eq_beta.gif" alt=""></p>
 
 <p>The figure below shows how a beta distribution becomes more peaked as the number of views increases (while keeping the CTR at 20%). It illustrates that as we collect more evidence (i.e., views) our uncertainty about the CTR decreases.</p>
 
-<p><img src="/img/vr-ht-beta-views-ctr.png (Parameterizing a beta distribution with views and CTR)" alt="Parameterizing a beta distribution with views and CTR" /></p>
+<p><img src="/img/vr-ht-beta-views-ctr.png" alt="Parameterizing a beta distribution with views and CTR" title="Parameterizing a beta distribution with views and CTR"></p>
 
 <p>The gray lines may give the impression that the peakedness increases linearly with the number of views, but please note that these lines represent the number of views on a log scale. Allow me to clarify this with the following image, which shows that the interval in which 95% of the probability density is located, i.e., the 95% credibility interval as it is called in Bayesian statistics, decreases exponentially with respect to the number of views.</p>
 
-<p><img src="/img/vr-ht-credibility-interval.png (Credibility Interval)" alt="Credibility Interval" /></p>
+<p><img src="/img/vr-ht-credibility-interval.png" alt="Credibility Interval" title="Credibility Interval"></p>
 
 <p>The amount of overlap between A’s beta distributions and B’s beta distribution determines the certainty of our conclusion. We can estimate this certainty by generating a random value (i.e., drawing a random sample) from both beta distributions and note which value one is higher. If we repeat this, say, a million times, we can accurately estimate the probability that B is better than A. This probability is the certainty with which we can declare headline B as the true winner.</p>
 
@@ -148,15 +148,15 @@
 
 <p>Below are two figures that show how long it takes to conclude and the amount of certainty associated to that conclusion. In the first figure, the CTRs of both headlines are kept constant (CTR A=5%, CTR B=3%), and the views per minute (VPM) varies from 10 to 10,000. In the second figure, the VPM (=1000) and the CTR of headline A (=5%) are kept constant and the CTR of headline B varies from 0% to 10%.</p>
 
-<p><img src="/img/vr-ht-time-to-conclude.png (Time to conclude)" alt="Time to conclude" /></p>
+<p><img src="/img/vr-ht-time-to-conclude.png" alt="Time to conclude" title="Time to conclude"></p>
 
-<p><img src="/img/vr-ht-certainty.png (Time to conclude)" alt="Time to conclude" /></p>
+<p><img src="/img/vr-ht-certainty.png" alt="Time to conclude" title="Time to conclude"></p>
 
 <p>In case of sufficient certainty, we declare the headline with the highest CTR as the winner of the headline test. After that, the editor may decide to continue to serve the winning headline to 100% of the readers.</p>
 
 <p>The serving aspect is actually taken care of by our platform and doesn’t require any additional integration, but that’s material for a blog post that one of our fine front-end engineers should write!</p>
 
-<h3 id="conclusions">Conclusions</h3>
+<h3>Conclusions</h3>
 
 <p>Visual Revenue’s Instant Headline Testing tool enables editors to A/B test easily different headlines and to quickly see whether the quality has improved. The frequentist approach, which is often used for A/B tests, is unable to overcome the challenges that are associated with A/B testing headlines. The Bayesian approach, however, offers the flexibility that front pages require.</p>
 
@@ -169,7 +169,6 @@
 <p>Alternatively, the frequentist approach provides methods that allow for setting up “checkpoints” where you may determine whether you want to stop a headline test. In other words, these methods offer <a href="http://en.wikipedia.org/wiki/Multiple_comparisons">correction for multiple testing</a>.</p>
 
 <p>If you like what I had to say then you may want to <a href="https://twitter.com/jeroenhjanssens">follow me on Twitter</a>.</p>
-
 
 					</div>
 

@@ -1,5 +1,5 @@
 name: Jeroen Janssens
-markdown: kramdown
+markdown: redcarpet
 highlighter: pygments
 url: http://www.jeroenjanssens.com
 description: Dutch Data Scientist, Teacher, Author, Entrepreneur
