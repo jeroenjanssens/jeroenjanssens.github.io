@@ -40,7 +40,7 @@ So, on the one hand, we want to collect as much data as possible in order to mak
 
 Within statistics, the frequentist approach and the Bayesian approach are two well-known approaches when it comes to A/B testing. The frequentist approach provides a [statistical test][7] whether the CTRs of the two headlines are [significantly different][8]. That would answer our second question.
 
-The frequentist approach doesn’t provide an easy answer to the first question because the statistical test assumes that the number of views are fixed before we start a headline test. Furthermore, we cannot run a headline test until we see a significant difference between CTRs as this would falsely increase the probability of obtaining a significant result, as [Evan Mill explains on his blog][9]. We would have to estimate how many views we would need in order to obtain a significant difference.
+The frequentist approach doesn’t provide an easy answer to the first question because the statistical test assumes that the number of views are fixed before we start a headline test. Furthermore, we cannot run a headline test until we see a significant difference between CTRs as this would falsely increase the probability of obtaining a significant result, as [Evan Miller explains on his blog][9]. We would have to estimate how many views we would need in order to obtain a significant difference.
 
 And this is where the four challenges come into play. Due to challenge 1, the headline test cannot take too long, say 20 minutes at most, which limits the number of views we can get. Because of challenge 2, the views per minute may be anything between 10 and 10,000, and we do need to have a tool that’s usable by all our front page editors. Challenge 3 determines the CTRs of the headlines as well. When the CTRs are closer together, we need more views in order to obtain a statistically significant difference. Including these three challenges when estimating the desired number of views is not straightforward. On top of that, when a headline changes position during a test (which is the fourth challenge), our estimate becomes completely invalid!
 
@@ -111,7 +111,6 @@ Alternatively, the frequentist approach provides methods that allow for setting 
 
 If you like what I had to say then you may want to [follow me on Twitter][twitter].
 
-
    [1]: http://visualrevenue.com/instant-headline-testing
    [2]: http://visualrevenue.com/blog/2012/08/usa-today-sports-boosted-their-olympics-coverage-by-57-with-headline-testing.html
    [3]: http://www.usatoday.com/sports/
@@ -125,15 +124,15 @@ If you like what I had to say then you may want to [follow me on Twitter][twitte
    [11]: /img/eq_k.gif
    [12]: /img/eq_anscombe.gif
    [13]: /img/eq_y.gif
-   [14]: /img/vr-ht-anscombe.png (Anscombe Boundary)
+   [14]: /img/vr-ht-anscombe.png
    [15]: http://blog.custora.com/2012/05/a-bayesian-approach-to-ab-testing/
    [16]: /img/eq_beta.gif
-   [17]: /img/vr-ht-beta-views-ctr.png (Parameterizing a beta distribution with views and CTR)
-   [18]: /img/vr-ht-credibility-interval.png (Credibility Interval)
+   [17]: /img/vr-ht-beta-views-ctr.png
+   [18]: /img/vr-ht-credibility-interval.png
    [19]: http://www.johndcook.com/blog/2012/10/11/beta-inequalities-in-r/
    [20]: http://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.beta.html
-   [21]: /img/vr-ht-time-to-conclude.png (Time to conclude)
-   [22]: /img/vr-ht-certainty.png (Time to conclude)
+   [21]: /img/vr-ht-time-to-conclude.png
+   [22]: /img/vr-ht-certainty.png
    [23]: http://www.peakconversion.com/2012/02/ab-split-test-graphical-calculator/
    [24]: http://en.wikipedia.org/wiki/Multiple_comparisons
    [25]: mailto:jeroen.janssens%40visualrevenue.com
