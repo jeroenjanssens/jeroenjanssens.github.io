@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="Dutch Data Scientist, Teacher, Author, Entrepreneur">
     <link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
-    <link rel="alternate" type="application/rss+xml" title="Jeroen Janssens" href="http://www.jeroenjanssens.com/feed.xml">
+    <link rel="alternate" type="application/rss+xml" title="Jeroen Janssens" href="http://localhost:4000/feed.xml">
 
     
       <meta name="twitter:card" content="summary">
@@ -21,13 +21,13 @@
       <meta name="twitter:title" content="7 command-line tools for data science">
     
     
-    <meta name="twitter:url" content="http://www.jeroenjanssens.com/2013/09/19/seven-command-line-tools-for-data-science.html">
+    <meta name="twitter:url" content="http://localhost:4000/2013/09/19/seven-command-line-tools-for-data-science.html">
     
     
       <meta name="twitter:description" content="In this post I would like to share seven command-line tools that I have found useful in my day-to-day work as data scientist. The tools are: jq, json2csv, csvkit, scrape, xml2json, sample, and Rio.">
     
     
-      <meta name="twitter:image:src" content="http://www.jeroenjanssens.com/img/iris.png">
+      <meta name="twitter:image:src" content="http://localhost:4000/img/iris.png">
     
     <meta name="bitly-verification" content="f2828a63ca29"/>
   </head>
@@ -88,45 +88,39 @@ OSEMN, let’s get started with our first tool: <code class="highlighter-rouge">
 
 <p>Imagine we’re interested in the candidate totals of the 2008 presidential election. It so happens that the New York Times has a <a href="http://developer.nytimes.com/docs/campaign_finance_api/">Campaign Finance API</a>. (You can <a href="http://developer.nytimes.com/apps/mykeys">get your own API keys</a> if you want to access any of their APIs.) Let’s get some JSON using <code class="highlighter-rouge">curl</code>:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>curl -s <span class="s1">'http://api.nytimes.com/svc/elections/us/v3/finances/2008/president/totals.json?api-key=super-secret'</span> &gt; nyt.json
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-s</span> <span class="s1">'http://api.nytimes.com/svc/elections/us/v3/finances/2008/president/totals.json?api-key=super-secret'</span> <span class="o">&gt;</span> nyt.json
+</code></pre></div></div>
 
 <p>where <code class="highlighter-rouge">-s</code> puts <code class="highlighter-rouge">curl</code> in silent mode. In its simplest form, i.e., <code class="highlighter-rouge">jq '.'</code>, the tool transforms the incomprehensible API response we got:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="nt">"status"</span><span class="p">:</span><span class="s2">"OK"</span><span class="p">,</span><span class="nt">"base_uri"</span><span class="p">:</span><span class="s2">"http://api.nytimes.com/svc/elections/us/v3/finances/2008/"</span><span class="p">,</span><span class="nt">"cycle"</span><span class="p">:</span><span class="mi">2008</span><span class="p">,</span><span class="nt">"copyright"</span><span class="p">:</span><span class="s2">"Copyright (c) 2013 The New York Times Company. All Rights Reserved."</span><span class="p">,</span><span class="nt">"results"</span><span class="p">:[{</span><span class="nt">"candidate_name"</span><span class="p">:</span><span class="s2">"Obama, Barack"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Barack Obama"</span><span class="p">,</span><span class="nt">"party"</span><span class="p">:</span><span class="s2">"D"</span><span class="p">,</span><span class="w">
-</span></code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{"status":"OK","base_uri":"http://api.nytimes.com/svc/elections/us/v3/finances/2008/","cycle":2008,"copyright":"Copyright (c) 2013 The New York Times Company. All Rights Reserved.","results":[{"candidate_name":"Obama, Barack","name":"Barack Obama","party":"D",
+</code></pre></div></div>
 
 <p>into nicely indented and colored output:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>&lt; nyt.json jq <span class="s1">'.'</span> | head
-</code></pre>
-</div>
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt; nyt.json jq <span class="s1">'.'</span> | <span class="nb">head</span>
+</code></pre></div></div>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"candidate_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"P80003338"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"date_coverage_from"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2007-01-01"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"date_coverage_to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2008-11-24"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"candidate_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Obama, Barack"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Barack Obama"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"party"</span><span class="p">:</span><span class="w"> </span><span class="s2">"D"</span><span class="p">,</span><span class="w"> 
-</span></code></pre>
-</div>
+      </span><span class="s2">"candidate_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"P80003338"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"date_coverage_from"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2007-01-01"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"date_coverage_to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2008-11-24"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"candidate_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Obama, Barack"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Barack Obama"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"party"</span><span class="p">:</span><span class="w"> </span><span class="s2">"D"</span><span class="p">,</span><span class="w"> 
+</span></code></pre></div></div>
 
 <p>Note that the output isn’t necessarily in the same order as the input.
 Besides pretty printing, <code class="highlighter-rouge">jq</code> can also select, filter, and format JSON data, as illustrated by 
 the following command, which returns the name, cash, and party of each candidate that had at least $1,000,000 in cash:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>&lt; nyt.json jq -c <span class="s1">'.results[] | {name, party, cash: .cash_on_hand} | select(.cash | tonumber &gt; 1000000)'</span> 
-</code></pre>
-</div>
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="nt">"cash"</span><span class="p">:</span><span class="s2">"29911984.0"</span><span class="p">,</span><span class="nt">"party"</span><span class="p">:</span><span class="s2">"D"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Barack Obama"</span><span class="p">}</span><span class="w">
-</span><span class="p">{</span><span class="nt">"cash"</span><span class="p">:</span><span class="s2">"32812513.75"</span><span class="p">,</span><span class="nt">"party"</span><span class="p">:</span><span class="s2">"R"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"John McCain"</span><span class="p">}</span><span class="w">
-</span><span class="p">{</span><span class="nt">"cash"</span><span class="p">:</span><span class="s2">"4428347.5"</span><span class="p">,</span><span class="nt">"party"</span><span class="p">:</span><span class="s2">"D"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"John Edwards"</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt; nyt.json jq <span class="nt">-c</span> <span class="s1">'.results[] | {name, party, cash: .cash_on_hand} | select(.cash | tonumber &gt; 1000000)'</span> 
+</code></pre></div></div>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="s2">"cash"</span><span class="p">:</span><span class="s2">"29911984.0"</span><span class="p">,</span><span class="s2">"party"</span><span class="p">:</span><span class="s2">"D"</span><span class="p">,</span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"Barack Obama"</span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="s2">"cash"</span><span class="p">:</span><span class="s2">"32812513.75"</span><span class="p">,</span><span class="s2">"party"</span><span class="p">:</span><span class="s2">"R"</span><span class="p">,</span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"John McCain"</span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="s2">"cash"</span><span class="p">:</span><span class="s2">"4428347.5"</span><span class="p">,</span><span class="s2">"party"</span><span class="p">:</span><span class="s2">"D"</span><span class="p">,</span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"John Edwards"</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
 
 <p>Please refer to the <a href="http://stedolan.github.io/jq/manual/">jq manual</a> to read about the many other things it can do, but don’t expect it to solve all your data munging problems. 
 Remember, the Unix philosophy favors small programs that do one thing and do it well. 
@@ -137,16 +131,15 @@ Now that we have the data we need, it’s time to move on to our second tool: <c
 
 <p>While JSON is a great format for interchanging data, it’s rather unsuitable for most command-line tools. Not to worry, we can easily convert JSON into CSV using <a href="https://github.com/jehiah/json2csv">json2csv</a>. Assuming that we stored the data from the last step in <code class="highlighter-rouge">million.json</code>, simply invoking</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>&lt; million.json json2csv -k name,party,cash
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt; million.json json2csv <span class="nt">-k</span> name,party,cash
+</code></pre></div></div>
 
 <p>will convert it to some nicely comma-separated values:</p>
 
-<pre><code class="language-awk">Barack Obama,D,29911984.0
-John McCain,R,32812513.75
-John Edwards,D,4428347.5
-</code></pre>
+<div class="language-awk highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Barack</span> <span class="nx">Obama</span><span class="p">,</span><span class="nx">D</span><span class="p">,</span><span class="mf">29911984.0</span>
+<span class="nx">John</span> <span class="nx">McCain</span><span class="p">,</span><span class="nx">R</span><span class="p">,</span><span class="mf">32812513.75</span>
+<span class="nx">John</span> <span class="nx">Edwards</span><span class="p">,</span><span class="nx">D</span><span class="p">,</span><span class="mf">4428347.5</span>
+</code></pre></div></div>
 
 <p>Having the data in CSV format allows us to use the classic tools such as <code class="highlighter-rouge">cut -d,</code> and <code class="highlighter-rouge">awk -F,</code>. 
 Others like <code class="highlighter-rouge">grep</code> and <code class="highlighter-rouge">sed</code> don’t really have a notion of fields. 
@@ -157,13 +150,12 @@ Since CSV is the king of tabular file formats, according to the authors of
 
 <p>Rather than being one tool, <a href="http://csvkit.readthedocs.org/">csvkit</a> is a collection of tools that operate on CSV data. Most of these tools expect the CSV data to have a header, so let’s add one. (Since the publication of this post, <code class="highlighter-rouge">json2csv</code> has been updated to print the header with the <code class="highlighter-rouge">-p</code> option.)</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="nb">echo </span>name,party,cash | cat - million.csv &gt; million-header.csv
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo </span>name,party,cash | <span class="nb">cat</span> - million.csv <span class="o">&gt;</span> million-header.csv
+</code></pre></div></div>
 
 <p>We can, for example, sort the candidates by cash with <code class="highlighter-rouge">csvsort</code> and display the data using <code class="highlighter-rouge">csvlook</code>:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>&lt; million-header.csv csvsort -rc cash | csvlook
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt; million-header.csv csvsort <span class="nt">-rc</span> cash | csvlook
 
 |---------------+-------+--------------|
 |  name         | party | cash         |
@@ -172,23 +164,20 @@ Since CSV is the king of tabular file formats, according to the authors of
 |  Barack Obama | D     | 29911984.0   |
 |  John Edwards | D     | 4428347.5    |
 |---------------+-------+--------------|
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Looks like the MySQL console doesn’t it? Speaking of databases, you can insert the CSV data into an sqlite database as follows (many other databases are supported as well):</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>csvsql --db sqlite:///myfirst.db --insert million-header.csv
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>csvsql <span class="nt">--db</span> sqlite:///myfirst.db <span class="nt">--insert</span> million-header.csv
 sqlite3 myfirst.db
-<span class="gp">sqlite&gt; </span>.schema million-header
-</code></pre>
-</div>
-<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="nv">"million-header"</span> <span class="p">(</span>
+sqlite&gt; .schema million-header
+</code></pre></div></div>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="nv">"million-header"</span> <span class="p">(</span>
 	<span class="n">name</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span> 
 	<span class="n">party</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span> 
 	<span class="n">cash</span> <span class="n">FLOAT</span> <span class="k">NOT</span> <span class="k">NULL</span>
 <span class="p">);</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>In this case, the database columns have the correct data types because the type is inferred from the CSV data.
  Other tools within <code class="highlighter-rouge">csvkit</code> that might be of interest are: <code class="highlighter-rouge">in2csv</code>, <code class="highlighter-rouge">csvgrep</code>, and <code class="highlighter-rouge">csvjoin</code>. And with <code class="highlighter-rouge">csvjson</code>, the data can even be converted back to JSON. All in all, <code class="highlighter-rouge">csvkit</code> is worth <a href="http://csvkit.readthedocs.org/">checking out</a>.</p>
@@ -198,10 +187,9 @@ sqlite3 myfirst.db
 <p>JSON APIs sure are nice, but they aren’t the only source of data; a lot of it is <a href="http://www.ted.com/talks/tim_berners_lee_on_the_next_web.html">unfortunately still</a> embedded in HTML. <a href="https://github.com/jeroenjanssens/data-science-toolbox">scrape</a> is a python script I put together that employs the <code class="highlighter-rouge">lxml</code> and <code class="highlighter-rouge">cssselect</code> packages to select certain HTML elements by means of an XPath query or <a href="http://net.tutsplus.com/tutorials/html-css-techniques/the-30-css-selectors-you-must-memorize/">CSS selector</a>. (I tried <a href="https://metacpan.org/module/scrape.pl">scrape.pl</a>, but I couldn’t get it to work properly. Moreover, rather than processing HTML from stdin, it expects a url and then downloads the HTML itself.)
 Let’s extract the table from <a href="http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio">this Wikipedia article that lists the border and area ratio of each country</a>.</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>curl -s <span class="s1">'http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio'</span> | scrape -b -e <span class="s1">'table.wikitable &gt; tr:not(:first-child)'</span> | head
-</code></pre>
-</div>
-<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-s</span> <span class="s1">'http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio'</span> | scrape <span class="nt">-b</span> <span class="nt">-e</span> <span class="s1">'table.wikitable &gt; tr:not(:first-child)'</span> | <span class="nb">head</span>
+</code></pre></div></div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html&gt;</span>
 <span class="nt">&lt;body&gt;</span>
 <span class="nt">&lt;tr&gt;</span>
@@ -211,8 +199,7 @@ Let’s extract the table from <a href="http://en.wikipedia.org/wiki/List_of_cou
 <span class="nt">&lt;td&gt;</span>0.44<span class="nt">&lt;/td&gt;</span>
 <span class="nt">&lt;td&gt;</span>7.2727273<span class="nt">&lt;/td&gt;</span>
 <span class="nt">&lt;/tr&gt;</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The <code class="highlighter-rouge">-b</code> argument lets <code class="highlighter-rouge">scrape</code> enclose the output with <code class="highlighter-rouge"><span class="nt">&lt;html&gt;</span></code> and <code class="highlighter-rouge">&lt;body&gt;</code> tags, which is sometimes required by <code class="highlighter-rouge">xml2json</code> to convert correctly the HTML to JSON.</p>
 
@@ -220,21 +207,19 @@ Let’s extract the table from <a href="http://en.wikipedia.org/wiki/List_of_cou
 
 <p>As its name implies, <a href="https://github.com/parmentf/xml2json">xml2json</a> takes XML (and HTML) as input and returns JSON as output. Therefore, <code class="highlighter-rouge">xml2json</code> is a great liaison between <code class="highlighter-rouge">scrape</code> and <code class="highlighter-rouge">jq</code>.</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>curl -s <span class="s1">'http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio'</span> | scrape -be <span class="s1">'table.wikitable &gt; tr:not(:first-child)'</span> | xml2json | jq -c <span class="s1">'.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]}'</span> | head
-</code></pre>
-</div>
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="nt">"ratio"</span><span class="p">:</span><span class="s2">"7.2727273"</span><span class="p">,</span><span class="nt">"surface"</span><span class="p">:</span><span class="s2">"0.44"</span><span class="p">,</span><span class="nt">"border"</span><span class="p">:</span><span class="s2">"3.2"</span><span class="p">,</span><span class="nt">"country"</span><span class="p">:</span><span class="s2">"Vatican City"</span><span class="p">}</span><span class="w">
-</span><span class="p">{</span><span class="nt">"ratio"</span><span class="p">:</span><span class="s2">"2.2000000"</span><span class="p">,</span><span class="nt">"surface"</span><span class="p">:</span><span class="s2">"2"</span><span class="p">,</span><span class="nt">"border"</span><span class="p">:</span><span class="s2">"4.4"</span><span class="p">,</span><span class="nt">"country"</span><span class="p">:</span><span class="s2">"Monaco"</span><span class="p">}</span><span class="w">
-</span><span class="p">{</span><span class="nt">"ratio"</span><span class="p">:</span><span class="s2">"0.6393443"</span><span class="p">,</span><span class="nt">"surface"</span><span class="p">:</span><span class="s2">"61"</span><span class="p">,</span><span class="nt">"border"</span><span class="p">:</span><span class="s2">"39"</span><span class="p">,</span><span class="nt">"country"</span><span class="p">:</span><span class="s2">"San Marino"</span><span class="p">}</span><span class="w">
-</span><span class="p">{</span><span class="nt">"ratio"</span><span class="p">:</span><span class="s2">"0.4750000"</span><span class="p">,</span><span class="nt">"surface"</span><span class="p">:</span><span class="s2">"160"</span><span class="p">,</span><span class="nt">"border"</span><span class="p">:</span><span class="s2">"76"</span><span class="p">,</span><span class="nt">"country"</span><span class="p">:</span><span class="s2">"Liechtenstein"</span><span class="p">}</span><span class="w">
-</span><span class="p">{</span><span class="nt">"ratio"</span><span class="p">:</span><span class="s2">"0.3000000"</span><span class="p">,</span><span class="nt">"surface"</span><span class="p">:</span><span class="s2">"34"</span><span class="p">,</span><span class="nt">"border"</span><span class="p">:</span><span class="s2">"10.2"</span><span class="p">,</span><span class="nt">"country"</span><span class="p">:</span><span class="s2">"Sint Maarten (Netherlands)"</span><span class="p">}</span><span class="w">
-</span><span class="p">{</span><span class="nt">"ratio"</span><span class="p">:</span><span class="s2">"0.2570513"</span><span class="p">,</span><span class="nt">"surface"</span><span class="p">:</span><span class="s2">"468"</span><span class="p">,</span><span class="nt">"border"</span><span class="p">:</span><span class="s2">"120.3"</span><span class="p">,</span><span class="nt">"country"</span><span class="p">:</span><span class="s2">"Andorra"</span><span class="p">}</span><span class="w">
-</span><span class="p">{</span><span class="nt">"ratio"</span><span class="p">:</span><span class="s2">"0.2000000"</span><span class="p">,</span><span class="nt">"surface"</span><span class="p">:</span><span class="s2">"6"</span><span class="p">,</span><span class="nt">"border"</span><span class="p">:</span><span class="s2">"1.2"</span><span class="p">,</span><span class="nt">"country"</span><span class="p">:</span><span class="s2">"Gibraltar (United Kingdom)"</span><span class="p">}</span><span class="w">
-</span><span class="p">{</span><span class="nt">"ratio"</span><span class="p">:</span><span class="s2">"0.1888889"</span><span class="p">,</span><span class="nt">"surface"</span><span class="p">:</span><span class="s2">"54"</span><span class="p">,</span><span class="nt">"border"</span><span class="p">:</span><span class="s2">"10.2"</span><span class="p">,</span><span class="nt">"country"</span><span class="p">:</span><span class="s2">"Saint Martin (France)"</span><span class="p">}</span><span class="w">
-</span><span class="p">{</span><span class="nt">"ratio"</span><span class="p">:</span><span class="s2">"0.1388244"</span><span class="p">,</span><span class="nt">"surface"</span><span class="p">:</span><span class="s2">"2586"</span><span class="p">,</span><span class="nt">"border"</span><span class="p">:</span><span class="s2">"359"</span><span class="p">,</span><span class="nt">"country"</span><span class="p">:</span><span class="s2">"Luxembourg"</span><span class="p">}</span><span class="w">
-</span><span class="p">{</span><span class="nt">"ratio"</span><span class="p">:</span><span class="s2">"0.0749196"</span><span class="p">,</span><span class="nt">"surface"</span><span class="p">:</span><span class="s2">"6220"</span><span class="p">,</span><span class="nt">"border"</span><span class="p">:</span><span class="s2">"466"</span><span class="p">,</span><span class="nt">"country"</span><span class="p">:</span><span class="s2">"Palestinian territories"</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-s</span> <span class="s1">'http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio'</span> | scrape <span class="nt">-be</span> <span class="s1">'table.wikitable &gt; tr:not(:first-child)'</span> | xml2json | jq <span class="nt">-c</span> <span class="s1">'.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]}'</span> | <span class="nb">head</span>
+</code></pre></div></div>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="s2">"ratio"</span><span class="p">:</span><span class="s2">"7.2727273"</span><span class="p">,</span><span class="s2">"surface"</span><span class="p">:</span><span class="s2">"0.44"</span><span class="p">,</span><span class="s2">"border"</span><span class="p">:</span><span class="s2">"3.2"</span><span class="p">,</span><span class="s2">"country"</span><span class="p">:</span><span class="s2">"Vatican City"</span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="s2">"ratio"</span><span class="p">:</span><span class="s2">"2.2000000"</span><span class="p">,</span><span class="s2">"surface"</span><span class="p">:</span><span class="s2">"2"</span><span class="p">,</span><span class="s2">"border"</span><span class="p">:</span><span class="s2">"4.4"</span><span class="p">,</span><span class="s2">"country"</span><span class="p">:</span><span class="s2">"Monaco"</span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="s2">"ratio"</span><span class="p">:</span><span class="s2">"0.6393443"</span><span class="p">,</span><span class="s2">"surface"</span><span class="p">:</span><span class="s2">"61"</span><span class="p">,</span><span class="s2">"border"</span><span class="p">:</span><span class="s2">"39"</span><span class="p">,</span><span class="s2">"country"</span><span class="p">:</span><span class="s2">"San Marino"</span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="s2">"ratio"</span><span class="p">:</span><span class="s2">"0.4750000"</span><span class="p">,</span><span class="s2">"surface"</span><span class="p">:</span><span class="s2">"160"</span><span class="p">,</span><span class="s2">"border"</span><span class="p">:</span><span class="s2">"76"</span><span class="p">,</span><span class="s2">"country"</span><span class="p">:</span><span class="s2">"Liechtenstein"</span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="s2">"ratio"</span><span class="p">:</span><span class="s2">"0.3000000"</span><span class="p">,</span><span class="s2">"surface"</span><span class="p">:</span><span class="s2">"34"</span><span class="p">,</span><span class="s2">"border"</span><span class="p">:</span><span class="s2">"10.2"</span><span class="p">,</span><span class="s2">"country"</span><span class="p">:</span><span class="s2">"Sint Maarten (Netherlands)"</span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="s2">"ratio"</span><span class="p">:</span><span class="s2">"0.2570513"</span><span class="p">,</span><span class="s2">"surface"</span><span class="p">:</span><span class="s2">"468"</span><span class="p">,</span><span class="s2">"border"</span><span class="p">:</span><span class="s2">"120.3"</span><span class="p">,</span><span class="s2">"country"</span><span class="p">:</span><span class="s2">"Andorra"</span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="s2">"ratio"</span><span class="p">:</span><span class="s2">"0.2000000"</span><span class="p">,</span><span class="s2">"surface"</span><span class="p">:</span><span class="s2">"6"</span><span class="p">,</span><span class="s2">"border"</span><span class="p">:</span><span class="s2">"1.2"</span><span class="p">,</span><span class="s2">"country"</span><span class="p">:</span><span class="s2">"Gibraltar (United Kingdom)"</span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="s2">"ratio"</span><span class="p">:</span><span class="s2">"0.1888889"</span><span class="p">,</span><span class="s2">"surface"</span><span class="p">:</span><span class="s2">"54"</span><span class="p">,</span><span class="s2">"border"</span><span class="p">:</span><span class="s2">"10.2"</span><span class="p">,</span><span class="s2">"country"</span><span class="p">:</span><span class="s2">"Saint Martin (France)"</span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="s2">"ratio"</span><span class="p">:</span><span class="s2">"0.1388244"</span><span class="p">,</span><span class="s2">"surface"</span><span class="p">:</span><span class="s2">"2586"</span><span class="p">,</span><span class="s2">"border"</span><span class="p">:</span><span class="s2">"359"</span><span class="p">,</span><span class="s2">"country"</span><span class="p">:</span><span class="s2">"Luxembourg"</span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="s2">"ratio"</span><span class="p">:</span><span class="s2">"0.0749196"</span><span class="p">,</span><span class="s2">"surface"</span><span class="p">:</span><span class="s2">"6220"</span><span class="p">,</span><span class="s2">"border"</span><span class="p">:</span><span class="s2">"466"</span><span class="p">,</span><span class="s2">"country"</span><span class="p">:</span><span class="s2">"Palestinian territories"</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
 
 <p>Of course this JSON data could then be piped into <code class="highlighter-rouge">json2csv</code> and so forth.</p>
 
@@ -246,9 +231,8 @@ The tool serves three purposes (which isn’t very Unix-minded, but since it’s
 <p>The first purpose of <code class="highlighter-rouge">sample</code> is to get a subset of the data by outputting only a certain percentage of the input on a line-by-line basis. The second purpose is to add some delay to the output. This comes in handy when the input is a constant stream (e.g., the Twitter firehose), and the data comes in too fast to see what’s going on.
 The third purpose is to run only for a certain time. The following invocation illustrates all three purposes.</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>seq 10000 | sample -r 20% -d 1000 -s 5 | jq <span class="s1">'{number: .}'</span>
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">seq </span>10000 | sample <span class="nt">-r</span> 20% <span class="nt">-d</span> 1000 <span class="nt">-s</span> 5 | jq <span class="s1">'{number: .}'</span>
+</code></pre></div></div>
 
 <p>This way, every input line has a 20% chance of being forwarded to <code class="highlighter-rouge">jq</code>. Moreover, there is a 1000 millisecond delay between each line and after five seconds <code class="highlighter-rouge">sample</code> will stop entirely. Please note that each argument is optional. 
 In order to prevent unnecessary computation, try to put <code class="highlighter-rouge">sample</code> as early as possible in your pipeline (the same argument holds for <code class="highlighter-rouge">head</code> and <code class="highlighter-rouge">tail</code>). Once you’re done debugging you can simply take it out of the pipeline.</p>
@@ -268,11 +252,10 @@ Allow me to demonstrate three one-liners that use the Iris dataset (don’t mind
 
 <p>Display the five-number-summary of each field.</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>curl -s <span class="s1">'https://raw.github.com/pydata/pandas/master/pandas/tests/data/iris.csv'</span> &gt; iris.csv
-&lt; iris.csv Rio -e <span class="s1">'summary(df)'</span>
-</code></pre>
-</div>
-<div class="highlighter-rouge"><pre class="highlight"><code>  SepalLength      SepalWidth     PetalLength      PetalWidth   
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-s</span> <span class="s1">'https://raw.github.com/pydata/pandas/master/pandas/tests/data/iris.csv'</span> <span class="o">&gt;</span> iris.csv
+&lt; iris.csv Rio <span class="nt">-e</span> <span class="s1">'summary(df)'</span>
+</code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  SepalLength      SepalWidth     PetalLength      PetalWidth   
  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
  Median :5.800   Median :3.000   Median :4.350   Median :1.300  
@@ -283,16 +266,14 @@ Allow me to demonstrate three one-liners that use the Iris dataset (don’t mind
  Length:150        
  Class :character  
  Mode  :character 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>If you specify the <code class="highlighter-rouge">-s</code> option, the <code class="highlighter-rouge">sqldf</code> package will be imported.
 In case tthe output is a data frame, CSV will be written to stdout. This enables you to further process that data using other tools.</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>&lt; iris.csv Rio -se <span class="s1">'sqldf("select * from df where df.SepalLength &gt; 7.5")'</span> | csvlook
-</code></pre>
-</div>
-<div class="highlighter-rouge"><pre class="highlight"><code>|--------------+------------+-------------+------------+-----------------|
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt; iris.csv Rio <span class="nt">-se</span> <span class="s1">'sqldf("select * from df where df.SepalLength &gt; 7.5")'</span> | csvlook
+</code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>|--------------+------------+-------------+------------+-----------------|
 |  SepalLength | SepalWidth | PetalLength | PetalWidth | Name            |
 |--------------+------------+-------------+------------+-----------------|
 |  7.6         | 3          | 6.6         | 2.1        | Iris-virginica  |
@@ -302,15 +283,13 @@ In case tthe output is a data frame, CSV will be written to stdout. This enables
 |  7.9         | 3.8        | 6.4         | 2          | Iris-virginica  |
 |  7.7         | 3          | 6.1         | 2.3        | Iris-virginica  |
 |--------------+------------+-------------+------------+-----------------|
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>If you specify the <code class="highlighter-rouge">-g</code> option, <code class="highlighter-rouge">ggplot2</code> gets imported and a ggplot object called <code class="highlighter-rouge">g</code> with <code class="highlighter-rouge">df</code> as the data is initialized.
 If the final output is a ggplot object, a PNG will be written to stdout.</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>&lt; iris.csv Rio -ge <span class="s1">'g+geom_point(aes(x=SepalLength,y=SepalWidth,colour=Name))'</span> &gt; iris.png
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt; iris.csv Rio <span class="nt">-ge</span> <span class="s1">'g+geom_point(aes(x=SepalLength,y=SepalWidth,colour=Name))'</span> <span class="o">&gt;</span> iris.png
+</code></pre></div></div>
 <p><img src="/img/iris.png" alt="iris.csv" /></p>
 
 <p>I made this tool so that I could take advantage of the power of R on the command-line. Of course it has its limits, but at least there’s no need to learn <a href="http://www.gnuplot.info">gnuplot</a> any more.</p>

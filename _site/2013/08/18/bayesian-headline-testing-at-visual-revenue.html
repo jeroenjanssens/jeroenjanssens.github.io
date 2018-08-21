@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="Dutch Data Scientist, Teacher, Author, Entrepreneur">
     <link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
-    <link rel="alternate" type="application/rss+xml" title="Jeroen Janssens" href="http://www.jeroenjanssens.com/feed.xml">
+    <link rel="alternate" type="application/rss+xml" title="Jeroen Janssens" href="http://localhost:4000/feed.xml">
 
     
       <meta name="twitter:card" content="summary">
@@ -21,13 +21,13 @@
       <meta name="twitter:title" content="Bayesian headline testing at Visual Revenue">
     
     
-    <meta name="twitter:url" content="http://www.jeroenjanssens.com/2013/08/18/bayesian-headline-testing-at-visual-revenue.html">
+    <meta name="twitter:url" content="http://localhost:4000/2013/08/18/bayesian-headline-testing-at-visual-revenue.html">
     
     
       <meta name="twitter:description" content="Dutch Data Scientist, Teacher, Author, Entrepreneur">
     
     
-      <meta name="twitter:image:src" content="http://www.jeroenjanssens.com/img/jeroenjanssens.jpg">
+      <meta name="twitter:image:src" content="http://localhost:4000/img/jeroenjanssens.jpg">
     
     <meta name="bitly-verification" content="f2828a63ca29"/>
   </head>
@@ -99,7 +99,7 @@
 
 <p>Within statistics, the frequentist approach and the Bayesian approach are two well-known approaches when it comes to A/B testing. The frequentist approach provides a <a href="http://visualwebsiteoptimizer.com/ab-split-significance-calculator/">statistical test</a> whether the CTRs of the two headlines are <a href="http://en.wikipedia.org/wiki/Statistical_significance">significantly different</a>. That would answer our second question.</p>
 
-<p>The frequentist approach doesn’t provide an easy answer to the first question because the statistical test assumes that the number of views are fixed before we start a headline test. Furthermore, we cannot run a headline test until we see a significant difference between CTRs as this would falsely increase the probability of obtaining a significant result, as <a href="http://www.evanmiller.org/how-not-to-run-an-ab-test.html">Evan Mill explains on his blog</a>. We would have to estimate how many views we would need in order to obtain a significant difference.</p>
+<p>The frequentist approach doesn’t provide an easy answer to the first question because the statistical test assumes that the number of views are fixed before we start a headline test. Furthermore, we cannot run a headline test until we see a significant difference between CTRs as this would falsely increase the probability of obtaining a significant result, as <a href="http://www.evanmiller.org/how-not-to-run-an-ab-test.html">Evan Miller explains on his blog</a>. We would have to estimate how many views we would need in order to obtain a significant difference.</p>
 
 <p>And this is where the four challenges come into play. Due to challenge 1, the headline test cannot take too long, say 20 minutes at most, which limits the number of views we can get. Because of challenge 2, the views per minute may be anything between 10 and 10,000, and we do need to have a tool that’s usable by all our front page editors. Challenge 3 determines the CTRs of the headlines as well. When the CTRs are closer together, we need more views in order to obtain a statistically significant difference. Including these three challenges when estimating the desired number of views is not straightforward. On top of that, when a headline changes position during a test (which is the fourth challenge), our estimate becomes completely invalid!</p>
 
@@ -119,7 +119,7 @@
 
 <p>where <img src="/img/eq_y.gif" alt="" /> is the absolute difference between the number of clicks for both headlines. The shape of the Anscombe boundary is shown in the figure below. Here, we assumed that the front page gets 1,000 views per minute (VPM). So, after 20 minutes of testing, the front page has been viewed 20,000 times. The figure also shows the absolute difference for five simulated headline tests (CTR A=5%, CTR B=3%), which are denoted by gray lines.</p>
 
-<p><img src="/img/vr-ht-anscombe.png (Anscombe Boundary)" alt="Anscombe Boundary" /></p>
+<p><img src="/img/vr-ht-anscombe.png" alt="Anscombe Boundary" /></p>
 
 <p>The figure illustrates that the Anscombe boundary takes the trade-off between the number of views so far, and the number of views after conclusion into account. In a recent blog post, Aaron Goodman performed an <a href="http://blog.custora.com/2012/05/a-bayesian-approach-to-ab-testing/">interesting comparison</a> between the frequentist, multiple testing, and Bayesian approaches. He demonstrated that the Bayesian approach is best at minimizing regret, or, in other words, maximizing article views.</p>
 
@@ -135,11 +135,11 @@
 
 <p>The figure below shows how a beta distribution becomes more peaked as the number of views increases (while keeping the CTR at 20%). It illustrates that as we collect more evidence (i.e., views) our uncertainty about the CTR decreases.</p>
 
-<p><img src="/img/vr-ht-beta-views-ctr.png (Parameterizing a beta distribution with views and CTR)" alt="Parameterizing a beta distribution with views and CTR" /></p>
+<p><img src="/img/vr-ht-beta-views-ctr.png" alt="Parameterizing a beta distribution with views and CTR" /></p>
 
 <p>The gray lines may give the impression that the peakedness increases linearly with the number of views, but please note that these lines represent the number of views on a log scale. Allow me to clarify this with the following image, which shows that the interval in which 95% of the probability density is located, i.e., the 95% credibility interval as it is called in Bayesian statistics, decreases exponentially with respect to the number of views.</p>
 
-<p><img src="/img/vr-ht-credibility-interval.png (Credibility Interval)" alt="Credibility Interval" /></p>
+<p><img src="/img/vr-ht-credibility-interval.png" alt="Credibility Interval" /></p>
 
 <p>The amount of overlap between A’s beta distributions and B’s beta distribution determines the certainty of our conclusion. We can estimate this certainty by generating a random value (i.e., drawing a random sample) from both beta distributions and note which value one is higher. If we repeat this, say, a million times, we can accurately estimate the probability that B is better than A. This probability is the certainty with which we can declare headline B as the true winner.</p>
 
@@ -148,9 +148,9 @@
 
 <p>Below are two figures that show how long it takes to conclude and the amount of certainty associated to that conclusion. In the first figure, the CTRs of both headlines are kept constant (CTR A=5%, CTR B=3%), and the views per minute (VPM) varies from 10 to 10,000. In the second figure, the VPM (=1000) and the CTR of headline A (=5%) are kept constant and the CTR of headline B varies from 0% to 10%.</p>
 
-<p><img src="/img/vr-ht-time-to-conclude.png (Time to conclude)" alt="Time to conclude" /></p>
+<p><img src="/img/vr-ht-time-to-conclude.png" alt="Time to conclude" /></p>
 
-<p><img src="/img/vr-ht-certainty.png (Time to conclude)" alt="Time to conclude" /></p>
+<p><img src="/img/vr-ht-certainty.png" alt="Time to conclude" /></p>
 
 <p>In case of sufficient certainty, we declare the headline with the highest CTR as the winner of the headline test. After that, the editor may decide to continue to serve the winning headline to 100% of the readers.</p>
 

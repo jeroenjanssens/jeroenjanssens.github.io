@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="Dutch Data Scientist, Teacher, Author, Entrepreneur">
     <link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
-    <link rel="alternate" type="application/rss+xml" title="Jeroen Janssens" href="http://www.jeroenjanssens.com/feed.xml">
+    <link rel="alternate" type="application/rss+xml" title="Jeroen Janssens" href="http://localhost:4000/feed.xml">
 
     
       <meta name="twitter:card" content="summary">
@@ -21,13 +21,13 @@
       <meta name="twitter:title" content="Lean, mean data science machine">
     
     
-    <meta name="twitter:url" content="http://www.jeroenjanssens.com/2013/12/07/lean-mean-data-science-machine.html">
+    <meta name="twitter:url" content="http://localhost:4000/2013/12/07/lean-mean-data-science-machine.html">
     
     
       <meta name="twitter:description" content="I am sharing a virtual environment that enables you to follow along with all the commands and tools discussed in my upcoming book Data Science at the Command Line.">
     
     
-      <meta name="twitter:image:src" content="http://www.jeroenjanssens.com/img/vagrant.png">
+      <meta name="twitter:image:src" content="http://localhost:4000/img/vagrant.png">
     
     <meta name="bitly-verification" content="f2828a63ca29"/>
   </head>
@@ -107,23 +107,20 @@ So, first you will need to install <a href="https://www.virtualbox.org">VirtualB
 Second you need to install <a href="http://www.vagrantup.com/">Vagrant</a>. 
 Third, you need to download the environment by cloning the data science toolbox. (If you do not want to use <code class="highlighter-rouge">git</code> you can also <a href="https://github.com/jeroenjanssens/data-science-toolbox/archive/master.zip">download the zip file</a>.)</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>git clone https://github.com/jeroenjanssens/data-science-toolbox.git
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/jeroenjanssens/data-science-toolbox.git
 <span class="nb">cd </span>data-science-toolbox/box
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Running <code class="highlighter-rouge">vagrant up</code> in the <code class="highlighter-rouge">box</code> directory will download the base box (Ubuntu 12.04 LTS 64-bit), spin up a virtual machine, and provision it. (Now would be the perfect time to think about any command-line scripts you may have lying around and donate them to the <a href="http://datasciencetoolbox.org">data science toolbox</a>.) Once the provisioning is complete, you will be able to log into your own lean, mean data science machine:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>vagrant ssh
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant ssh
+</code></pre></div></div>
 
 <p>Run the following command to test whether everything has been installed correctly:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>curl -s <span class="s1">'http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio'</span> | scrape -be <span class="s1">'table.wikitable &gt; tr:not(:first-child)'</span> | xml2json | jq -c <span class="s1">'.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]}'</span> | json2csv -p -k<span class="o">=</span>country,ratio | Rio -se<span class="s1">'sqldf("select * from df where ratio &gt; 0.3 order by ratio desc")'</span> | csvlook
-</code></pre>
-</div>
-<div class="highlighter-rouge"><pre class="highlight"><code>|----------------+------------|
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-s</span> <span class="s1">'http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_border/area_ratio'</span> | scrape <span class="nt">-be</span> <span class="s1">'table.wikitable &gt; tr:not(:first-child)'</span> | xml2json | jq <span class="nt">-c</span> <span class="s1">'.html.body.tr[] | {country: .td[1][], border: .td[2][], surface: .td[3][], ratio: .td[4][]}'</span> | json2csv <span class="nt">-p</span> <span class="nt">-k</span><span class="o">=</span>country,ratio | Rio <span class="nt">-se</span><span class="s1">'sqldf("select * from df where ratio &gt; 0.3 order by ratio desc")'</span> | csvlook
+</code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>|----------------+------------|
 |  country       | ratio      |
 |----------------+------------|
 |  Vatican City  | 7.2727273  |
@@ -131,8 +128,7 @@ Third, you need to download the environment by cloning the data science toolbox.
 |  San Marino    | 0.6393443  |
 |  Liechtenstein | 0.475      |
 |----------------+------------|
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The virtual machine is not entirely isolated. Files that you put in the <code class="highlighter-rouge">box</code> directory will be accessible from the <code class="highlighter-rouge">/vagrant</code> directory in the virtual machine. This allows you to use both the tools you already have installed and the command-line tools provided by the environment. If you want to install any of these tools on your own machine, then you can run the relevant commands from the <a href="https://github.com/jeroenjanssens/data-science-toolbox/blob/master/box/bootstrap.sh">provisioning script</a>.</p>
 

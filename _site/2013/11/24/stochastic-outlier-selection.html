@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="Dutch Data Scientist, Teacher, Author, Entrepreneur">
     <link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
-    <link rel="alternate" type="application/rss+xml" title="Jeroen Janssens" href="http://www.jeroenjanssens.com/feed.xml">
+    <link rel="alternate" type="application/rss+xml" title="Jeroen Janssens" href="http://localhost:4000/feed.xml">
 
     
       <meta name="twitter:card" content="summary">
@@ -21,13 +21,13 @@
       <meta name="twitter:title" content="Stochastic Outlier Selection">
     
     
-    <meta name="twitter:url" content="http://www.jeroenjanssens.com/2013/11/24/stochastic-outlier-selection.html">
+    <meta name="twitter:url" content="http://localhost:4000/2013/11/24/stochastic-outlier-selection.html">
     
     
       <meta name="twitter:description" content="SOS is an unsupervised outlier-selection algorithm that computes for each data point an outlier probability. It employs the concept of affinity to quantify the relationship between data points.">
     
     
-      <meta name="twitter:image:src" content="http://www.jeroenjanssens.com/img/twitter-sos.png">
+      <meta name="twitter:image:src" content="http://localhost:4000/img/twitter-sos.png">
     
     <meta name="bitly-verification" content="f2828a63ca29"/>
   </head>
@@ -122,31 +122,30 @@ The demo illustrates how the approximated outlier probability of each senator ev
 
 <p>Let’s see how the approximated outlier probabilities compare to the outlier probabilities computed on the command-line. Recently, I started using <a href="https://github.com/Factual/drake#drake">drake</a> to organize my data workflow. (If you care about reproducibility, then I recommend you try it out.) The following <code class="highlighter-rouge">Drakefile</code> shows how to fetch the roll call voting data, extract its features and labels, and apply the <a href="https://github.com/jeroenjanssens/sos/blob/master/bin/sos">Python implementation of SOS</a> with a perplexity of 50 to it.</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>cat Drakefile
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>Drakefile
 
-<span class="gp">;# </span>Get dataset
-dataset.csv &lt;- <span class="o">[</span>-timecheck]
-	curl -s https://raw.github.com/VikParuchuri/political-positions/master/113_frame.csv &gt; <span class="nv">$OUTPUT</span>
+<span class="p">;</span><span class="c"># Get dataset</span>
+dataset.csv &lt;- <span class="o">[</span><span class="nt">-timecheck</span><span class="o">]</span>
+	curl <span class="nt">-s</span> https://raw.github.com/VikParuchuri/political-positions/master/113_frame.csv <span class="o">&gt;</span> <span class="nv">$OUTPUT</span>
 
-<span class="gp">;# </span>Extract features
+<span class="p">;</span><span class="c"># Extract features</span>
 features.csv &lt;- dataset.csv
-	csvcut <span class="nv">$INPUT</span> -C 1,name,party,state | sed <span class="s1">'1d;s/NA/4/g'</span> &gt; <span class="nv">$OUTPUT</span>
+	csvcut <span class="nv">$INPUT</span> <span class="nt">-C</span> 1,name,party,state | <span class="nb">sed</span> <span class="s1">'1d;s/NA/4/g'</span> <span class="o">&gt;</span> <span class="nv">$OUTPUT</span>
 
-<span class="gp">;# </span>Extract labels
+<span class="p">;</span><span class="c"># Extract labels</span>
 labels.csv &lt;- dataset.csv
-	csvcut <span class="nv">$INPUT</span> -c name,party,state &gt; <span class="nv">$OUTPUT</span>
+	csvcut <span class="nv">$INPUT</span> <span class="nt">-c</span> name,party,state <span class="o">&gt;</span> <span class="nv">$OUTPUT</span>
 
-<span class="gp">;# </span>Compute outlier probabilities using SOS
+<span class="p">;</span><span class="c"># Compute outlier probabilities using SOS</span>
 outlier.csv &lt;- features.csv
-	<span class="nb">echo</span> <span class="s1">'outlier'</span> &gt; <span class="nv">$OUTPUT</span>
-	&lt; <span class="nv">$INPUT</span> sos -p 50 &gt;&gt; <span class="nv">$OUTPUT</span>
+	<span class="nb">echo</span> <span class="s1">'outlier'</span> <span class="o">&gt;</span> <span class="nv">$OUTPUT</span>
+	&lt; <span class="nv">$INPUT</span> sos <span class="nt">-p</span> 50 <span class="o">&gt;&gt;</span> <span class="nv">$OUTPUT</span>
 
-<span class="gp">;# </span>Combine labels and outlier probabilities and sort
+<span class="p">;</span><span class="c"># Combine labels and outlier probabilities and sort</span>
 result.csv &lt;- labels.csv, outlier.csv
-	paste -d, <span class="nv">$INPUT0</span> <span class="nv">$INPUT1</span> | csvsort -rc outlier &gt; <span class="nv">$OUTPUT</span>
-</code></pre>
-</div>
-<div class="highlighter-rouge"><pre class="highlight"><code>drake
+	<span class="nb">paste</span> <span class="nt">-d</span>, <span class="nv">$INPUT0</span> <span class="nv">$INPUT1</span> | csvsort <span class="nt">-rc</span> outlier <span class="o">&gt;</span> <span class="nv">$OUTPUT</span>
+</code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>drake
 head result.csv | csvlook
 
 |-------------+-------+-------+-------------|
@@ -162,8 +161,7 @@ head result.csv | csvlook
 |  Alexander  | R     | TN    | 0.626972    |
 |  Vitter     | R     | LA    | 0.59739462  |
 |-------------+-------+-------+-------------|
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The tools <code class="highlighter-rouge">csvcut</code>, <code class="highlighter-rouge">csvsort</code>, and <code class="highlighter-rouge">csvlook</code> are part of <a href="http://csvkit.readthedocs.org/">csvkit</a>. 
 You may notice that the outlier probabilities shown in the screenshot do not match the exact ones computed with <code class="highlighter-rouge">sos</code>. That’s because (1) the screenshot was taken not long after the demo started and (2) the demo was running in Chrome, which apparently has a different implementation of <code class="highlighter-rouge">Math.random</code>. In Firefox, the approximated outlier probabilities will match the exact ones, eventually.</p>

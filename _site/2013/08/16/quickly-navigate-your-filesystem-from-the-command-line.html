@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="Dutch Data Scientist, Teacher, Author, Entrepreneur">
     <link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
-    <link rel="alternate" type="application/rss+xml" title="Jeroen Janssens" href="http://www.jeroenjanssens.com/feed.xml">
+    <link rel="alternate" type="application/rss+xml" title="Jeroen Janssens" href="http://localhost:4000/feed.xml">
 
     
       <meta name="twitter:card" content="summary">
@@ -21,13 +21,13 @@
       <meta name="twitter:title" content="Quickly navigate your filesystem from the command-line">
     
     
-    <meta name="twitter:url" content="http://www.jeroenjanssens.com/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html">
+    <meta name="twitter:url" content="http://localhost:4000/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html">
     
     
       <meta name="twitter:description" content="Dutch Data Scientist, Teacher, Author, Entrepreneur">
     
     
-      <meta name="twitter:image:src" content="http://www.jeroenjanssens.com/img/jeroenjanssens.jpg">
+      <meta name="twitter:image:src" content="http://localhost:4000/img/jeroenjanssens.jpg">
     
     <meta name="bitly-verification" content="f2828a63ca29"/>
   </head>
@@ -81,49 +81,44 @@ I have noticed quite an increase in efficiency with this, and perhaps you will t
 <p>Under the hood this manual solution comes down to storing symbolic links in a hidden directory (e.g., <code class="highlighter-rouge">~/.marks</code>).
 There are four shell functions <code class="highlighter-rouge">jump</code>, <code class="highlighter-rouge">mark</code>, <code class="highlighter-rouge">unmark</code>, and <code class="highlighter-rouge">marks</code>, and they look like this:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="nb">export </span><span class="nv">MARKPATH</span><span class="o">=</span><span class="nv">$HOME</span>/.marks
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">MARKPATH</span><span class="o">=</span><span class="nv">$HOME</span>/.marks
 <span class="k">function </span>jump <span class="o">{</span> 
-	<span class="nb">cd</span> -P <span class="s2">"</span><span class="nv">$MARKPATH</span><span class="s2">/</span><span class="nv">$1</span><span class="s2">"</span> 2&gt;/dev/null <span class="o">||</span> <span class="nb">echo</span> <span class="s2">"No such mark: </span><span class="nv">$1</span><span class="s2">"</span>
+	<span class="nb">cd</span> <span class="nt">-P</span> <span class="s2">"</span><span class="nv">$MARKPATH</span><span class="s2">/</span><span class="nv">$1</span><span class="s2">"</span> 2&gt;/dev/null <span class="o">||</span> <span class="nb">echo</span> <span class="s2">"No such mark: </span><span class="nv">$1</span><span class="s2">"</span>
 <span class="o">}</span>
 <span class="k">function </span>mark <span class="o">{</span> 
-	mkdir -p <span class="s2">"</span><span class="nv">$MARKPATH</span><span class="s2">"</span>; ln -s <span class="s2">"</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$MARKPATH</span><span class="s2">/</span><span class="nv">$1</span><span class="s2">"</span>
+	<span class="nb">mkdir</span> <span class="nt">-p</span> <span class="s2">"</span><span class="nv">$MARKPATH</span><span class="s2">"</span><span class="p">;</span> <span class="nb">ln</span> <span class="nt">-s</span> <span class="s2">"</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$MARKPATH</span><span class="s2">/</span><span class="nv">$1</span><span class="s2">"</span>
 <span class="o">}</span>
 <span class="k">function </span>unmark <span class="o">{</span> 
-	rm -i <span class="s2">"</span><span class="nv">$MARKPATH</span><span class="s2">/</span><span class="nv">$1</span><span class="s2">"</span>
+	<span class="nb">rm</span> <span class="nt">-i</span> <span class="s2">"</span><span class="nv">$MARKPATH</span><span class="s2">/</span><span class="nv">$1</span><span class="s2">"</span>
 <span class="o">}</span>
 <span class="k">function </span>marks <span class="o">{</span>
-	ls -l <span class="s2">"</span><span class="nv">$MARKPATH</span><span class="s2">"</span> | sed <span class="s1">'s/  / /g'</span> | cut -d<span class="s1">' '</span> -f9- | sed <span class="s1">'s/ -/\t-/g'</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
+	<span class="nb">ls</span> <span class="nt">-l</span> <span class="s2">"</span><span class="nv">$MARKPATH</span><span class="s2">"</span> | <span class="nb">sed</span> <span class="s1">'s/  / /g'</span> | <span class="nb">cut</span> <span class="nt">-d</span><span class="s1">' '</span> <span class="nt">-f9-</span> | <span class="nb">sed</span> <span class="s1">'s/ -/\t-/g'</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
 <span class="o">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Put this in your <code class="highlighter-rouge">.zshrc</code> or <code class="highlighter-rouge">.bashrc</code> and you’re ready to jump (Mac OS X users need a slightly different version of the <code class="highlighter-rouge">marks</code> function; see below). I have also turned this into a plugin for <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a> called <code class="highlighter-rouge">jump</code>. To add a new bookmark, <code class="highlighter-rouge">cd</code> into the directory and <code class="highlighter-rouge">mark</code> it with a name to your liking:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">cd</span> ~/some/very/deep/often-used/directory
-<span class="gp">$ </span>mark deep
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd</span> ~/some/very/deep/often-used/directory
+<span class="nv">$ </span>mark deep
+</code></pre></div></div>
 
 <p>This adds a symbolic link named <code class="highlighter-rouge">deep</code> to the directory <code class="highlighter-rouge">~/.marks</code>. To <code class="highlighter-rouge">jump</code> to this directory, type the following from any place in the filesystem:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>jump deep
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>jump deep
+</code></pre></div></div>
 
 <p>To remove the bookmark (i.e., the symbolic link), type:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>unmark deep
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>unmark deep
+</code></pre></div></div>
 
 <p>You can view all marks by typing:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>marks
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>marks
 
 deep	-&gt; /home/johndoe/some/very/deep/often-used/directory
 foo		-&gt; /usr/bin/foo/bar
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>That’s all there is to it!</p>
 
@@ -131,27 +126,25 @@ foo		-&gt; /usr/bin/foo/bar
 
 <p>In order to add tab completion for the <code class="highlighter-rouge">jump</code> and <code class="highlighter-rouge">unmark</code> functions, add the following code to your .zshrc (thanks to <a href="https://news.ycombinator.com/item?id=6229468">tiziano88</a>):</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="k">function </span>_completemarks <span class="o">{</span>
-  <span class="nv">reply</span><span class="o">=(</span><span class="k">$(</span>ls <span class="nv">$MARKPATH</span><span class="k">)</span><span class="o">)</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function </span>_completemarks <span class="o">{</span>
+  <span class="nv">reply</span><span class="o">=(</span><span class="k">$(</span><span class="nb">ls</span> <span class="nv">$MARKPATH</span><span class="k">)</span><span class="o">)</span>
 <span class="o">}</span>
 
-compctl -K _completemarks jump
-compctl -K _completemarks unmark
-</code></pre>
-</div>
+compctl <span class="nt">-K</span> _completemarks jump
+compctl <span class="nt">-K</span> _completemarks unmark
+</code></pre></div></div>
 
 <p>or the following to your .bashrc (thanks to <a href="https://news.ycombinator.com/item?id=6229768">microcolonel</a>):</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>_completemarks<span class="o">()</span> <span class="o">{</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>_completemarks<span class="o">()</span> <span class="o">{</span>
   <span class="nb">local </span><span class="nv">curw</span><span class="o">=</span><span class="k">${</span><span class="nv">COMP_WORDS</span><span class="p">[COMP_CWORD]</span><span class="k">}</span>
-  <span class="nb">local </span><span class="nv">wordlist</span><span class="o">=</span><span class="k">$(</span>find <span class="nv">$MARKPATH</span> -type l -printf <span class="s2">"%f</span><span class="se">\n</span><span class="s2">"</span><span class="k">)</span>
-  <span class="nv">COMPREPLY</span><span class="o">=(</span><span class="k">$(</span><span class="nb">compgen</span> -W <span class="s1">'${wordlist[@]}'</span> -- <span class="s2">"</span><span class="nv">$curw</span><span class="s2">"</span><span class="k">)</span><span class="o">)</span>
+  <span class="nb">local </span><span class="nv">wordlist</span><span class="o">=</span><span class="k">$(</span>find <span class="nv">$MARKPATH</span> <span class="nt">-type</span> l <span class="nt">-printf</span> <span class="s2">"%f</span><span class="se">\n</span><span class="s2">"</span><span class="k">)</span>
+  <span class="nv">COMPREPLY</span><span class="o">=(</span><span class="k">$(</span><span class="nb">compgen</span> <span class="nt">-W</span> <span class="s1">'${wordlist[@]}'</span> <span class="nt">--</span> <span class="s2">"</span><span class="nv">$curw</span><span class="s2">"</span><span class="k">)</span><span class="o">)</span>
   <span class="k">return </span>0
 <span class="o">}</span>
 
-<span class="nb">complete</span> -F _completemarks jump unmark
-</code></pre>
-</div>
+<span class="nb">complete</span> <span class="nt">-F</span> _completemarks jump unmark
+</code></pre></div></div>
 
 <p>If you now type <code class="highlighter-rouge">jump</code> or <code class="highlighter-rouge">unmark</code> and then press TAB, you see a list of available marks. Neat!</p>
 
@@ -159,11 +152,10 @@ compctl -K _completemarks unmark
 
 <p>As pointed out by <a href="https://news.ycombinator.com/item?id=6229428">guygurari</a>, Mac OS X users need a slightly different version of the <code class="highlighter-rouge">marks</code> function:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="k">function </span>marks <span class="o">{</span>
-	<span class="se">\l</span>s -l <span class="s2">"</span><span class="nv">$MARKPATH</span><span class="s2">"</span> | tail -n +2 | sed <span class="s1">'s/  / /g'</span> | cut -d<span class="s1">' '</span> -f9- | awk -F <span class="s1">' -&gt; '</span> <span class="s1">'{printf "%-10s -&gt; %s\n", $1, $2}'</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function </span>marks <span class="o">{</span>
+	<span class="se">\l</span>s <span class="nt">-l</span> <span class="s2">"</span><span class="nv">$MARKPATH</span><span class="s2">"</span> | <span class="nb">tail</span> <span class="nt">-n</span> +2 | <span class="nb">sed</span> <span class="s1">'s/  / /g'</span> | <span class="nb">cut</span> <span class="nt">-d</span><span class="s1">' '</span> <span class="nt">-f9-</span> | <span class="nb">awk</span> <span class="nt">-F</span> <span class="s1">' -&gt; '</span> <span class="s1">'{printf "%-10s -&gt; %s\n", $1, $2}'</span>
 <span class="o">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>If you like what I had to say then you may want to <a href="https://twitter.com/jeroenhjanssens/">follow me on Twitter</a>.</p>
 
